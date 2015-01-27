@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <style> 
+      body {padding: 0; margin: 0; background-color:white;}
+      #content,
+      #content2{font-size:50px; position:inline; color:blue}
+      canvas{border: 2px solid white;}
+
+    </style>
+
+    <script>
+      var host = location.origin.replace(/^http/, 'ws')
+      var ws = new WebSocket(host);
+      // ws.onmessage = function (event) {
+      //   var li = document.createElement('li');
+      //   li.innerHTML = JSON.parse(event.data);
+      //   document.querySelector('#pings').appendChild(li);
+      // };
+    </script>
+
+    <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+    <script language="javascript" src="lib/p5.min.js"></script>
+    <script language="javascript" src="lib/p5.sound.js"></script>
+    <script language="javascript" src="lib/p5.dom.js"></script>
+    <script language="javascript" src="lib/jquery-1.10.1.min.js"></script>
+    <script language="javascript" src="Note.js"></script>
+    <script language="javascript" src="sketch.js"></script>
+
+    <!-- <div id="canvas"></div>
+    <div id="content"></div> -->
+  </head>
+  <body>
+    <!-- <h1>Pings</h1> -->
+    <!-- <ul id='pings'></ul> -->
+    <div id="canvas"></div>
+    <div id="content"></div>
+    <!-- <div id="content2"></div> -->
+  </body>
+</html>
