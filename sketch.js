@@ -88,8 +88,14 @@ var sketch = function(s){
        B is Brightness, 0 to 255
    */
     s.colorMode("hsb");
-
-
+    s.background(184, 174, 175, 50);
+    s.noStroke();
+    s.fill(204);
+    if(acceleration){
+      s.rotate(dir);  
+    }
+    
+    s.triangle(218, 18, 218, 360, 381, 360);
 
 
 
@@ -133,7 +139,7 @@ var sketch = function(s){
 
   /* Draw loops over and over after setup runs */
   s.draw = function(){
-    s.background(184, 174, 175, 50);
+    
 
     /*
        Desktop has mouseX, phone has touchX
