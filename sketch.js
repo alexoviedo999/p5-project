@@ -89,13 +89,7 @@ var sketch = function(s){
    */
     s.colorMode("hsb");
     s.background(184, 174, 175, 50);
-    s.noStroke();
-    s.fill(204);
-    if(acceleration){
-      s.rotate(dir);  
-    }
     
-    s.triangle(218, 18, 218, 360, 381, 360);
 
 
 
@@ -211,7 +205,7 @@ var sketch = function(s){
     acceleration = accel.accelerationIncludingGravity.x;
     var aval = Math.abs(acceleration);
     if (isPressed && aval >5){
-      s.background(aval/20 * 255, 255, 255);
+      // s.background(aval/20 * 255, 255, 255);
     }
   }
 
@@ -247,6 +241,16 @@ var sketch = function(s){
 
 function gesture(s){
   $("#content").text("X: " +posX + ", Y: " + posY +", a:"+acceleration.toFixed(2) + ", pressed:"+ isPressed + ", direction: " + dir + ", tilt LR " + tiltLR + ", tilt FB " + tiltFB);
+
+  if(dir){
+      s.translate(width/2, height/2);
+      s.rotate(dir);  
+    }
+
+    s.noStroke();
+    s.fill(0);    
+    s.rect(posX, posY, 152, 152); 
+    // s.pop();
 }
 
 var checkFeatureSupport = function(){
