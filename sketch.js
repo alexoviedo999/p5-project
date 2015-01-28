@@ -240,17 +240,22 @@ var sketch = function(s){
 }
 
 function gesture(s){
-  $("#content").text("X: " +posX + ", Y: " + posY +", a:"+acceleration.toFixed(2) + ", pressed:"+ isPressed + ", direction: " + dir + ", tilt LR " + tiltLR + ", tilt FB " + tiltFB);
+  $("#content").text("X: " +posX + ", Y: " + posY +", a:"+acceleration + ", pressed:"+ isPressed + ", direction: " + dir + ", tilt LR " + tiltLR + ", tilt FB " + tiltFB);
 
-  if(dir){
-      s.translate(width/2, height/2);
+  
+
+    s.noStroke();
+    s.rectMode(s.CENTER);
+    s.fill(0); 
+    s.push();   
+
+    if(dir){
+      s.translate(200, 100);
       s.rotate(dir);  
     }
 
-    s.noStroke();
-    s.fill(0);    
-    s.rect(posX, posY, 152, 152); 
-    // s.pop();
+    s.rect(100, 100, 50, 50); 
+    s.pop();
 }
 
 var checkFeatureSupport = function(){
