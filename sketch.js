@@ -103,7 +103,7 @@ var sketch = function(s){
     }
 
     if (window.DeviceOrientationEvent) {
-      //  window.addEventListener('deviceorientation', devOrientHandler, false);
+       window.addEventListener('deviceorientation', devOrientHandler, false);
     }
 
 
@@ -133,7 +133,7 @@ var sketch = function(s){
 
   /* Draw loops over and over after setup runs */
   s.draw = function(){
-    s.background(0);
+    s.background(184, 174, 175, 50);
 
     /*
        Desktop has mouseX, phone has touchX
@@ -209,6 +209,19 @@ var sketch = function(s){
     }
   }
 
+  devOrientHandler = function(eventData){
+
+     // gamma is the left-to-right tilt in degrees, where right is positive
+    tiltLR = eventData.gamma;
+
+    // beta is the front-to-back tilt in degrees, where front is positive
+    tiltFB = eventData.beta;
+
+    // alpha is the compass direction the device is facing in degrees
+    dir = eventData.alpha
+  }
+
+
  
 
   // // when we receive a message from pubnub
@@ -227,7 +240,7 @@ var sketch = function(s){
 }
 
 function gesture(s){
-  $("#content").text("X: " +posX + ", Y: " + posY +", a:"+acceleration.toFixed(2) + ", pressed:"+ isPressed);
+  $("#content").text("X: " +posX + ", Y: " + posY +", a:"+acceleration.toFixed(2) + ", pressed:"+ isPressed + ", direction: " + dir + ", tilt LR " + tiltLR + ", tilt FB " + tiltFB);
 }
 
 var checkFeatureSupport = function(){
