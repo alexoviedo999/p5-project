@@ -40,7 +40,6 @@ var height = 640; // height of the canvas for visuals
 
 var timemsg = new Date().getTime(); // for timing
 
-
 var synth;
 /*
   This is the variable for the synth, as specified in Note.js
@@ -75,7 +74,6 @@ var sketch = function(s){
   /* Setup runs once */
   s.setup = function(){
 
-
     /* Creates a canvas on which everything is drawn.
        width and height determine the size. You can change these
     */
@@ -88,10 +86,11 @@ var sketch = function(s){
        B is Brightness, 0 to 255
    */
     s.colorMode("hsb");
-    s.background(184, 174, 175, 50);
-    
+    // s.background(184, 174, 175, 50);
 
+    s.noStroke();
 
+    s.background(184, 174, 175, 90);
 
     /*
        This starts reading the accelerometer data and running the deviceMotionHandler function
@@ -128,13 +127,9 @@ var sketch = function(s){
   }
 
 
-  
-
-
   /* Draw loops over and over after setup runs */
   s.draw = function(){
     
-
     /*
        Desktop has mouseX, phone has touchX
        This normalizes
@@ -152,14 +147,9 @@ var sketch = function(s){
     else
     {
 
-
     }
 
-
-
     if(!acceleration){acceleration=0;}
-
-    
 
     //every 200 ms emit message
     var now = new Date().getTime();
@@ -182,7 +172,6 @@ var sketch = function(s){
   // });
 
   }
-
 
 
   //start
@@ -210,7 +199,6 @@ var sketch = function(s){
   }
 
   devOrientHandler = function(eventData){
-
      // gamma is the left-to-right tilt in degrees, where right is positive
     tiltLR = eventData.gamma;
 
@@ -220,9 +208,6 @@ var sketch = function(s){
     // alpha is the compass direction the device is facing in degrees
     dir = eventData.alpha
   }
-
-
- 
 
   // // when we receive a message from pubnub
   // function handleMessage(message) 
@@ -240,22 +225,25 @@ var sketch = function(s){
 }
 
 function gesture(s){
-  $("#content").text("X: " +posX + ", Y: " + posY +", a:"+acceleration + ", pressed:"+ isPressed + ", direction: " + dir + ", tilt LR " + tiltLR + ", tilt FB " + tiltFB);
-
   
+ s.background(184, 174, 175, 90);
+    
+ s.push();
 
-    s.noStroke();
-    s.rectMode(s.CENTER);
-    s.fill(0); 
-    s.push();   
+  if(dir){
+    s.translate(width/2, height/2)
+    s.rotate(dir);  
+  }
+  else{
+    s.translate(width/2, height/2)
+    s.rotate(posX);  
+  }
+  s.rectMode(s.CENTER);
+  // s.fill(184, 174, 175, 50)
+  s.rect(0, 0, 100, 100); 
+  s.pop();
 
-    if(dir){
-      s.translate(200, 100);
-      s.rotate(dir);  
-    }
-
-    s.rect(100, 100, 50, 50); 
-    s.pop();
+  $("#content").text("X: " +posX + ", Y: " + posY +", a:"+acceleration + ", pressed:"+ isPressed + ", direction: " + dir + ", tilt LR " + tiltLR + ", tilt FB " + tiltFB);
 }
 
 var checkFeatureSupport = function(){
