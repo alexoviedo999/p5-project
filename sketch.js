@@ -225,18 +225,21 @@ var sketch = function(s){
 }
 
 function gesture(s){
-  
+
+ var posX10 = posX/100;
+ var dir10 = dir/100;
+ console.log(posX10); 
  s.background(184, 174, 175, 90);
     
  s.push();
 
-  if(dir){
+  if(dir10){
     s.translate(width/2, height/2)
-    s.rotate(dir);  
+    s.rotate(dir10);  
   }
   else{
     s.translate(width/2, height/2)
-    s.rotate(posX);  
+    s.rotate(posX10);  
   }
   s.rectMode(s.CENTER);
   // s.fill(184, 174, 175, 50)
