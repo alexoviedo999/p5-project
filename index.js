@@ -6,12 +6,22 @@ var port = process.env.PORT || 5000
 var serialport = require("serialport");
 var SerialPort = serialport.SerialPort;
 
-app.use(express.static(__dirname + "/"))
+app.use(express.static(__dirname + "/"));
+// app.use(express.static(__dirname + "views"));
 
 var server = http.createServer(app)
 server.listen(port)
 
-console.log("http server listening on %d", port)
+console.log("http server listening on %d", port);
+
+// a convenient variable to refer to the HTML directory
+var html_dir = './html/';
+
+// routes to serve the static HTML files
+app.get('/test', function(req, res) {
+    res.sendfile(html_dir + 'test.html');
+});
+
 
 var wss = new WebSocketServer({server: server})
 console.log("websocket server created")
