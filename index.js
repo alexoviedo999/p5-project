@@ -6,22 +6,40 @@ var port = process.env.PORT || 5000
 var serialport = require("serialport");
 var SerialPort = serialport.SerialPort;
 
-app.use(express.static(__dirname + "/"));
-// app.use(express.static(__dirname + "views"));
+// set up handlebars view engine
+var handlebars = require('express3-handlebars').create({ 
+	defaultLayout:'main' 
+});
 
-var server = http.createServer(app)
+app.engine('handlebars', handlebars.engine);
+app.set('view engine', 'handlebars');
+
+
+var server = http.createServer(app);
 server.listen(port)
 
 console.log("http server listening on %d", port);
 
-// a convenient variable to refer to the HTML directory
-var html_dir = './html/';
+app.use(express.static(__dirname + '/public'));
 
-// routes to serve the static HTML files
-app.get('/test', function(req, res) {
-    res.sendfile(html_dir + 'test.html');
+app.get('/', function(req, res) {
+	res.render('home');
+});
+app.get('/about', function(req, res) {
+	res.render('about');
 });
 
+// // 404 catch-all handler (middleware)
+// app.use(function(req, res, next){
+// res.status(404);
+// res.render('404');
+// });
+// // 500 error handler (middleware)
+// app.use(function(err, req, res, next){
+// console.error(err.stack);
+// res.status(500);
+// res.render('500');
+// });
 
 var wss = new WebSocketServer({server: server})
 console.log("websocket server created")

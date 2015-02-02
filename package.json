@@ -7,8 +7,9 @@
   },
   "dependencies": {
     "express": "^4.4.5",
-    "ws": "0.4.x",
-    "serialport": "1.4"
+    "express3-handlebars": "^0.5.2",
+    "serialport": "1.4",
+    "ws": "0.4.x"
   },
   "engines": {
     "node": "0.10.x"
