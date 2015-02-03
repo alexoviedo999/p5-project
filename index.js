@@ -25,8 +25,13 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', function(req, res) {
 	res.render('home');
 });
+
 app.get('/about', function(req, res) {
 	res.render('about');
+});
+
+app.get('/play/play_one', function(req, res) {
+	res.render('play_one');
 });
 
 // // 404 catch-all handler (middleware)
