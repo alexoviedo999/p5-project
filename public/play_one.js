@@ -98,11 +98,19 @@ var sketch = function(s){
     */
 
     if (window.DeviceMotionEvent) {
+      document.getElementById("doAccelEvent").innerHTML = "Yes";
        window.addEventListener('devicemotion', deviceMotionHandler, false);
+    }
+    else{
+      document.getElementById("doAccelEvent").innerHTML = "Not supported."
     }
 
     if (window.DeviceOrientationEvent) {
-       window.addEventListener('deviceorientation', devOrientHandler, false);
+      document.getElementById("doOrientationEvent").innerHTML = "Yes";
+      window.addEventListener('deviceorientation', devOrientHandler, false);
+    }
+    else{
+      document.getElementById("doOrientationEvent").innerHTML = "Not supported."
     }
 
 
@@ -246,7 +254,12 @@ function gesture(s){
   s.rect(0, 0, 100, 100); 
   s.pop();
 
-  $("#content").text("X: " +posX + ", Y: " + posY +", a:"+acceleration + ", pressed:"+ isPressed + ", direction: " + dir + ", tilt LR " + tiltLR + ", tilt FB " + tiltFB);
+  // $("#content").text("X: " +posX + ", Y: " + posY +", a:"+acceleration + ", pressed:"+ isPressed + ", direction: " + dir + ", tilt LR " + tiltLR + ", tilt FB " + tiltFB);
+  document.getElementById("posX").innerHTML = Math.round(posX);  
+  document.getElementById("posY").innerHTML = Math.round(posY);  
+  document.getElementById("doTiltLR").innerHTML = Math.round(tiltLR);
+  document.getElementById("doTiltFB").innerHTML = Math.round(tiltFB);
+  document.getElementById("doDirection").innerHTML = Math.round(dir);
 }
 
 var checkFeatureSupport = function(){
