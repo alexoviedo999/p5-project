@@ -1,8 +1,10 @@
 function setup() {
+  createCanvas(800, 800);
+  translate(200, 200);
  backgroundColour = color(255, 255, 255);
  nodeColour = color(40, 168, 107);
  edgeColour = color(34, 68, 204);
- nodeSize = 8;
+nodeSize = 8;
 
 var node0 = [-100, -100, -100];
 var node1 = [-100, -100,  100];
@@ -33,6 +35,8 @@ var edge9  = [1, 5];
 var edge10 = [2, 6];
 var edge11 = [3, 7];
 edges = [edge0, edge1, edge2, edge3, edge4, edge5, edge6, edge7, edge8, edge9, edge10, edge11,[11,15],[15,14],[14,12],[12,13],[13,15],[10,14],[10,11],[12,8],[8,9],[9,11],[8,10],[9,13],[13,5],[14,6],[15,7],[12,4],[11,3],[10,2],[9,1],[8,0]];
+
+ 
 }
 // Rotate shape around the z-axis
 var rotateZ3D = function(theta) {
@@ -76,7 +80,7 @@ var rotateX3D = function(theta) {
 
 function draw() {
     background(backgroundColour);
-    
+    translate(200, 200); 
     // Draw edges
     stroke(edgeColour);
     for (var e=0; e<edges.length; e++) {
@@ -94,7 +98,7 @@ function draw() {
         var node = nodes[n];
         ellipse(node[0], node[1], nodeSize, nodeSize);
     }
-    translate(200, 200);
+   
 };
 
 var mouseDragged = function() {
