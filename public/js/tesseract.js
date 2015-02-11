@@ -1,7 +1,43 @@
+/*
+ Global Variables
+*/
+
+var posX, posY; // x and y position when you touch the screen
+var acceleration; // for device motion
+// var pubnub;
+// var uniqueid;
+/*
+
+*/
+var isPressed = false; // is the screen pressed or not
+var width = 640; // width of the canvas for visuals
+var height = 640; // height of the canvas for visuals
+
+
+var timemsg = new Date().getTime(); // for timing
+
+// var synth;
+/*
+  This is the variable for the synth, as specified in Note.js
+  usage is
+
+  synth = new Note(); // creates the synth object
+  synth.setPitch(440);
+  synth.setFilter(440);
+  synth.play();
+  synth.stop();
+
+*/
+
+
+
+
 function setup() {
     createCanvas(700, 500);
     translate(150, 150);
-    backgroundColour = color(255, 255, 255);
+    colorMode("hsb");
+    noStroke();
+    backgroundColour = color(155, 55, 55);
     nodeColour = color(40, 168, 107);
     edgeColour = color(34, 68, 204);
     nodeSize = 8;
@@ -58,6 +94,29 @@ function setup() {
     ];
 
 
+
+
+    /*
+       This starts reading the accelerometer data and running the deviceMotionHandler function
+       when new data is received
+    */
+
+    if (window.DeviceMotionEvent) {
+      document.getElementById("doAccelEvent").innerHTML = "Yes";
+      window.addEventListener('devicemotion', deviceMotionHandler, false);
+    }
+    else{
+      document.getElementById("doAccelEvent").innerHTML = "Not supported."
+    }
+
+    if (window.DeviceOrientationEvent) {
+      document.getElementById("doOrientationEvent").innerHTML = "Yes";
+      window.addEventListener('deviceorientation', devOrientHandler, false);
+    }
+    else{
+      document.getElementById("doOrientationEvent").innerHTML = "Not supported."
+    }
+
   }
   // Rotate shape around the z-axis
 var rotateZ3D = function(theta) {
@@ -102,6 +161,32 @@ var rotateX3D = function(theta) {
 function draw() {
   background(backgroundColour);
   translate(180, 180);
+
+  /*
+     Desktop has mouseX, phone has touchX
+     This normalizes
+  */
+  posX = Math.max(mouseX, touchX);
+  posY = Math.max(mouseY, touchY);
+
+  if(isPressed){
+    gesture();
+  }
+  else{ }
+
+
+  if(!acceleration){acceleration=0;}
+
+  //every 200 ms emit message
+  var now = new Date().getTime();
+  if(isPressed && (now - timemsg > 300)){
+    ws.send({x: posX, y: posY});
+    timemsg = new Date().getTime();
+  }
+
+ 
+
+
   // Draw edges
   stroke(edgeColour);
   for (var e = 0; e < edges.length; e++) {
@@ -121,6 +206,56 @@ function draw() {
   }
 
 };
+
+
+
+
+
+ //start
+  touchStarted  = mousePressed = function(){
+    isPressed = true;
+  }
+
+  //during
+  touchMoved = mouseDragged =  function(){
+    isPressed = true;
+  }
+
+  //end
+  touchEnded = mouseReleased = function(){
+    isPressed = false
+  }
+
+  deviceMotionHandler = function(accel){
+    acceleration = accel.accelerationIncludingGravity.x;
+    var aval = Math.abs(acceleration);
+    if (isPressed && aval >5){
+      // s.background(aval/20 * 255, 255, 255);
+    }
+  }
+
+  devOrientHandler = function(eventData){
+     // gamma is the left-to-right tilt in degrees, where right is positive
+    tiltLR = eventData.gamma;
+
+    // beta is the front-to-back tilt in degrees, where front is positive
+    tiltFB = eventData.beta;
+
+    // alpha is the compass direction the device is facing in degrees
+    dir = eventData.alpha
+  }
+
+
+
+
+
+function gesture(){
+  document.getElementById("posX").innerHTML = Math.round(posX);  
+  document.getElementById("posY").innerHTML = Math.round(posY);  
+  document.getElementById("doTiltLR").innerHTML = Math.round(tiltLR);
+  document.getElementById("doTiltFB").innerHTML = Math.round(tiltFB);
+  document.getElementById("doDirection").innerHTML = Math.round(dir);
+}
 
 var mouseDragged = function() {
   rotateY3D(mouseX - pmouseX);
