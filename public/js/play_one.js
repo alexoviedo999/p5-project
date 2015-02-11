@@ -11,10 +11,6 @@
   + the browser accelerometer API to get motion
   https://developer.mozilla.org/en-US/docs/Web/Events/devicemotion
 
-  + websockets to talk to the server
-  http://socket.io/docs/
-
-
 */
 
 
@@ -32,15 +28,11 @@ var acceleration; // for device motion
 var isPressed = false; // is the screen pressed or not
 var width = 640; // width of the canvas for visuals
 var height = 640; // height of the canvas for visuals
-// var socket = ws;
-/*
-  To write to the server
-  socket.emit('motion',{data: x });
-*/
+
 
 var timemsg = new Date().getTime(); // for timing
 
-var synth;
+// var synth;
 /*
   This is the variable for the synth, as specified in Note.js
   usage is
@@ -52,10 +44,6 @@ var synth;
   synth.stop();
 
 */
-
-// socket.on('connect', function(){
-//   console.log('connected');
-// });
 
 
 /*
@@ -99,7 +87,7 @@ var sketch = function(s){
 
     if (window.DeviceMotionEvent) {
       document.getElementById("doAccelEvent").innerHTML = "Yes";
-       window.addEventListener('devicemotion', deviceMotionHandler, false);
+      window.addEventListener('devicemotion', deviceMotionHandler, false);
     }
     else{
       document.getElementById("doAccelEvent").innerHTML = "Not supported."
