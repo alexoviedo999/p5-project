@@ -236,7 +236,7 @@ function gesture(s){
 
  var posX10 = posX/100;
  var dir10 = dir/100;
- console.log(posX10); 
+ // console.log(posX10); 
  s.background(184, 174, 175, 90);
     
  s.push();
