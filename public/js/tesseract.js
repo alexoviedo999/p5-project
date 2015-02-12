@@ -196,8 +196,8 @@ function draw() {
 
   //every 200 ms emit message
   var now = new Date().getTime();
-  if(isPressed && (now - timemsg > 300)){
-    ws.send({x: posX, y: posY});
+  if(now - timemsg > 300){
+    ws.send({tiltLR: tiltLR, tiltFB: tiltFB, tiltLRp: tiltLRp, tiltFBp: tiltFBp });
     timemsg = new Date().getTime();
   }
 
