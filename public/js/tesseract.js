@@ -226,7 +226,7 @@ function draw() {
       tiltLRp = tiltLR;
       tiltFBp = tiltFB;
       dirp = dir
-    },50);
+    },100);
 
     rotateY3D(tiltLR - tiltLRp );
     rotateX3D(tiltFB - tiltFBp );
@@ -246,15 +246,15 @@ deviceMotionHandler = function(accel){
 
 devOrientHandler = function(eventData){
    // gamma is the left-to-right tilt in degrees, where right is positive
-  tiltLR = eventData.gamma/10;
+  tiltLR = eventData.gamma;
 
   // beta is the front-to-back tilt in degrees, where front is positive
-  tiltFB = eventData.beta/10;
+  tiltFB = eventData.beta;
 
   // alpha is the compass direction the device is facing in degrees
-  dir = eventData.alpha/10;
+  dir = eventData.alpha;
 
-  // console.log('fb ' + tiltFB + 'lr ' + tiltLR)
+  console.log('fb ' + tiltFB + 'lr ' + tiltLR)
 }
 
 
