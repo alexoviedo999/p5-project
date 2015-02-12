@@ -9,6 +9,7 @@ var tiltLRp = 0;
 var tiltFB = 0;
 var tiltFBp = 0;
 var dir = 0;
+var dirp = 0;
 // var pubnub;
 // var uniqueid;
 /*
