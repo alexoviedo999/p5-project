@@ -124,7 +124,6 @@ function setup() {
   }
   // Rotate shape around the z-axis
 var rotateZ3D = function(theta) {
-  // var theta = theta/10;
   console.log('z ' + theta);
   var sin_t = sin(theta);
   var cos_t = cos(theta);
@@ -139,7 +138,6 @@ var rotateZ3D = function(theta) {
 };
 
 var rotateY3D = function(theta) {
-  // var theta = theta/10;
   console.log('y ' + theta);
   var sin_t = sin(theta);
   var cos_t = cos(theta);
@@ -190,7 +188,7 @@ function draw() {
     touchControl();
   }
   else{ 
-
+    gestureControl();
   }
 
 
@@ -264,13 +262,13 @@ function touchControl(){
   document.getElementById("posXp").innerHTML = posXp;  
   document.getElementById("posY").innerHTML = posY;  
   document.getElementById("posYp").innerHTML = posYp;   
-  document.getElementById("doTiltLR").innerHTML = Math.round(tiltLR);
-  document.getElementById("doTiltFB").innerHTML = Math.round(tiltFB);
+  
   // document.getElementById("doDirection").innerHTML = Math.round(dir);
 }
 
 function gestureControl(){
-
+  document.getElementById("doTiltLR").innerHTML = Math.round(tiltLR);
+  document.getElementById("doTiltFB").innerHTML = Math.round(tiltFB);
 }
 
 
@@ -288,9 +286,6 @@ touchMoved = mouseDragged =  function(){
   isPressed = true;
   // rotateY3D(posX - posXp);
   // rotateX3D(posY - posYp);
-
-  
-
 
   return false;
 }
