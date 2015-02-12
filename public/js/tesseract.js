@@ -224,7 +224,7 @@ function draw() {
 setTimeout(function(){
     tiltLRp = tiltLR;
     tiltFBp = tiltFB;
-  },50);
+  },200);
 
     rotateY3D(tiltLR - tiltLRp );
 rotateX3D(tiltFB - tiltFBp );
