@@ -124,7 +124,7 @@ function setup() {
   }
   // Rotate shape around the z-axis
 var rotateZ3D = function(theta) {
-  var theta = theta/10;
+  // var theta = theta/10;
   console.log('z ' + theta);
   var sin_t = sin(theta);
   var cos_t = cos(theta);
@@ -139,7 +139,7 @@ var rotateZ3D = function(theta) {
 };
 
 var rotateY3D = function(theta) {
-  var theta = theta/10;
+  // var theta = theta/10;
   console.log('y ' + theta);
   var sin_t = sin(theta);
   var cos_t = cos(theta);
@@ -154,7 +154,7 @@ var rotateY3D = function(theta) {
 };
 
 var rotateX3D = function(theta) {
-  var theta = theta/10;
+  // var theta = theta/10;
   console.log('x ' + theta);
   var sin_t = sin(theta);
   var cos_t = cos(theta);
