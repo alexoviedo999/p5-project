@@ -5,7 +5,9 @@
 var posX, posY; // x and y position when you touch the screen
 var acceleration; // for device motion
 var tiltLR = 0;
+var tiltLRp = 0;
 var tiltFB = 0;
+var tiltFBp = 0;
 // var pubnub;
 // var uniqueid;
 /*
@@ -36,7 +38,7 @@ var timemsg = new Date().getTime(); // for timing
 
 function setup() {
     createCanvas(700, 500);
-    translate(150, 150);
+    // translate(150, 150);
     colorMode("hsb");
     noStroke();
     backgroundColour = color(155, 55, 55);
@@ -168,7 +170,7 @@ var rotateX3D = function(theta) {
 
 function draw() {
   background(backgroundColour);
-  translate(180, 180);
+  translate(320, 250);
 
   /*
      Desktop has mouseX, phone has touchX
@@ -224,7 +226,7 @@ function draw() {
 setTimeout(function(){
     tiltLRp = tiltLR;
     tiltFBp = tiltFB;
-  },200);
+  },50);
 
     rotateY3D(tiltLR - tiltLRp );
 rotateX3D(tiltFB - tiltFBp );
