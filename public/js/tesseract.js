@@ -177,9 +177,11 @@ function draw() {
   posYp = Math.round(posYp1);
 
   if(isPressed){
-    gesture();
+    touchControl();
   }
-  else{ }
+  else{ 
+
+  }
 
 
   if(!acceleration){acceleration=0;}
@@ -238,7 +240,7 @@ devOrientHandler = function(eventData){
 
 
 
-function gesture(){
+function touchControl(){
   document.getElementById("posX").innerHTML = posX;  
   document.getElementById("posY").innerHTML = posY;  
   document.getElementById("doTiltLR").innerHTML = Math.round(tiltLR);
@@ -246,17 +248,29 @@ function gesture(){
   document.getElementById("doDirection").innerHTML = Math.round(dir);
 }
 
+function gestureControl(){
+
+}
+
+
+
 //start
 touchStarted  = mousePressed = function(){
   isPressed = true;
+
+    rotateY3D(tiltLR);
+rotateX3D(tiltFB);
   return false;
 }
 
 //during
 touchMoved = mouseDragged =  function(){
   isPressed = true;
-  rotateY3D(posX - posXp);
-  rotateX3D(posY - posYp);
+  // rotateY3D(posX - posXp);
+  // rotateX3D(posY - posYp);
+
+
+
   return false;
 }
 
