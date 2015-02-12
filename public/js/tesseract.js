@@ -228,7 +228,7 @@ setTimeout(function(){
     tiltLRp = tiltLR;
     tiltFBp = tiltFB;
     dirp = dir
-  },100);
+  },50);
 
   rotateY3D(tiltLR - tiltLRp );
   rotateX3D(tiltFB - tiltFBp );
