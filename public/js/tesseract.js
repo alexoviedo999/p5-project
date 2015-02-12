@@ -126,7 +126,7 @@ function setup() {
   }
   // Rotate shape around the z-axis
 var rotateZ3D = function(theta) {
-  console.log('z ' + theta);
+  // console.log('z ' + theta);
   var sin_t = sin(theta);
   var cos_t = cos(theta);
 
@@ -140,7 +140,7 @@ var rotateZ3D = function(theta) {
 };
 
 var rotateY3D = function(theta) {
-  console.log('y ' + theta);
+  // console.log('y ' + theta);
   var sin_t = sin(theta);
   var cos_t = cos(theta);
 
@@ -154,8 +154,7 @@ var rotateY3D = function(theta) {
 };
 
 var rotateX3D = function(theta) {
-  // var theta = theta/10;
-  console.log('x ' + theta);
+  // console.log('x ' + theta);
   var sin_t = sin(theta);
   var cos_t = cos(theta);
 
@@ -176,22 +175,15 @@ function draw() {
      Desktop has mouseX, phone has touchX
      This normalizes
   */
-  posX1 = Math.max(mouseX, touchX);
-  posX = Math.round(posX1);
-  posXp1 = Math.max(pmouseX, ptouchX);
-  posXp = Math.round(posXp1);
+  posX = Math.max(mouseX, touchX)/10;
+  // posX = Math.round(posX1);
+  posXp = Math.max(pmouseX, ptouchX)/10;
+  // posXp = Math.round(posXp1);
 
-  posY1 = Math.max(mouseY, touchY);
-  posY = Math.round(posY1);
-  posYp1 = Math.max(pmouseY, ptouchY);
-  posYp = Math.round(posYp1);
-
-  // if(isPressed){
-  //   touchControl();
-  // }
-  // else{ 
-    gestureControl();
-  // }
+  posY = Math.max(mouseY, touchY)/10;
+  // posY = Math.round(posY1);
+  posYp = Math.max(pmouseY, ptouchY)/10;
+  // posYp = Math.round(posYp1);
 
 
   if(!acceleration){acceleration=0;}
@@ -202,8 +194,6 @@ function draw() {
     ws.send({tiltLR: tiltLR, tiltFB: tiltFB, tiltLRp: tiltLRp, tiltFBp: tiltFBp, dir: dir });
     timemsg = new Date().getTime();
   }
-
-
 
 
   // Draw edges
@@ -224,15 +214,24 @@ function draw() {
     ellipse(node[0], node[1], nodeSize, nodeSize);
   }
 
-setTimeout(function(){
-    tiltLRp = tiltLR;
-    tiltFBp = tiltFB;
-    dirp = dir
-  },50);
 
-  rotateY3D(tiltLR - tiltLRp );
-  rotateX3D(tiltFB - tiltFBp );
-  rotateZ3D(dir - dirp );
+  if(isPressed){
+    touchControl();
+    rotateY3D(posX - posXp);
+    rotateX3D(posY - posYp);
+  }
+  else{
+    gestureControl();
+    setTimeout(function(){
+      tiltLRp = tiltLR;
+      tiltFBp = tiltFB;
+      dirp = dir
+    },50);
+
+    rotateY3D(tiltLR - tiltLRp );
+    rotateX3D(tiltFB - tiltFBp );
+    rotateZ3D(dir - dirp );
+  }
 
 };
 
@@ -290,9 +289,6 @@ touchStarted  = mousePressed = function(){
 //during
 touchMoved = mouseDragged =  function(){
   isPressed = true;
-  // rotateY3D(posX - posXp);
-  // rotateX3D(posY - posYp);
-
   return false;
 }
 
