@@ -166,8 +166,15 @@ function draw() {
      Desktop has mouseX, phone has touchX
      This normalizes
   */
-  posX = Math.max(mouseX, touchX);
-  posY = Math.max(mouseY, touchY);
+  posX1 = Math.max(mouseX, touchX);
+  posX = Math.round(posX1);
+  posXp1 = Math.max(pmouseX, ptouchX);
+  posXp = Math.round(posXp1);
+
+  posY1 = Math.max(mouseY, touchY);
+  posY = Math.round(posY1);
+  posYp1 = Math.max(pmouseY, ptouchY);
+  posYp = Math.round(posYp1);
 
   if(isPressed){
     gesture();
@@ -184,7 +191,6 @@ function draw() {
     timemsg = new Date().getTime();
   }
 
- 
 
 
   // Draw edges
@@ -205,59 +211,70 @@ function draw() {
     ellipse(node[0], node[1], nodeSize, nodeSize);
   }
 
+
 };
 
 
-
-
-
- //start
-  touchStarted  = mousePressed = function(){
-    isPressed = true;
+deviceMotionHandler = function(accel){
+  acceleration = accel.accelerationIncludingGravity.x;
+  var aval = Math.abs(acceleration);
+  if (isPressed && aval >5){
+    // s.background(aval/20 * 255, 255, 255);
   }
+}
 
-  //during
-  touchMoved = mouseDragged =  function(){
-    isPressed = true;
-  }
+devOrientHandler = function(eventData){
+   // gamma is the left-to-right tilt in degrees, where right is positive
+  tiltLR = eventData.gamma;
 
-  //end
-  touchEnded = mouseReleased = function(){
-    isPressed = false
-  }
+  // beta is the front-to-back tilt in degrees, where front is positive
+  tiltFB = eventData.beta;
 
-  deviceMotionHandler = function(accel){
-    acceleration = accel.accelerationIncludingGravity.x;
-    var aval = Math.abs(acceleration);
-    if (isPressed && aval >5){
-      // s.background(aval/20 * 255, 255, 255);
-    }
-  }
-
-  devOrientHandler = function(eventData){
-     // gamma is the left-to-right tilt in degrees, where right is positive
-    tiltLR = eventData.gamma;
-
-    // beta is the front-to-back tilt in degrees, where front is positive
-    tiltFB = eventData.beta;
-
-    // alpha is the compass direction the device is facing in degrees
-    dir = eventData.alpha
-  }
+  // alpha is the compass direction the device is facing in degrees
+  dir = eventData.alpha
+}
 
 
 
 
 
 function gesture(){
-  document.getElementById("posX").innerHTML = Math.round(posX);  
-  document.getElementById("posY").innerHTML = Math.round(posY);  
+  document.getElementById("posX").innerHTML = posX;  
+  document.getElementById("posY").innerHTML = posY;  
   document.getElementById("doTiltLR").innerHTML = Math.round(tiltLR);
   document.getElementById("doTiltFB").innerHTML = Math.round(tiltFB);
   document.getElementById("doDirection").innerHTML = Math.round(dir);
 }
 
-var mouseDragged = function() {
-  rotateY3D(mouseX - pmouseX);
-  rotateX3D(mouseY - pmouseY);
-};
+//start
+touchStarted  = mousePressed = function(){
+  isPressed = true;
+  return false;
+}
+
+//during
+touchMoved = mouseDragged =  function(){
+  isPressed = true;
+  rotateY3D(posX - posXp);
+  rotateX3D(posY - posYp);
+  return false;
+}
+
+//end
+touchEnded = mouseReleased = function(){
+  isPressed = false;
+  return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
