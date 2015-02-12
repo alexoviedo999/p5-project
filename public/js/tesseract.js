@@ -283,7 +283,7 @@ touchMoved = mouseDragged =  function(){
   setTimeout(function(){
     tiltLRp = tiltLR;
     tiltFBp = tiltFB;
-  },300);
+  },200);
 
     rotateY3D(tiltLR - tiltLRp );
 rotateX3D(tiltFB - tiltFBp );
