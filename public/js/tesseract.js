@@ -221,6 +221,13 @@ function draw() {
     ellipse(node[0], node[1], nodeSize, nodeSize);
   }
 
+setTimeout(function(){
+    tiltLRp = tiltLR;
+    tiltFBp = tiltFB;
+  },200);
+
+    rotateY3D(tiltLR - tiltLRp );
+rotateX3D(tiltFB - tiltFBp );
 
 };
 
@@ -280,13 +287,7 @@ touchMoved = mouseDragged =  function(){
   // rotateY3D(posX - posXp);
   // rotateX3D(posY - posYp);
 
-  setTimeout(function(){
-    tiltLRp = tiltLR;
-    tiltFBp = tiltFB;
-  },200);
-
-    rotateY3D(tiltLR - tiltLRp );
-rotateX3D(tiltFB - tiltFBp );
+  
 
 
   return false;
