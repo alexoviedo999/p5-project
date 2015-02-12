@@ -122,6 +122,8 @@ function setup() {
   }
   // Rotate shape around the z-axis
 var rotateZ3D = function(theta) {
+  var theta = theta/10;
+  console.log('z ' + theta);
   var sin_t = sin(theta);
   var cos_t = cos(theta);
 
@@ -135,6 +137,8 @@ var rotateZ3D = function(theta) {
 };
 
 var rotateY3D = function(theta) {
+  var theta = theta/10;
+  console.log('y ' + theta);
   var sin_t = sin(theta);
   var cos_t = cos(theta);
 
@@ -148,6 +152,8 @@ var rotateY3D = function(theta) {
 };
 
 var rotateX3D = function(theta) {
+  var theta = theta/10;
+  console.log('x ' + theta);
   var sin_t = sin(theta);
   var cos_t = cos(theta);
 
@@ -236,6 +242,8 @@ devOrientHandler = function(eventData){
 
   // alpha is the compass direction the device is facing in degrees
   // dir = eventData.alpha
+
+  console.log('fb ' + tiltFB + 'lr ' + tiltLR)
 }
 
 
@@ -244,7 +252,9 @@ devOrientHandler = function(eventData){
 
 function touchControl(){
   document.getElementById("posX").innerHTML = posX;  
-  document.getElementById("posY").innerHTML = posY;   
+  document.getElementById("posXp").innerHTML = posXp;  
+  document.getElementById("posY").innerHTML = posY;  
+  document.getElementById("posYp").innerHTML = posYp;   
   document.getElementById("doTiltLR").innerHTML = Math.round(tiltLR);
   document.getElementById("doTiltFB").innerHTML = Math.round(tiltFB);
   // document.getElementById("doDirection").innerHTML = Math.round(dir);
@@ -270,8 +280,13 @@ touchMoved = mouseDragged =  function(){
   // rotateY3D(posX - posXp);
   // rotateX3D(posY - posYp);
 
-    rotateY3D(tiltLR );
-rotateX3D(tiltFB );
+  setTimeout(function(){
+    tiltLRp = tiltLR;
+    tiltFBp = tiltFB;
+  },300);
+
+    rotateY3D(tiltLR - tiltLRp );
+rotateX3D(tiltFB - tiltFBp );
 
 
   return false;
