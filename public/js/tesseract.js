@@ -4,6 +4,8 @@
 
 var posX, posY; // x and y position when you touch the screen
 var acceleration; // for device motion
+var tiltLR = 0;
+var tiltFB = 0;
 // var pubnub;
 // var uniqueid;
 /*
@@ -242,7 +244,7 @@ devOrientHandler = function(eventData){
 
 function touchControl(){
   document.getElementById("posX").innerHTML = posX;  
-  document.getElementById("posY").innerHTML = posY;  
+  document.getElementById("posY").innerHTML = posY;   
   document.getElementById("doTiltLR").innerHTML = Math.round(tiltLR);
   document.getElementById("doTiltFB").innerHTML = Math.round(tiltFB);
   document.getElementById("doDirection").innerHTML = Math.round(dir);
@@ -258,8 +260,7 @@ function gestureControl(){
 touchStarted  = mousePressed = function(){
   isPressed = true;
 
-    rotateY3D(tiltLR);
-rotateX3D(tiltFB);
+
   return false;
 }
 
@@ -269,6 +270,8 @@ touchMoved = mouseDragged =  function(){
   // rotateY3D(posX - posXp);
   // rotateX3D(posY - posYp);
 
+    rotateY3D(tiltLR);
+rotateX3D(tiltFB);
 
 
   return false;
