@@ -253,7 +253,7 @@ devOrientHandler = function(eventData){
   tiltFB = eventData.beta;
 
   // alpha is the compass direction the device is facing in degrees
-  // dir = eventData.alpha
+  dir = eventData.alpha
 
   console.log('fb ' + tiltFB + 'lr ' + tiltLR)
 }
