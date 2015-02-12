@@ -8,6 +8,7 @@ var tiltLR = 0;
 var tiltLRp = 0;
 var tiltFB = 0;
 var tiltFBp = 0;
+var dir = 0;
 // var pubnub;
 // var uniqueid;
 /*
@@ -184,12 +185,12 @@ function draw() {
   posYp1 = Math.max(pmouseY, ptouchY);
   posYp = Math.round(posYp1);
 
-  if(isPressed){
-    touchControl();
-  }
-  else{ 
+  // if(isPressed){
+  //   touchControl();
+  // }
+  // else{ 
     gestureControl();
-  }
+  // }
 
 
   if(!acceleration){acceleration=0;}
@@ -197,9 +198,10 @@ function draw() {
   //every 200 ms emit message
   var now = new Date().getTime();
   if(now - timemsg > 300){
-    ws.send({tiltLR: tiltLR, tiltFB: tiltFB, tiltLRp: tiltLRp, tiltFBp: tiltFBp });
+    ws.send({tiltLR: tiltLR, tiltFB: tiltFB, tiltLRp: tiltLRp, tiltFBp: tiltFBp, dir: dir });
     timemsg = new Date().getTime();
   }
+
 
 
 
@@ -224,10 +226,12 @@ function draw() {
 setTimeout(function(){
     tiltLRp = tiltLR;
     tiltFBp = tiltFB;
-  },200);
+    dirp = dir
+  },100);
 
-    rotateY3D(tiltLR - tiltLRp );
-rotateX3D(tiltFB - tiltFBp );
+  rotateY3D(tiltLR - tiltLRp );
+  rotateX3D(tiltFB - tiltFBp );
+  rotateZ3D(dir - dirp );
 
 };
 
@@ -263,12 +267,13 @@ function touchControl(){
   document.getElementById("posY").innerHTML = posY;  
   document.getElementById("posYp").innerHTML = posYp;   
   
-  // document.getElementById("doDirection").innerHTML = Math.round(dir);
+  
 }
 
 function gestureControl(){
   document.getElementById("doTiltLR").innerHTML = Math.round(tiltLR);
   document.getElementById("doTiltFB").innerHTML = Math.round(tiltFB);
+  document.getElementById("doDirection").innerHTML = Math.round(dir);
 }
 
 
