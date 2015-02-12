@@ -246,13 +246,13 @@ deviceMotionHandler = function(accel){
 
 devOrientHandler = function(eventData){
    // gamma is the left-to-right tilt in degrees, where right is positive
-  tiltLR = eventData.gamma;
+  tiltLR = eventData.gamma * 10;
 
   // beta is the front-to-back tilt in degrees, where front is positive
-  tiltFB = eventData.beta;
+  tiltFB = eventData.beta * 10;
 
   // alpha is the compass direction the device is facing in degrees
-  dir = eventData.alpha
+  dir = eventData.alpha * 10;
 
   console.log('fb ' + tiltFB + 'lr ' + tiltLR)
 }
