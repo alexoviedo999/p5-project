@@ -235,7 +235,7 @@ devOrientHandler = function(eventData){
   tiltFB = eventData.beta;
 
   // alpha is the compass direction the device is facing in degrees
-  dir = eventData.alpha
+  // dir = eventData.alpha
 }
 
 
@@ -247,7 +247,7 @@ function touchControl(){
   document.getElementById("posY").innerHTML = posY;   
   document.getElementById("doTiltLR").innerHTML = Math.round(tiltLR);
   document.getElementById("doTiltFB").innerHTML = Math.round(tiltFB);
-  document.getElementById("doDirection").innerHTML = Math.round(dir);
+  // document.getElementById("doDirection").innerHTML = Math.round(dir);
 }
 
 function gestureControl(){
@@ -270,8 +270,8 @@ touchMoved = mouseDragged =  function(){
   // rotateY3D(posX - posXp);
   // rotateX3D(posY - posYp);
 
-    rotateY3D(tiltLR);
-rotateX3D(tiltFB);
+    rotateY3D(tiltLR );
+rotateX3D(tiltFB );
 
 
   return false;
