@@ -37,7 +37,7 @@ require('./server/nunchuck-server.js')(io);
 // Detect if mobile
 app.use(function(req, res, next){
   if (isCallerMobile(req)){
-    res.sendfile('views/controller.html')
+    res.sendFile('views/controller.html')
   } else {
     next();
 }});
