@@ -10,7 +10,7 @@
     "express3-handlebars": "^0.5.2",
     "serialport": "1.4",
     "ws": "0.4.x",
-    "socket.io": "1.0"
+    "socket.io": "*"
   },
   "engines": {
     "node": "0.10.x"

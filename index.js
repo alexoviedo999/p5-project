@@ -95,18 +95,18 @@ module.exports = app;
 // io.on('connection', function(){ /* … */ });
 
 
-// var wss = new WebSocketServer({server: server})
+// var wss = new io({server: server})
 // console.log("websocket server created")
 
-// wss.on("connection", function(ws) {
-//   var id = setInterval(function() {
-//     ws.send(JSON.stringify(new Date()), function() {  })
-//   }, 1000)
+io.on("connection", function(ws) {
+  var id = setInterval(function() {
+    ws.send(JSON.stringify(new Date()), function() {  })
+  }, 1000)
 
-//   console.log("websocket connection open")
+  console.log("websocket connection open")
 
-//   ws.on("close", function() {
-//     console.log("websocket connection close")
-//     clearInterval(id)
-//   })
-// })
+  io.on("close", function() {
+    console.log("websocket connection close")
+    clearInterval(id)
+  })
+})
