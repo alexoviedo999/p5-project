@@ -27,8 +27,8 @@ server.listen(port);
 console.log("http server listening on %d", port);
 
 app.use(express.static(__dirname + '/public'));
-app.use(express.static(__dirname + '/server/nunchuck-server.js'));
-    console.log( __dirname + '/server/nunchuck-server.js' );
+// app.use(express.static(__dirname + '/server/nunchuck-server.js'));
+//     console.log( __dirname + '/server/nunchuck-server.js' );
 
 
 // Sockets
