@@ -32,7 +32,7 @@ app.use(express.static(__dirname + '/server/nunchuck-server.js'));
 
 
 // Sockets
-require('server/nunchuck-server.js')(io);
+require('./server/nunchuck-server.js')(io);
 
 // Detect if mobile
 app.use(function(req, res, next){
