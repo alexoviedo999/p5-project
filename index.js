@@ -29,7 +29,7 @@ console.log("http server listening on %d", port);
 app.use(express.static(__dirname + '/public'));
 
 // Sockets
-require('nunchuck-server.js')(io);
+require('nunchuck-server')(io);
 
 // Detect if mobile
 app.use(function(req, res, next){
@@ -87,7 +87,7 @@ io.on('connection', function (socket) {
 // });
 
 // Sockets
-require('nunchuck-server')(io);
+
 
 module.exports = app;
 
