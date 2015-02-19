@@ -1,7 +1,7 @@
 // var WebSocketServer = require("ws").Server
 
 var express = require("express");
-// var router = express.Router();
+var router = express.Router();
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
@@ -35,9 +35,9 @@ app.use(express.static(__dirname + '/public'));
 require('./server/nunchuck-server.js')(io);
 
 // Detect if mobile
-app.use(function(req, res, next){
+router.use(function(req, res, next){
   if (isCallerMobile(req)){
-    res.sendFile('./views/controller.html')
+    res.sendFile('views/controller.html')
   } else {
     next();
 }});
