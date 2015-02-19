@@ -87,7 +87,7 @@ io.on('connection', function (socket) {
 // });
 
 // Sockets
-require('nunchuck-server.js')(io);
+require('nunchuck-server')(io);
 
 module.exports = app;
 
