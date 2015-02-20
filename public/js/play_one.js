@@ -150,7 +150,7 @@ var sketch = function(s){
     //every 200 ms emit message
     var now = new Date().getTime();
     if(isPressed && (now - timemsg > 300)){
-      io.send({x: posX, y: posY});
+      socket.send({x: posX, y: posY});
       timemsg = new Date().getTime();
     }
 

@@ -16,7 +16,7 @@
     if (!players[data.username]){
       players[data.username] = numPlayers;
       numPlayers+=1;
-      createPlane(players[data.username]);
+      // createPlane(players[data.username]);
       $('.users').append("<br><strong>" + data.username + "</strong>")
     }
     n.receive(function(data){
