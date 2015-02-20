@@ -18,13 +18,17 @@
       numPlayers+=1;
       // createPlane(players[data.username]);
       $('.users').append("<br><strong>" + data.username + "</strong>")
+
+      var el = $('<h3></h3>');
+      users[data.username] = el;
+      $('body').append(el);
     }
     n.receive(function(data){
       if (players[data.username]){
         data.id = players[data.username];
 
-        if (users[data.username]){
-          document.body =  data.orientation.beta ;
+         if (users[data.username]){
+          document.body.style.webkitTransform = 'rotate(' + data.orientation.beta + 'deg)';
           users[data.username].text(JSON.stringify(data,null,2))
         }
 
@@ -32,9 +36,9 @@
       }
     })
   });
-  $(document).ready(function(){
-    $('.code').text(n.roomId)
-  });
+
+
+
 </script>
 
 <style>
@@ -91,6 +95,7 @@
    </table>
 
    <div class="code"></div>
-
+    <h2></h2>
+    <h3></h3>
     <div class="users">USERS ONLINE:</div>
 </div>
