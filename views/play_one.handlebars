@@ -1,4 +1,59 @@
 <script language="javascript" src="../js/play_one.js"></script>
+<script src="js/nunchuck.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>player_data = {}; </script>
+
+
+<script>
+  var socket = io();
+  var n = nunchuck.init('host', socket);
+  var players = {};
+  var numPlayers = 1234;
+  n.onJoin(function(data){
+    if (!players[data.username]){
+      players[data.username] = numPlayers;
+      numPlayers+=1;
+      createPlane(players[data.username]);
+      $('.users').append("<br><strong>" + data.username + "</strong>")
+    }
+    n.receive(function(data){
+      if (players[data.username]){
+        data.id = players[data.username];
+
+        if (users[data.username]){
+          document.body =  data.orientation.beta ;
+          users[data.username].text(JSON.stringify(data,null,2))
+        }
+
+        // movePlane(data)
+      }
+    })
+  });
+  $(document).ready(function(){
+    $('.code').text(n.roomId)
+  });
+</script>
+
+<style>
+  .code {
+    position: fixed;
+    font-size: 15em;
+    opacity: .5;
+    right: .2em;
+    bottom: 0;
+  }
+  .users {
+    position: fixed;
+    font-family: 'Montserrat', 'Helvetic Neue', 'Helvetica', sans-serif;
+    font-size: 1.2em;
+    top: 8px;
+    left: 8px;
+  }
+</style>
+
 
 <h1>play one</h1>
 {{!-- <div id="content"></div> --}}
@@ -34,4 +89,8 @@
       <td id="doDirection"></td>
     </tr>
    </table>
+
+   <div class="code"></div>
+
+    <div class="users">USERS ONLINE:</div>
 </div>
