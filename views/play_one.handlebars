@@ -13,6 +13,7 @@
   var players = {};
   var numPlayers = 1234;
   n.onJoin(function(data){
+    console.log(data)
     if (!players[data.username]){
       players[data.username] = numPlayers;
       numPlayers+=1;
@@ -37,7 +38,7 @@
     })
   });
 
-
+  $('h2').append(n.roomId)
 
 </script>
 
@@ -58,6 +59,12 @@
   }
 </style>
 
+<body>
+  <h1> RECEIVER </h1>
+
+  <h2> Access Code: </h2>
+
+  <h3> DATA </h3>
 
 <h1>play one</h1>
 {{!-- <div id="content"></div> --}}
@@ -99,3 +106,4 @@
     <h3></h3>
     <div class="users">USERS ONLINE:</div>
 </div>
+</body>
