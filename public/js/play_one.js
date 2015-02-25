@@ -22,12 +22,12 @@ var posX, posY; // x and y position when you touch the screen
 var acceleration; // for device motion
 var data;
 var userData;
-
+var dir;
+var tiltLR;
+var tiltFB;
 var isPressed = false; // is the screen pressed or not
 var width = 640; // width of the canvas for visuals
 var height = 640; // height of the canvas for visuals
-
-
 var timemsg = new Date().getTime(); // for timing
 
 // var synth;
@@ -49,47 +49,37 @@ var timemsg = new Date().getTime(); // for timing
 
 // nunchuck stuff
 
-
 var socket = io();
+var n = nunchuck.init('host', socket);
+var users = {};
 
-    var n = nunchuck.init('host', socket);
+n.onJoin(function(data){
+  console.log(data)
+  users[data.username] = data;
+  var usersCount = Object.keys(users).length;
+  $('.users').html("Users Online " + usersCount);
+});
 
-    var users = {};
+$(document).ready(function(){
 
-    n.onJoin(function(data){
-      console.log(data)
-    });
+  n.receive(function(data){
+    userData = data;
+    if (!users[data.username]){
+      var el = $('<h3></h3>');
+      users[data.username] = el;
+      $('body').append(el);
+    }
+    if (users[data.username]){
+      data = data;
+      // document.body.style.webkitTransform = 'rotate(' + data.orientation.beta + 'deg)';
+      users[data.username].text(JSON.stringify(data,null,2))
+      // $('.beta').append(data.orientation.beta)
+      document.getElementById("beta").innerHTML = data.orientation.beta; 
+    }
+  });
 
-    $(document).ready(function(){
-
-      n.receive(function(data){
-        userData = data;
-        if (!users[data.username]){
-          var el = $('<h3></h3>');
-          users[data.username] = el;
-          $('body').append(el);
-        }
-
-        if (users[data.username]){
-          data = data;
-          // document.body.style.webkitTransform = 'rotate(' + data.orientation.beta + 'deg)';
-          users[data.username].text(JSON.stringify(data,null,2))
-          // $('.beta').append(data.orientation.beta)
-          document.getElementById("beta").innerHTML = data.orientation.beta; 
-        }
-
-      });
-
-      $('.room-id').append(n.roomId);
-    })
-
-
-
-
-
-
-
-
+  $('.room-id').append(n.roomId);
+})
 
 
 
@@ -219,13 +209,11 @@ var sketch = function(s){
     dir = eventData.alpha
   }
 
-
 }
 
 function nunchuckOrient(s) {
   s.background(184, 174, 175, 90);
-    
- s.push();
+  s.push();
   s.translate(width/2, height/2)
   s.rotate(userData.orientation.beta);  
   s.rectMode(s.CENTER);
@@ -258,9 +246,9 @@ function gesture(s){
   // $("#content").text("X: " +posX + ", Y: " + posY +", a:"+acceleration + ", pressed:"+ isPressed + ", direction: " + dir + ", tilt LR " + tiltLR + ", tilt FB " + tiltFB);
   document.getElementById("posX").innerHTML = Math.round(posX);  
   document.getElementById("posY").innerHTML = Math.round(posY);  
-  document.getElementById("doTiltLR").innerHTML = Math.round(tiltLR);
-  document.getElementById("doTiltFB").innerHTML = Math.round(tiltFB);
-  document.getElementById("doDirection").innerHTML = Math.round(dir);
+  // document.getElementById("doTiltLR").innerHTML = Math.round(tiltLR);
+  // document.getElementById("doTiltFB").innerHTML = Math.round(tiltFB);
+  // document.getElementById("doDirection").innerHTML = Math.round(dir);
 }
 
 var checkFeatureSupport = function(){
