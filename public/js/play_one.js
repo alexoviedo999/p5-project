@@ -70,10 +70,6 @@ $(document).ready(function(){
       $('body').append(el);
     }
     if (users[data.username]){
-      // data = data;
-      // document.body.style.webkitTransform = 'rotate(' + data.orientation.beta + 'deg)';
-      // users[data.username].text(JSON.stringify(data,null,2))
-      // $('.beta').append("Beta " + data.orientation.beta)
       document.getElementById("beta").innerHTML = "Beta " + data.orientation.beta; 
     }
   });
@@ -215,7 +211,8 @@ function nunchuckOrient(s) {
   s.background(184, 174, 175, 90);
   s.push();
   s.translate(width/2, height/2)
-  s.rotate(userData.orientation.beta);  
+  var angle = s.cos(userData.orientation.beta);
+  s.rotate(angle);  
   s.rectMode(s.CENTER);
   s.rect(0, 0, 100, 100); 
   // s.pop();
