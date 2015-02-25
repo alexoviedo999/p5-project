@@ -4,48 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title> Base! </title>
+
   <script src="../lib/nunchuck.js"></script>
+
+  <script src="../js/nun-test.js"></script>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
-      transition-duration: .2s
+      transition-duration: .2s;
     }
   </style>
 
   <script>
-    var socket = io();
-
-    var n = nunchuck.init('host', socket);
-
-    var users = {};
-
-    n.onJoin(function(data){
-      console.log(data)
-    });
-
-    $(document).ready(function(){
-
-      n.receive(function(data){
-
-        if (!users[data.username]){
-          var el = $('<h3></h3>');
-          users[data.username] = el;
-          $('body').append(el);
-        }
-
-        if (users[data.username]){
-          document.body.style.webkitTransform = 'rotate(' + data.orientation.beta + 'deg)';
-          users[data.username].text(JSON.stringify(data,null,2))
-        }
-
-      });
-
-      $('h2').append(n.roomId)
-
-    })
+    
 
   </script>
 </head>
@@ -58,4 +32,3 @@
 <h3> DATA </h3>
 
 </body>
-/*</html>*/

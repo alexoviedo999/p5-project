@@ -17,14 +17,12 @@
 /*
  Global Variables
 */
-
+var test = {};
 var posX, posY; // x and y position when you touch the screen
 var acceleration; // for device motion
-// var pubnub;
-// var uniqueid;
-/*
+var data;
+var userData;
 
-*/
 var isPressed = false; // is the screen pressed or not
 var width = 640; // width of the canvas for visuals
 var height = 640; // height of the canvas for visuals
@@ -44,6 +42,55 @@ var timemsg = new Date().getTime(); // for timing
   synth.stop();
 
 */
+
+
+
+
+
+// nunchuck stuff
+
+
+var socket = io();
+
+    var n = nunchuck.init('host', socket);
+
+    var users = {};
+
+    n.onJoin(function(data){
+      console.log(data)
+    });
+
+    $(document).ready(function(){
+
+      n.receive(function(data){
+        userData = data;
+        if (!users[data.username]){
+          var el = $('<h3></h3>');
+          users[data.username] = el;
+          $('body').append(el);
+        }
+
+        if (users[data.username]){
+          data = data;
+          // document.body.style.webkitTransform = 'rotate(' + data.orientation.beta + 'deg)';
+          users[data.username].text(JSON.stringify(data,null,2))
+          // $('.beta').append(data.orientation.beta)
+          document.getElementById("beta").innerHTML = data.orientation.beta; 
+        }
+
+      });
+
+      $('.room-id').append(n.roomId);
+    })
+
+
+
+
+
+
+
+
+
 
 
 /*
@@ -101,25 +148,6 @@ var sketch = function(s){
       document.getElementById("doOrientationEvent").innerHTML = "Not supported."
     }
 
-
-    // // create a unique_id
-    // uniqueid = PUBNUB.uuid();
-   
-    // // initialize pubnub
-    // pubnub = PUBNUB.init(
-    // {
-    //   publish_key   : 'pub-c-1a91967b-b933-4bba-bf6f-324f9b35740d',
-    //   subscribe_key : 'sub-c-9623189a-a062-11e4-8dd9-02ee2ddab7fe',
-    //   uuid: uniqueid,
-    //   ssl: true
-    // });
-   
-    // // subscribe to drawing channel
-    // pubnub.subscribe(
-    // {
-    //   channel : "drawing",
-    //   message: handleMessage
-    // });
   }
 
 
@@ -140,9 +168,8 @@ var sketch = function(s){
     if(isPressed){
       gesture(s);
     }
-    else
-    {
-
+    else if (userData){
+      nunchuckOrient(s);
     }
 
     if(!acceleration){acceleration=0;}
@@ -153,19 +180,6 @@ var sketch = function(s){
       socket.send({x: posX, y: posY});
       timemsg = new Date().getTime();
     }
-
-      // publish drawing data
-  // pubnub.publish(
-  // {
-  //   channel: 'drawing',
-  //   message: {
-  //     x: posX,
-  //     y: posY,
-  //     a: acceleration.toFixed(2),
-  //     p: isPressed,
-  //     uniqueid: uniqueid
-  //   }
-  // });
 
   }
 
@@ -205,19 +219,18 @@ var sketch = function(s){
     dir = eventData.alpha
   }
 
-  // // when we receive a message from pubnub
-  // function handleMessage(message) 
-  // {
-  //   // draw a circle on the screen if the user is someone else
-  //   if(message.uniqueid != uniqueid)
-  //   {
-      
-  //     // ellipse(message.x, message.y, 20, 20);
 
-  //     $("#content2").text("X: " +message.x + ", Y: " + message.y +", a:"+message.a + ", pressed:"+ message.p);
-  //   }
-  // }
+}
 
+function nunchuckOrient(s) {
+  s.background(184, 174, 175, 90);
+    
+ s.push();
+  s.translate(width/2, height/2)
+  s.rotate(userData.orientation.beta);  
+  s.rectMode(s.CENTER);
+  s.rect(0, 0, 100, 100); 
+  // s.pop();
 }
 
 function gesture(s){
@@ -275,4 +288,15 @@ window.onload = function(){
   containerNode = document.getElementById( 'canvas' );
   myp5 = new p5(sketch, containerNode);
 }
+
+
+
+
+
+
+
+
+
+
+
 

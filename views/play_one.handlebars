@@ -1,48 +1,15 @@
 <head>
 <script language="javascript" src="../js/play_one.js"></script>
+{{!-- <script src="../js/nun-test.js"></script> --}}
 <script src="../lib/nunchuck.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 {{!-- <link href='http://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'> --}}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>player_data = {}; </script>
-
 
 <script>
+  player_data = {}; 
   var socket = io();
-  var n = nunchuck.init('host', socket);
-  var players = {};
-  var numPlayers = 1234;
-  n.onJoin(function(data){
-    console.log(data)
-    if (!players[data.username]){
-      players[data.username] = numPlayers;
-      numPlayers+=1;
-      // createPlane(players[data.username]);
-      $('.users').append("<br><strong>" + data.username + "</strong>")
-
-      var el = $('<h3></h3>');
-      players[data.username] = el;
-      $('body').append(el);
-    }
-    n.receive(function(data){
-      if (players[data.username]){
-        data.id = players[data.username];
-
-         if (players[data.username]){
-          document.body.style.webkitTransform = 'rotate(' + data.orientation.beta + 'deg)';
-          players[data.username].text(JSON.stringify(data,null,2))
-        }
-
-        // movePlane(data)
-      }
-    })
-
-
-  });
-
-  $('h2').append(n.roomId)
-
 </script>
 
 <style>
@@ -66,7 +33,7 @@
 <body>
   <h1> RECEIVER </h1>
 
-  <h2> Room Id: </h2>
+  <h2 class="room-id"> Room Id: </h2>
 
   <h3> DATA </h3>
 
@@ -76,7 +43,7 @@
 <h1>play one</h1>
 {{!-- <div id="content"></div> --}}
 <div class="main">
-  <h2>Device Orientation</h2>
+  <h2 id="beta">Device Orientation</h2>
   <table>
   	 <tr>
       <td>Touch X</td>
