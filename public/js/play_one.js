@@ -213,7 +213,7 @@ function nunchuckOrient(s) {
   s.push();
   s.translate(width/2, height/2)
   // var angleCos = s.cos(userData.orientation.beta);
-  angle = Math.max(userData.orientation.beta);
+  angle = Math.max(userData.orientation.beta/100);
   s.rotate(angle);  
   s.rectMode(s.CENTER);
   s.rect(0, 0, 100, 100); 
