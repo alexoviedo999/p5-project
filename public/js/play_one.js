@@ -132,21 +132,21 @@ var sketch = function(s){
        when new data is received
     */
 
-    if (window.DeviceMotionEvent) {
-      document.getElementById("doAccelEvent").innerHTML = "Yes";
-      window.addEventListener('devicemotion', deviceMotionHandler, false);
-    }
-    else{
-      document.getElementById("doAccelEvent").innerHTML = "Not supported."
-    }
+    // if (window.DeviceMotionEvent) {
+    //   document.getElementById("doAccelEvent").innerHTML = "Yes";
+    //   window.addEventListener('devicemotion', deviceMotionHandler, false);
+    // }
+    // else{
+    //   document.getElementById("doAccelEvent").innerHTML = "Not supported."
+    // }
 
-    if (window.DeviceOrientationEvent) {
-      document.getElementById("doOrientationEvent").innerHTML = "Yes";
-      window.addEventListener('deviceorientation', devOrientHandler, false);
-    }
-    else{
-      document.getElementById("doOrientationEvent").innerHTML = "Not supported."
-    }
+    // if (window.DeviceOrientationEvent) {
+    //   document.getElementById("doOrientationEvent").innerHTML = "Yes";
+    //   window.addEventListener('deviceorientation', devOrientHandler, false);
+    // }
+    // else{
+    //   document.getElementById("doOrientationEvent").innerHTML = "Not supported."
+    // }
 
   }
 
