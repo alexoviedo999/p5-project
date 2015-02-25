@@ -29,6 +29,7 @@ var isPressed = false; // is the screen pressed or not
 var width = 640; // width of the canvas for visuals
 var height = 640; // height of the canvas for visuals
 var timemsg = new Date().getTime(); // for timing
+// var angle = 0;
 
 // var synth;
 /*
@@ -70,7 +71,7 @@ $(document).ready(function(){
       $('body').append(el);
     }
     if (users[data.username]){
-      document.getElementById("beta").innerHTML = "Beta " + data.orientation.beta; 
+      // document.getElementById("beta").innerHTML = "Beta " + angle; 
     }
   });
 
@@ -211,10 +212,12 @@ function nunchuckOrient(s) {
   s.background(184, 174, 175, 90);
   s.push();
   s.translate(width/2, height/2)
-  var angle = s.cos(userData.orientation.beta);
+  var angleCos = s.cos(userData.orientation.beta);
+  angle = userData.orientation.beta + angleCos;
   s.rotate(angle);  
   s.rectMode(s.CENTER);
   s.rect(0, 0, 100, 100); 
+  document.getElementById("beta").innerHTML = "Beta " + angle; 
   // s.pop();
 }
 
