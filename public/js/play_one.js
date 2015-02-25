@@ -70,11 +70,11 @@ $(document).ready(function(){
       $('body').append(el);
     }
     if (users[data.username]){
-      data = data;
+      // data = data;
       // document.body.style.webkitTransform = 'rotate(' + data.orientation.beta + 'deg)';
-      users[data.username].text(JSON.stringify(data,null,2))
-      // $('.beta').append(data.orientation.beta)
-      document.getElementById("beta").innerHTML = data.orientation.beta; 
+      // users[data.username].text(JSON.stringify(data,null,2))
+      // $('.beta').append("Beta " + data.orientation.beta)
+      document.getElementById("beta").innerHTML = "Beta " + data.orientation.beta; 
     }
   });
 
