@@ -29,6 +29,7 @@ var isPressed = false; // is the screen pressed or not
 var width = 640; // width of the canvas for visuals
 var height = 640; // height of the canvas for visuals
 var timemsg = new Date().getTime(); // for timing
+var usersCount;
 // var angle = 0;
 
 // var synth;
@@ -57,7 +58,8 @@ var users = {};
 n.onJoin(function(data){
   console.log(data)
   users[data.username] = data;
-  var usersCount = Object.keys(users).length;
+  usersCount = Object.keys(users).length;
+
   $('.users').html("Users Online " + usersCount);
 });
 
@@ -211,8 +213,7 @@ var sketch = function(s){
 function nunchuckOrient(s) {
   s.background(184, 174, 175, 90);
   s.push();
-  s.translate(width/2, height/2)
-  // var angleCos = s.cos(userData.orientation.beta);
+  s.translate(width/4, height/4)
   angle = Math.max(userData.orientation.beta/100);
   s.rotate(angle);  
   s.rectMode(s.CENTER);
@@ -225,9 +226,7 @@ function gesture(s){
 
  var posX10 = posX/100;
  var dir10 = dir/100;
- // console.log(posX10); 
  s.background(184, 174, 175, 90);
-    
  s.push();
 
   if(dir10){
@@ -235,7 +234,7 @@ function gesture(s){
     s.rotate(dir10);  
   }
   else{
-    s.translate(width/2, height/2)
+    s.translate(width/4, height/4)
     s.rotate(posX10);  
   }
   s.rectMode(s.CENTER);
