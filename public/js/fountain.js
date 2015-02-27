@@ -31,7 +31,7 @@ $(document).ready(function(){
     }
     if (users[data.username]){
       angle = userData.orientation.beta;
-      angleCos = cos(angleCos);
+      angleCos = cos(angle);
     document.getElementById("beta").innerHTML = "Beta " + angle;
     document.getElementById("beta-cos").innerHTML = "Beta Cos " + angleCos; 
       // document.getElementById("beta").innerHTML = "Beta " + angle; 
