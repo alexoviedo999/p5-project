@@ -18,7 +18,7 @@ $(document).ready(function(){
     }
     if (users[data.username]){
       // document.body.style.webkitTransform = 'rotate(' + data.orientation.beta + 'deg)';
-      users[data.username].text(JSON.stringify(data,null,2))
+      users[data.username].text(JSON.stringify(data,null,2));
     }
   });
   $('h2').append(n.roomId);

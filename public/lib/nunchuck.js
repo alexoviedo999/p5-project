@@ -2,6 +2,11 @@
     'use strict';
 
     var _instance;
+    var touchPad = {};
+    // var posX = 0;
+    // var posXp = 0;
+    // var posY = 0;
+    // var posYp = 0;
 
     var nunchuck = {
         get: function() {
@@ -28,6 +33,7 @@
         this.socket = options.socket;
         this.prevData = null;
         this.buttons = [];
+        this.touchPad = touchPad;
 
         if (this.type == 'host') {
             this.socket.emit('nunchuck-create', this.id);
@@ -95,6 +101,7 @@
                         username: _instance.username,
                         roomId: _instance.roomId,
                         buttons: _instance.buttons,
+                        touchPad: touchPad,
                         orientation: data,
                         timestamp: Date.now()
                     });
@@ -115,6 +122,7 @@
                     username: _instance.username,
                     roomId: _instance.roomId,
                     buttons: _instance.buttons,
+                    touchPad: touchPad,
                     orientation: _instance.prevData,
                     timestamp: Date.now()
                 });
@@ -132,12 +140,73 @@
                     username: _instance.username,
                     roomId: _instance.roomId,
                     buttons: _instance.buttons,
+                    touchPad: touchPad,
                     orientation: _instance.prevData,
                     timestamp: Date.now()
                 });
             });
         }
 
+        var canvasTouch = document.getElementById('defaultCanvas')
+
+        canvasTouch.addEventListener('touchstart', function(e) {
+            console.log('touchCanvas: ' + e);
+
+             touchPad = {
+                posX: e.view.posX,
+                posXp: e.view.posXp,
+                posY: e.view.posY,
+                posYp: e.view.posYp
+            }
+
+            _instance.socket.emit('nunchuck-data', {
+                username: _instance.username,
+                roomId: _instance.roomId,
+                buttons: _instance.buttons,
+                touchPad: touchPad,
+                orientation: _instance.prevData,
+                timestamp: Date.now()
+            });
+        });
+
+        canvasTouch.addEventListener('touchmove', function(e) {
+                e.preventDefault()
+
+                 touchPad = {
+                    posX: e.view.posX,
+                    posXp: e.view.posXp,
+                    posY: e.view.posY,
+                    posYp: e.view.posYp
+                }
+
+                _instance.socket.emit('nunchuck-data', {
+                username: _instance.username,
+                roomId: _instance.roomId,
+                buttons: _instance.buttons,
+                touchPad: touchPad,
+                orientation: _instance.prevData,
+                timestamp: Date.now()
+            });
+            });
+
+        canvasTouch.addEventListener('touchend', function(e) {
+
+             touchPad = {
+                posX: e.view.posX,
+                posXp: e.view.posXp,
+                posY: e.view.posY,
+                posYp: e.view.posYp
+            }
+
+            _instance.socket.emit('nunchuck-data', {
+                username: _instance.username,
+                roomId: _instance.roomId,
+                buttons: _instance.buttons,
+                touchPad: touchPad,
+                orientation: _instance.prevData,
+                timestamp: Date.now()
+            });
+        });
 
     };
 
