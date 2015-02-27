@@ -93,17 +93,11 @@ io.on('connection', function (socket) {
 // res.render('500');
 // });
 
-// Sockets
 
+// Sockets
 
 module.exports = app;
 
-
-// io.on('connection', function(){ /* … */ });
-
-
-// var wss = new io({server: server})
-// console.log("websocket server created")
 
 io.on("connection", function(ws) {
   var id = setInterval(function() {

@@ -73,6 +73,7 @@ $(document).ready(function(){
       $('body').append(el);
     }
     if (users[data.username]){
+      // users[data.username].text(JSON.stringify(data,null,2))
       // document.getElementById("beta").innerHTML = "Beta " + angle; 
     }
   });

@@ -45,6 +45,7 @@ $(document).ready(function(){
       // document.getElementById("alpha").innerHTML = "Alpha " + alphaAngle; 
       // document.getElementById("alpha-cos").innerHTML = "Alpha Cos " + alphaAngleCos;
     }
+    // users[data.username].text(JSON.stringify(data,null,2))
   });
   $('.room-id').append(n.roomId);
 })

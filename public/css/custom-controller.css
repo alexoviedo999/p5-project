@@ -1,0 +1,20 @@
+button.gamepad {
+  width: 70% !important;
+}
+
+button.connect {
+  width: 70% !important;
+}
+
+#join {
+  width: 70%;
+}
+
+#controller {
+  width: 70%;
+}
+
+canvas {
+  position: absolute;
+  top: 0px;
+}
