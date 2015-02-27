@@ -2,7 +2,7 @@
 
   var sketch = function(s){
     s.setup = function () {
-        s.createCanvas(150, 300);
+        s.createCanvas(250, 300);
         s.colorMode("hsb");
         s.background(184, 174, 175, 90);
       }

@@ -33,7 +33,10 @@ $(document).ready(function(){
     if (users[data.username]){
       for(var i = 0; i < allParticles.length; i++){
         if(allParticles[i].user.username == data.username){
-          betaAngle = userData.orientation.beta;
+          // betaAngle = userData.orientation.beta;
+
+          betaAngle = Math.abs(data.touchPad.posX);
+
           alphaAngle = userData.orientation.alpha;
           betaAngleCos = cos(betaAngle);
           alphaAngleCos = cos(alphaAngle);

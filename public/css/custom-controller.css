@@ -1,17 +1,17 @@
 button.gamepad {
-  width: 70% !important;
+  width: 60% !important;
 }
 
 button.connect {
-  width: 70% !important;
+  width: 60% !important;
 }
 
 #join {
-  width: 70%;
+  width: 60%;
 }
 
 #controller {
-  width: 70%;
+  width: 60%;
 }
 
 canvas {
