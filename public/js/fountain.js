@@ -3,7 +3,7 @@ var data;
 var userData;
 var usersCount;
 var allParticles = [];
-var angle = 0;
+var betaAngle = 0;
 
 
 // nunchuck stuff
@@ -13,10 +13,11 @@ var n = nunchuck.init('host', socket);
 var users = {};
 
 n.onJoin(function(data){
+  var userName = data.username;
   console.log(data)
   users[data.username] = data;
   usersCount = Object.keys(users).length;
-  addUser(data);
+  addUser(userName);
   $('.users').html("Users Online " + usersCount);
 });
 
@@ -30,14 +31,21 @@ $(document).ready(function(){
       $('body').append(el);
     }
     if (users[data.username]){
-      angle = userData.orientation.beta;
-      angleCos = cos(angle);
-    document.getElementById("beta").innerHTML = "Beta " + angle;
-    document.getElementById("beta-cos").innerHTML = "Beta Cos " + angleCos; 
-      // document.getElementById("beta").innerHTML = "Beta " + angle; 
+      for(var i = 0; i < allParticles.length; i++){
+        if(allParticles[i].user.username == data.username){
+          betaAngle = userData.orientation.beta;
+          alphaAngle = userData.orientation.alpha;
+          betaAngleCos = cos(betaAngle);
+          alphaAngleCos = cos(alphaAngle);
+          allParticles[i].origin.x = betaAngle;
+        }
+      }
+      // document.getElementById("beta").innerHTML = "Beta " + betaAngle;
+      // document.getElementById("beta-cos").innerHTML = "Beta Cos " + betaAngleCos;
+      // document.getElementById("alpha").innerHTML = "Alpha " + alphaAngle; 
+      // document.getElementById("alpha-cos").innerHTML = "Alpha Cos " + alphaAngleCos;
     }
   });
-
   $('.room-id').append(n.roomId);
 })
 
@@ -50,26 +58,25 @@ function setup() {
 
 function draw() {
   background(0);
-  // nunchuckOrient();
   if (usersCount > 0){
     for(var i=0; i < allParticles.length; i++){
-      allParticles[i].origin.x = angle;
+      // allParticles[i].origin.x = width/((i+1) * 2) + betaAngle;
       allParticles[i].addParticle();
       allParticles[i].run();
     }
   }
 }
 
-function addUser(data){
-
+function addUser(user){
   ps = new ParticleSystem(new p5.Vector(width/(usersCount * 2), 50));
+  ps.user =  users[user]
   allParticles.push(ps)
 }
 
 function nunchuckOrient() {
   if(userData){
-    angle = userData.orientation.beta
-    document.getElementById("beta").innerHTML = "Beta " + angle; 
+    betaAngle = userData.orientation.beta
+    document.getElementById("beta").innerHTML = "Beta " + betaAngle; 
     // s.pop();
   }
 }
