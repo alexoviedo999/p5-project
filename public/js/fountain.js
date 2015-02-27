@@ -30,8 +30,10 @@ $(document).ready(function(){
       $('body').append(el);
     }
     if (users[data.username]){
-      angle = userData.orientation.beta
-    document.getElementById("beta").innerHTML = "Beta " + angle; 
+      angle = userData.orientation.beta;
+      angleCos = cos(angleCos);
+    document.getElementById("beta").innerHTML = "Beta " + angle;
+    document.getElementById("beta-cos").innerHTML = "Beta Cos " + angleCos; 
       // document.getElementById("beta").innerHTML = "Beta " + angle; 
     }
   });
