@@ -67,6 +67,10 @@ app.get('/play/tesseract', function(req, res) {
   res.render('tesseract');
 });
 
+app.get('/play/fountain', function(req, res) {
+  res.render('fountain');
+});
+
 
 
 io.on('connection', function (socket) {

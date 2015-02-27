@@ -1,0 +1,76 @@
+<head>
+<script language="javascript" src="../js/fountain.js"></script>
+{{!-- <script src="../js/nun-test.js"></script> --}}
+<script src="../lib/nunchuck.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+{{!-- <link href='http://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'> --}}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  player_data = {}; 
+  var socket = io();
+</script>
+
+<style>
+  .code {
+    position: fixed;
+    font-size: 15em;
+    opacity: .5;
+    right: .2em;
+    bottom: 0;
+  }
+  .users {
+    font-family: 'Montserrat', 'Helvetic Neue', 'Helvetica', sans-serif;
+    font-size: 1.2em;
+    top: 8px;
+    left: 8px;
+  }
+</style>
+</head>
+
+<body>
+  <h1> RECEIVER </h1>
+
+  <h2 class="room-id"> Room Id: </h2>
+
+  <h3> DATA </h3>
+
+  <div class="code"></div>
+  <div class="users">USERS ONLINE:</div>
+
+
+<div class="main">
+  <h2 id="beta">Device Orientation</h2>
+  <table>
+  	 <tr>
+      <td>Touch X</td>
+      <td id="posX"></td>
+    </tr>
+     <tr>
+      <td>Touch Y</td>
+      <td id="posY"></td>
+    </tr>
+   {{!--  <tr>
+      <td>Event Orientation Support</td>
+      <td id="doOrientationEvent"></td>
+    </tr>
+    <tr>
+      <td>Event Accelaration Support</td>
+      <td id="doAccelEvent"></td>
+    </tr>
+    <tr>
+      <td>Tilt Left/Right; y axis (-90 to 90) [gamma]: </td>
+      <td id="doTiltLR"></td>
+    </tr>
+    <tr>
+      <td>Tilt Front/Back; x axis (-180 to 180); [beta]: </td>
+      <td id="doTiltFB"></td>
+    </tr>
+    <tr>
+      <td>Direction; z axis (0 to 360); [alpha]: </td>
+      <td id="doDirection"></td>
+    </tr> --}}
+   </table>
+</div>
+</body>
