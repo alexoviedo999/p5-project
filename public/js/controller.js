@@ -24,7 +24,7 @@ function bounceOut(id) {
 }
 
 function join() {
-  audioPick = document.querySelector('input[name="audio-selector"]:checked').value;
+  var audioPick = document.querySelector('input[name="audio-selector"]:checked').value;
   n.join($('#username').val(), $('#roomId').val(), audioPick);
 }
 

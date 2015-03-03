@@ -23,10 +23,10 @@ n.onJoin(function(data){
   usersCount = Object.keys(users).length;
   addUser(userName);
   $('.users').html("Users Online " + usersCount);
-  if(data.audioPick === 'ourAudio'){
+  if(data.audioPick === 'ourAudio' && usersCount === 1){
     soundFile.play();
   }
-  else{
+  else if(usersCount === 1){
     mic = new p5.AudioIn();
     mic.start();
     amplitude.setInput(mic);  
@@ -178,7 +178,7 @@ Particle.prototype.update = function(levelRaw) {
 Particle.prototype.draw = function() {
     fill(this.color);
     ellipse(
-        this.position.x-10, this.position.y,
+        this.position.x, this.position.y,
         this.diameter, this.diameter
     );
     textSize(26);

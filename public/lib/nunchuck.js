@@ -62,6 +62,7 @@
                 username: username,
                 audioPick: audioPick
             });
+            this.username = username;
 
         }
     };
