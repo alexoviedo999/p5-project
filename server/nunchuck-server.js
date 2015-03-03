@@ -39,6 +39,8 @@ module.exports = function(io) {
                 type = 'player';
 
                 response.success = true;
+                response.audioPick = msg.audioPick;
+                response.username = msg.username;
                 response.msg = "Successfully joined room.";
 
                 io.to(msg.id).emit('nunchuck-join', response);

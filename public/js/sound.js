@@ -23,7 +23,15 @@ n.onJoin(function(data){
   usersCount = Object.keys(users).length;
   addUser(userName);
   $('.users').html("Users Online " + usersCount);
-  soundFile.play();
+  if(data.audioPick === 'ourAudio'){
+    soundFile.play();
+  }
+  else{
+    mic = new p5.AudioIn();
+    mic.start();
+    amplitude.setInput(mic);  
+  }
+  
 });
 
 $(document).ready(function(){
@@ -98,9 +106,7 @@ function setup() {
     noStroke();
 
     amplitude = new p5.Amplitude();
-    // mic = new p5.AudioIn();
-    // mic.start();
-    // amplitude.setInput(mic);    
+     
 
     // make a single particle.
     // particles.push(new Particle());

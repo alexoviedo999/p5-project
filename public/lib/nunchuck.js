@@ -24,6 +24,7 @@
         _instance = this;
         this.id = Math.floor(Math.random() * 9000) + 1000;
         this.username = "";
+        this.audioPick = "";
         this.roomId = this.id;
         this.type = options.type;
         this.socket = options.socket;
@@ -54,13 +55,14 @@
         });
     };
 
-    Nunchuck.prototype.join = function(username, id) {
+    Nunchuck.prototype.join = function(username, id, audioPick) {
         if (this.type == 'player') {
             this.socket.emit('nunchuck-join', {
                 id: id,
-                username: username
+                username: username,
+                audioPick: audioPick
             });
-            this.username = username;
+
         }
     };
 
