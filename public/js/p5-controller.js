@@ -3,17 +3,18 @@
   var sketch = function(s){
     s.setup = function () {
         s.createCanvas();
-        s.resizeCanvas(s.windowWidth*.6, s.windowHeight);
+        s.resizeCanvas(s.windowWidth, s.windowHeight);
         s.colorMode("hsb");
         s.background(184, 174, 175, 90);
       }
 
     s.draw = function () {
-      posX = Math.max(s.touchX);
+      posX = s.touchX;
       posXp = Math.max(s.ptouchX);
-      posY = Math.max(s.touchY);
+      posY = s.touchY;
       posYp = Math.max(s.ptouchY);
       console.log("posX: "+ posX)
+      console.log("posY: "+ posY)
     }
   }
 

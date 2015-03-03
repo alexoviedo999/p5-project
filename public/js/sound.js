@@ -23,10 +23,10 @@ n.onJoin(function(data){
   usersCount = Object.keys(users).length;
   addUser(userName);
   $('.users').html("Users Online " + usersCount);
-  if(data.audioPick === 'ourAudio' && usersCount === 1){
+  if(data.audioPick === 'ourAudio' && soundFile.playing === false){
     soundFile.play();
   }
-  else if(usersCount === 1){
+  else if(soundFile.playing === false){
     mic = new p5.AudioIn();
     mic.start();
     amplitude.setInput(mic);  
@@ -48,19 +48,27 @@ $(document).ready(function(){
         if(particles[i].user.username == data.username){
           // betaAngle = userData.orientation.beta;
 
-          posX = Math.abs(data.touchPad.posX)*7.5;
-          posY = Math.abs(data.touchPad.posY)*2;
-          alphaAngle = userData.orientation.alpha;
-          // betaAngleCos = cos(betaAngle);
-          // alphaAngleCos = cos(alphaAngle);
-          particles[i].position.x = posX;
-          particles[i].position.y = posY;
+          // posX = Math.abs(data.touchPad.posX)*7.5;
+          // posY = Math.abs(data.touchPad.posY)*2;
+
+
+          posX = Math.abs(data.touchPad.posX);
+          posY = Math.abs(data.touchPad.posY);
+
+
+          var touch = createVector(posX, posY);
+          // var center = createVector(width/2, height/2);
+          // touch.sub(center);
+          // touch.normalize();
+          touch.mult(5);
+          // var t = touch.mag()/10;
+          // rect(0,0,t,10);
+          console.log('poxX: '+ posX + 'touch x: ' + touch.x)
+          console.log('poxY: '+ posY + 'touch y: ' + touch.y)
+          particles[i].position.x = touch.x;
+          particles[i].position.y = touch.y;
         }
       }
-      // document.getElementById("beta").innerHTML = "Beta " + betaAngle;
-      // document.getElementById("beta-cos").innerHTML = "Beta Cos " + betaAngleCos;
-      // document.getElementById("alpha").innerHTML = "Alpha " + alphaAngle; 
-      // document.getElementById("alpha-cos").innerHTML = "Alpha Cos " + alphaAngleCos;
     }
     // users[data.username].text(JSON.stringify(data,null,2))
   });
