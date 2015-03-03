@@ -2,8 +2,8 @@
 
   var sketch = function(s){
     s.setup = function () {
-        s.createCanvas();
-        s.resizeCanvas(s.windowWidth, s.windowHeight);
+        s.createCanvas(550, 320);
+        // s.resizeCanvas();
         s.colorMode("hsb");
         s.background(184, 174, 175, 90);
       }
