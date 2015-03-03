@@ -1,11 +1,69 @@
-/*
-  The detectBeat() function decides whether we have a beat or not
-  based on amplitude level and Beat Detect Variables.
- */
+var ps;
+var data;
+var userData;
+var usersCount;
 var soundFile;
 var amplitude;
 var particles = [];
 var backgroundColor;
+
+
+// nunchuck stuff
+
+var socket = io();
+var n = nunchuck.init('host', socket);
+var users = {};
+
+n.onJoin(function(data){
+  var userName = data.username;
+  console.log(data)
+  users[data.username] = data;
+  usersCount = Object.keys(users).length;
+  addUser(userName);
+  $('.users').html("Users Online " + usersCount);
+});
+
+$(document).ready(function(){
+
+  n.receive(function(data){
+    userData = data;
+    if (!users[data.username]){
+      var el = $('<h3></h3>');
+      users[data.username] = el;
+      $('body').append(el);
+    }
+    if (users[data.username]){
+      for(var i = 0; i < particles.length; i++){
+        if(particles[i].user.username == data.username){
+          // betaAngle = userData.orientation.beta;
+
+          posX = Math.abs(data.touchPad.posX);
+          posY = Math.abs(data.touchPad.posY);
+
+          alphaAngle = userData.orientation.alpha;
+          // betaAngleCos = cos(betaAngle);
+          // alphaAngleCos = cos(alphaAngle);
+          particles[i].position.x = posX;
+          particles[i].position.y = posY;
+        }
+      }
+      // document.getElementById("beta").innerHTML = "Beta " + betaAngle;
+      // document.getElementById("beta-cos").innerHTML = "Beta Cos " + betaAngleCos;
+      // document.getElementById("alpha").innerHTML = "Alpha " + alphaAngle; 
+      // document.getElementById("alpha-cos").innerHTML = "Alpha Cos " + alphaAngleCos;
+    }
+    // users[data.username].text(JSON.stringify(data,null,2))
+  });
+  $('.room-id').append(n.roomId);
+})
+
+
+
+/*
+  The detectBeat() function decides whether we have a beat or not
+  based on amplitude level and Beat Detect Variables.
+ */
+
 
 /* 
  Beat Detect Variables
@@ -39,7 +97,7 @@ function setup() {
     soundFile.play();
 
     // make a single particle.
-    particles.push(new Particle());
+    // particles.push(new Particle());
 }
 
 function draw() {
@@ -52,6 +110,14 @@ function draw() {
         particles[i].update(level);
         particles[i].draw();
     }
+}
+
+function addUser(user){
+  // ps = new ParticleSystem(new p5.Vector(width/(usersCount * 2), 50));
+  ps = new Particle()
+
+  ps.user =  users[user]
+  particles.push(ps)
 }
 
 function detectBeat(level) {
@@ -84,9 +150,10 @@ function windowResized() {
 
 var Particle = function() {
     this.position = createVector(random(0, width), height / 2);
-    this.scale = random(1, 2);
+    this.scale = random(2, 4);
     this.speed = random(0, 10);
     this.color = color(random(0, 255), random(0, 255), random(0, 255));
+    // this.name = text('name', this.position.x, this.position.y);
 };
 
 Particle.prototype.update = function(levelRaw) {
@@ -96,7 +163,10 @@ Particle.prototype.update = function(levelRaw) {
 Particle.prototype.draw = function() {
     fill(this.color);
     ellipse(
-        this.position.x, this.position.y,
+        this.position.x-10, this.position.y,
         this.diameter, this.diameter
     );
+    textSize(26);
+    fill(255);
+    text(this.user.username, this.position.x, this.position.y);
 };

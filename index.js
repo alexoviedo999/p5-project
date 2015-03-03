@@ -71,6 +71,10 @@ app.get('/play/fountain', function(req, res) {
   res.render('fountain');
 });
 
+app.get('/play/sound', function(req, res) {
+  res.render('sound');
+});
+
 app.get('/practice', function(req, res) {
   res.render('practice');
 });

@@ -56,7 +56,7 @@ $(document).ready(function(){
 
 
 function setup() {
-  createCanvas(640, 360);
+  c = createCanvas(windowWidth, windowHeight);
   // ps = new ParticleSystem(new p5.Vector(width/(usersCount * 2), 50));
 }
 
@@ -137,4 +137,8 @@ ParticleSystem.prototype.run = function() {
         this.particles.splice(i, 1);
     }
   }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
