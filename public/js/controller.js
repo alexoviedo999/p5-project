@@ -27,10 +27,13 @@ function bounceOut(id) {
 
 function join() {
     n.join($('#username').val(), $('#roomId').val());
+    $('canvas').css('display', 'block');
+    $('section#join').css('display', 'none');
 }
 
 function bounceIn(id) {
     $('#' + id)
         .addClass('animate bounceIn')
         .css('display', 'block');
+
 }

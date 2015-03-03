@@ -33,12 +33,12 @@
   </head>
   <body>
 
-    <button class="big connect" onclick="bounceIn('join')">
+    {{!-- <button class="big connect" onclick="bounceIn('join')">
       CONNECT
     </button>
     <button class="big gamepad" onclick="bounceIn('controller')">
       GAMEPAD
-    </button>
+    </button> --}}
 
     <section id="join">
       <div class="content">
@@ -49,19 +49,33 @@
         <br>
         <input type="tel" id="roomId" placeholder="Room Id">
         <br>
-        <button class="outline" onclick="join()">JOIN</button>
+        
+        <div class="container">
+          <ul>
+            <li>
+              <input type="radio" id="your-option" name="selector">
+              <label for="your-option">Your Audio</label>
+              <div class="check"><div class="inside"></div></div>
+            </li>
+            <li>
+              <input type="radio" id="our-option" name="selector">
+              <label for="our-option">Our Audio</label>
+              <div class="check"><div class="inside"></div></div>
+            </li>
+          </ul>
+        </div>
         <br>
-        <button class="outline" onclick="bounceOut('join')">CANCEL</button>
-
+        <div class="join-btns">
+          <button class="outline" onclick="join()">JOIN</button>
+          <button class="outline" onclick="bounceOut('join')">CANCEL</button>
+        </div>
+        
       </div>
     </section>
 
     <section id="controller">
-
       <div class="content">
-
         <button class="close" onclick="bounceOut('controller')"></button>
-
         <div class="d-pad">
           <button class="nunchuck-button horizontal" id="LEFT"></button>
           <button class="nunchuck-button vertical" id="DOWN"></button>

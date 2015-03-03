@@ -2,7 +2,8 @@
 
   var sketch = function(s){
     s.setup = function () {
-        s.createCanvas(250, 300);
+        s.createCanvas();
+        s.resizeCanvas(s.windowWidth*.6, s.windowHeight);
         s.colorMode("hsb");
         s.background(184, 174, 175, 90);
       }
@@ -26,11 +27,3 @@
   myp5 = new p5(sketch, containerNode);
 
 }
-
-
-
-
-  
-// document.getElementById("posXp").innerHTML = posXp;  
-// document.getElementById("posY").innerHTML = posY;  
-// document.getElementById("posYp").innerHTML = posYp;

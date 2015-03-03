@@ -11,10 +11,14 @@ button.connect {
 }
 
 #controller {
-  width: 60%;
+  width: 40%;
 }
 
 canvas {
   position: absolute;
   top: 0px;
+  right: 0px;
+  width: 60%;
+  height: 100%;
+  display: none;
 }

@@ -6,6 +6,8 @@ var soundFile;
 var amplitude;
 var particles = [];
 var backgroundColor;
+var mainCanvasWidth;
+var mainCanvasHeight
 
 
 // nunchuck stuff
@@ -21,6 +23,7 @@ n.onJoin(function(data){
   usersCount = Object.keys(users).length;
   addUser(userName);
   $('.users').html("Users Online " + usersCount);
+  soundFile.play();
 });
 
 $(document).ready(function(){
@@ -37,9 +40,8 @@ $(document).ready(function(){
         if(particles[i].user.username == data.username){
           // betaAngle = userData.orientation.beta;
 
-          posX = Math.abs(data.touchPad.posX);
-          posY = Math.abs(data.touchPad.posY);
-
+          posX = Math.abs(data.touchPad.posX)*7.5;
+          posY = Math.abs(data.touchPad.posY)*2;
           alphaAngle = userData.orientation.alpha;
           // betaAngleCos = cos(betaAngle);
           // alphaAngleCos = cos(alphaAngle);
@@ -91,10 +93,14 @@ function preload() {
 
 function setup() {
     c = createCanvas(windowWidth, windowHeight);
+    mainCanvasWidth = windowWidth;
+    mainCanvasHeight = windowHeight
     noStroke();
 
     amplitude = new p5.Amplitude();
-    soundFile.play();
+    // mic = new p5.AudioIn();
+    // mic.start();
+    // amplitude.setInput(mic);    
 
     // make a single particle.
     // particles.push(new Particle());
@@ -102,14 +108,21 @@ function setup() {
 
 function draw() {
     background(backgroundColor);
-
-    var level = amplitude.getLevel();
-    detectBeat(level);
+    // if(amplitude){
+      var level = amplitude.getLevel();
+    // }
+    // else{
+        // var level = mic.getLevel();
+    // }
+    // if(level){
+        detectBeat(level);
 
     for (var i = 0; i < particles.length; i++) {
         particles[i].update(level);
         particles[i].draw();
     }
+    // }
+    
 }
 
 function addUser(user){
@@ -139,10 +152,6 @@ function onBeat() {
     backgroundColor = color(random(0, 255), random(0, 255), random(0, 255));
 }
 
-function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
-    background(0);
-}
 
 // ===============
 // Particle class
@@ -170,3 +179,34 @@ Particle.prototype.draw = function() {
     fill(255);
     text(this.user.username, this.position.x, this.position.y);
 };
+
+
+
+// ================
+// Helper Functions
+// ================
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  background(0);
+}
+
+function keyPressed() {
+  if (key == 'T') {
+    toggleInput();
+  }
+}
+
+// To prevent feedback, mic doesnt send its output.
+// So we need to tell fft to listen to the mic, and then switch back.
+// function toggleInput() {
+//   if (soundFile.isPlaying() ) {
+//     soundFile.pause();
+//     mic.start();
+//     particles.setInput(mic);
+//   } else {
+//     soundFile.play();
+//     mic.stop();
+//     particles.setInput(soundFile);
+//   }
+// }
