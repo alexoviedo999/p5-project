@@ -60,7 +60,7 @@ $(document).ready(function(){
           // var center = createVector(width/2, height/2);
           // touch.sub(center);
           // touch.normalize();
-          touch.mult(5);
+          touch.mult(2.5);
           // var t = touch.mag()/10;
           // rect(0,0,t,10);
           console.log('poxX: '+ posX + 'touch x: ' + touch.x)
