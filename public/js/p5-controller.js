@@ -5,6 +5,9 @@
     s.setup = function() {
         tp = s.createCanvas(s.windowWidth, s.windowHeight*0.7);
         tp.parent('touch-pad');
+        // strob = s.createButton('Strob', 'strob');
+        // strob.parent('bottom-strip');
+
         s.colorMode("hsb");
         s.background(184, 174, 175, 90);
       }

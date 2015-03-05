@@ -20,3 +20,14 @@ canvas {
   display: none;
   background-color: red !important;
 }
+
+.bottom-strip{
+	width: 100%
+	height: 70%;
+}
+
+.right.commands button {
+  position: absolute;
+  top: -104px;
+  left: 10px;
+}
