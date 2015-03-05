@@ -1,14 +1,15 @@
   var posX;
+  var tp
 
   var sketch = function(s){
-    s.setup = function () {
-        s.createCanvas(550, 320);
-        // s.resizeCanvas();
+    s.setup = function() {
+        tp = s.createCanvas(s.windowWidth, s.windowHeight*0.7);
+        tp.parent('touch-pad');
         s.colorMode("hsb");
         s.background(184, 174, 175, 90);
       }
 
-    s.draw = function () {
+    s.draw = function(){
       posX = s.touchX;
       posXp = Math.max(s.ptouchX);
       posY = s.touchY;

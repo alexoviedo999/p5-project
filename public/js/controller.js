@@ -31,5 +31,5 @@ function join() {
 function bounceIn(id) {
   $('#' + id)
   .addClass('animate bounceIn')
-  // .css('display', 'block');
+  .css('display', 'block');
 }

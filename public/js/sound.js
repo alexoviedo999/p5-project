@@ -7,7 +7,9 @@ var amplitude;
 var particles = [];
 var backgroundColor;
 var mainCanvasWidth;
-var mainCanvasHeight
+var mainCanvasHeight;
+var btnPressCount;
+var strobeInterval;
 
 
 // nunchuck stuff
@@ -44,29 +46,32 @@ $(document).ready(function(){
       $('body').append(el);
     }
     if (users[data.username]){
+       // users[data.username].text(JSON.stringify(data,null,2));
       for(var i = 0; i < particles.length; i++){
         if(particles[i].user.username == data.username){
           // betaAngle = userData.orientation.beta;
 
-          // posX = Math.abs(data.touchPad.posX)*7.5;
-          // posY = Math.abs(data.touchPad.posY)*2;
-
-
           posX = Math.abs(data.touchPad.posX);
           posY = Math.abs(data.touchPad.posY);
-
-
+          btnPressCount = userData.buttons.length;
           var touch = createVector(posX, posY);
-          // var center = createVector(width/2, height/2);
-          // touch.sub(center);
-          // touch.normalize();
           touch.mult(2.5);
-          // var t = touch.mag()/10;
-          // rect(0,0,t,10);
-          console.log('poxX: '+ posX + 'touch x: ' + touch.x)
-          console.log('poxY: '+ posY + 'touch y: ' + touch.y)
+
+          // console.log('poxX: '+ posX + 'touch x: ' + touch.x)
+          // console.log('poxY: '+ posY + 'touch y: ' + touch.y)
           particles[i].position.x = touch.x;
           particles[i].position.y = touch.y;
+
+          if(btnPressCount > 0){
+            strobeInterval = setInterval(function(){
+              for (var i = 0; i < particles.length; i++) {
+                particles[i].color = color(random(0, 255), random(0, 255), random(0, 255));
+              }
+            },200)
+          }
+          else {
+            clearInterval(strobeInterval);
+          }
         }
       }
     }
@@ -104,45 +109,48 @@ var framesSinceLastbeat = 0; // once this equals beatHoldFrames, beatCutoff star
 
 
 function preload() {
-    soundFile = loadSound('../../music/Eleanor_Rigby.mp3');
+  soundFile = loadSound('../../music/Eleanor_Rigby.mp3');
 }
 
 function setup() {
-    c = createCanvas(windowWidth, windowHeight);
-    mainCanvasWidth = windowWidth;
-    mainCanvasHeight = windowHeight
-    noStroke();
+  c = createCanvas(windowWidth, windowHeight);
+  c.parent('sound-canvas')
+  mainCanvasWidth = windowWidth;
+  mainCanvasHeight = windowHeight
+  noStroke();
+  amplitude = new p5.Amplitude();
 
-    amplitude = new p5.Amplitude();
-     
-
-    // make a single particle.
-    // particles.push(new Particle());
+  // make a single particle.
+  // particles.push(new Particle());
 }
 
 function draw() {
-    background(backgroundColor);
-    // if(amplitude){
-      var level = amplitude.getLevel();
-    // }
-    // else{
-        // var level = mic.getLevel();
-    // }
-    // if(level){
-        detectBeat(level);
+  background(backgroundColor);
+  var level = amplitude.getLevel();
+  detectBeat(level);
 
-    for (var i = 0; i < particles.length; i++) {
-        particles[i].update(level);
-        particles[i].draw();
-    }
-    // }
-    
+  for(var i = 0; i < particles.length; i++) {
+    particles[i].update(level);
+    particles[i].draw();
+  }
 }
+
+
+// function strobeColor(){
+//   strobeInterval = setInterval(function(){
+//     for (var i = 0; i < particles.length; i++) {
+//       particles[i].color = color(random(0, 255), random(0, 255), random(0, 255));
+//     }
+//   },200)
+// }
+
+// function strobeColorEnd(){
+//   clearInterval(strobeInterval);
+// }
 
 function addUser(user){
   // ps = new ParticleSystem(new p5.Vector(width/(usersCount * 2), 50));
   ps = new Particle()
-
   ps.user =  users[user]
   particles.push(ps)
 }
