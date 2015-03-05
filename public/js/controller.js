@@ -7,6 +7,7 @@ n.onJoin(function(data, err) {
     bounceOut('join');
     $('canvas').css('display', 'block');
     $('section#join').css('display', 'none');
+    $('#strobe-btn').css('display', 'block');
   } else {
     alert(err.msg)
   }
@@ -32,4 +33,5 @@ function bounceIn(id) {
   $('#' + id)
   .addClass('animate bounceIn')
   .css('display', 'block');
+
 }

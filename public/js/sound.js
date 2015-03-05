@@ -10,6 +10,7 @@ var mainCanvasWidth;
 var mainCanvasHeight;
 var btnPressCount;
 var strobeInterval;
+var strobeRun;
 
 
 // nunchuck stuff
@@ -53,7 +54,8 @@ $(document).ready(function(){
 
           posX = Math.abs(data.touchPad.posX);
           posY = Math.abs(data.touchPad.posY);
-          btnPressCount = userData.buttons.length;
+
+          
           var touch = createVector(posX, posY);
           touch.mult(2.5);
 
@@ -62,16 +64,27 @@ $(document).ready(function(){
           particles[i].position.x = touch.x;
           particles[i].position.y = touch.y;
 
-          if(btnPressCount > 0){
-            strobeInterval = setInterval(function(){
-              for (var i = 0; i < particles.length; i++) {
-                particles[i].color = color(random(0, 255), random(0, 255), random(0, 255));
-              }
-            },200)
+
+
+          function toggleStrobe(){
+            // btnPressCount = userData.buttons.length;
+            if(userData.buttons.length == 1){
+              userData.buttons = [];
+   
+              strobeInterval = setInterval(function(){
+                for (var i = 0; i < particles.length; i++) {
+                  particles[i].color = color(random(0, 255), random(0, 255), random(0, 255));
+                }
+              },200)
+            }
+            else if(userData.buttons.length == 0){
+              clearInterval(strobeInterval);
+            }
           }
-          else {
-            clearInterval(strobeInterval);
-          }
+
+          toggleStrobe();
+          
+
         }
       }
     }
@@ -132,7 +145,7 @@ function draw() {
   for(var i = 0; i < particles.length; i++) {
     particles[i].update(level);
     particles[i].draw();
-  }
+  } 
 }
 
 

@@ -31,3 +31,19 @@ canvas {
   top: -275px;
   left: 100px;
 }
+
+button#strobe-btn {
+	font-family: 'Montserrat', 'Helvetica', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  border: none;
+  color: white;
+	background: #808080 !important;
+  border-radius: 0px;
+  padding: 12px;
+	display: block;
+  background: #264e73 !important; 
+  width: 80px;
+  height: 80px;
+  padding: 12px;
+  display: none;
+}

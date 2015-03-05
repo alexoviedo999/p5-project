@@ -1,12 +1,15 @@
   var posX;
-  var tp
+  var tp;
+  var strobe;
 
   var sketch = function(s){
     s.setup = function() {
-        tp = s.createCanvas(s.windowWidth*0.5, s.windowHeight*0.5);
+        tp = s.createCanvas(s.windowWidth, s.windowHeight);
         tp.parent('touch-pad');
-        // strob = s.createButton('Strob', 'strob');
-        // strob.parent('bottom-strip');
+        strobe = s.createButton('Strobe', 'strobe');
+        strobe.id('strobe-btn').class('nunchuck-button').position(s.windowWidth/20, s.windowHeight/20);
+        // strobe.parent('bottom-strip');
+        strobe.touchEnded(strobeEnd);
 
         s.colorMode("hsb");
         s.background(184, 174, 175, 90);
@@ -17,9 +20,13 @@
       posXp = Math.max(s.ptouchX);
       posY = s.touchY;
       posYp = Math.max(s.ptouchY);
-      console.log("posX: "+ posX)
-      console.log("posY: "+ posY)
+      // console.log("posX: "+ posX)
+      // console.log("posY: "+ posY)
     }
+  }
+
+  function strobeEnd(){
+    console.log('ended');
   }
 
   window.onload = function(){
