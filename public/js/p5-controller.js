@@ -3,7 +3,7 @@
 
   var sketch = function(s){
     s.setup = function() {
-        tp = s.createCanvas(s.windowWidth, s.windowHeight*0.7);
+        tp = s.createCanvas(s.windowWidth*0.5, s.windowHeight*0.5);
         tp.parent('touch-pad');
         // strob = s.createButton('Strob', 'strob');
         // strob.parent('bottom-strip');
