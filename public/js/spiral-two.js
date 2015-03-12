@@ -41,8 +41,8 @@ function setup(){
   angleMode(DEGREES);
   soundFile.play();
   // frameRate(3);
-  imgWidth = 1100;
-  imgHeight = 700;
+  imgWidth = 1200;
+  imgHeight = 800;
 
   imageArches = loadImage("../images/colorful-arches.jpg");
   imageGray = loadImage("../images/colorful-arches.jpg", function(img2){
@@ -60,7 +60,7 @@ function setup(){
  
 function draw(){
   level = amplitude.getLevel();
-  background(0);
+  background(34,32,36);
   push();
   scaleLevel = map(level, 0, 1, 1.0, 1.8);
   scale(scaleLevel);
