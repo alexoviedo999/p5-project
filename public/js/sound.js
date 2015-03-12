@@ -83,7 +83,6 @@ $(document).ready(function(){
           }
 
           toggleStrobe();
-          
 
         }
       }

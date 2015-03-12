@@ -75,9 +75,19 @@ app.get('/play/sound', function(req, res) {
   res.render('sound');
 });
 
+app.get('/play/spiral-one', function(req, res) {
+  res.render('spiral-one');
+});
+
+app.get('/play/spiral-two', function(req, res) {
+  res.render('spiral-two');
+});
+
 app.get('/practice', function(req, res) {
   res.render('practice');
 });
+
+
 
 
 
