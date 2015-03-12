@@ -44,7 +44,7 @@ function setup(){
   imgWidth = 1100;
   imgHeight = 700;
 
-  imageArches = loadImage("../images/colorful-arches.jpg";
+  imageArches = loadImage("../images/colorful-arches.jpg");
   imageGray = loadImage("../images/colorful-arches.jpg", function(img2){
      img2.filter("gray");     
   });
