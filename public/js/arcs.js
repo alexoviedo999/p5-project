@@ -4,9 +4,9 @@ var backgroundColor;
 var canvas1;
 var scaleLevel;
 var level;
-var num = 9;
+var num = 7;
 var sw = 20; 
-var r = 0;
+var r = 2;
 var rs;
 var hsbBright;
 var numLevel;
@@ -38,7 +38,7 @@ function preload() {
 
 function setup() {
   // set canvas size
-  canvas1 = createCanvas(800, 800);
+  canvas1 = createCanvas(windowWidth, windowHeight);
   // angleMode(DEGREES);
   soundFile.play();
   // frameRate(3);
@@ -52,7 +52,7 @@ function setup() {
 
   thicknessSlider = createSlider(15, 25, 20);
   thicknessSlider.position(25, 25); 
-  lineNumSlider = createSlider(3, 10, 7);
+  lineNumSlider = createSlider(3, 8, 5);
   lineNumSlider.position(25, 40);
 
   amplitude = new p5.Amplitude();
@@ -80,7 +80,7 @@ function draw(){
 function arcs(x, y){
   push();
   // controlable value range
-  scaleLevel = map(level, 0, 1, 1.0, 1.5);
+  scaleLevel = map(level, 0, 1, 1.0, 1.2);
   scale(scaleLevel);
   hsbBright = map(level, 0, 1, 200, 500);
   
@@ -100,11 +100,11 @@ function arcs(x, y){
     // end = start + endLevel;
     scal = map(sin(r+TWO_PI/num*i), -1, 1, .5, 2);
     // arc(0, 0, width*.9-i*3*sw, height*.9-i*3*sw, start, end*scal);
-    arc(0, 0, width*.9-i*3*sw, height*.9-i*3*sw, start, end*arcScalLevel);
+    arc(0, 0, 800*.7-i*3*sw, 800*.7-i*3*sw, start, end*arcScalLevel);
   }
 
   // controlable value range
-  r = r + 0.0823/2;
+  r = r + 0.05523/2;
   pop();
 }
 
@@ -112,7 +112,7 @@ function arcs(x, y){
 function detectBeat(level) {
     if (level > beatCutoff && level > beatThreshold) {
         onBeat();
-        beatCutoff = level * 1.2;
+        beatCutoff = level * 1.9;
         framesSinceLastbeat = 0;
     } else {
         // offBeat();
