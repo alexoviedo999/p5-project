@@ -35,7 +35,7 @@ var beatDecayRate = 0.95; // how fast does beat cutoff decay?
 var framesSinceLastbeat = 0; // once this equals beatHoldFrames, beatCutoff starts to decay.
 
 function preload() {
-  soundFile = loadSound('../../music/Eleanor_Rigby.mp3');
+  soundFile = loadSound('../../music/tiesto_zero_76.mp3');
 }
 
 function setup(){
@@ -46,17 +46,16 @@ function setup(){
 
   imageDarkBlue = loadImage("../images/colorful-spiral-dark-blue.jpg");
   imageBlueGold = loadImage("../images/rectangle-spiral-blue-gold.jpg");
-  imageBlueRedYellow = loadImage("../images/rectangle-spiral-blue-red-yellow.jpg");
   imageRed = loadImage("../images/red-spiral.jpg");
-  imageGray = loadImage("../images/colorful-spiral-dark-blue.jpg", function(img2){
-     img2.filter("gray");     
-  });
-  imageThresh = loadImage("../images/colorful-spiral-dark-blue.jpg", function(img3){
-     img3.filter("threshold", 0.5);
-  }); 
-  imageInvert = loadImage("../images/colorful-spiral-dark-blue.jpg", function(img4){
-     img4.filter("invert");
-  })
+  // imageGray = loadImage("../images/colorful-spiral-dark-blue.jpg", function(img2){
+  //    img2.filter("gray");     
+  // });
+  // imageThresh = loadImage("../images/colorful-spiral-dark-blue.jpg", function(img3){
+  //    img3.filter("threshold", 0.5);
+  // }); 
+  // imageInvert = loadImage("../images/colorful-spiral-dark-blue.jpg", function(img4){
+  //    img4.filter("invert");
+  // })
 
   amplitude = new p5.Amplitude();
 }
@@ -106,13 +105,6 @@ var onBeat = function() {
   if(randomNum == 2){
     image(imageDarkBlue, -1000, -1000, 1000*2, 1000*2);
   }
-  if(randomNum == 3){
-    image(imageBlueRedYellow, -1000, -1000, 1000*2, 1000*2);
-  }
-  if(randomNum == 4){
-    image(imageBlueRedYellow, -1000, -1000, 1000*2, 1000*2);
-  }
-  // backgroundColor = color(random(0, 255), random(0, 255), random(0, 255));
 }
 
 var offBeat = function(){

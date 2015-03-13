@@ -33,7 +33,7 @@ var beatDecayRate = 0.95; // how fast does beat cutoff decay?
 var framesSinceLastbeat = 0; // once this equals beatHoldFrames, beatCutoff starts to decay.
 
 function preload(){
-  soundFile = loadSound('../../music/Eleanor_Rigby.mp3');
+  soundFile = loadSound('../../music/tiesto_zero_76.mp3');
 }
 
 function setup(){
@@ -59,6 +59,30 @@ function setup(){
 }
  
 function draw(){
+
+    // var images = [];
+  // images.push(img1);
+  // images.push(img2);
+  // images.push(img3);
+
+  // setInterval(function(){
+  //   for (var i = 0; i < images.length; i++) {
+  //     // images[i].filter("threshold", 0.5);
+  //     images[i].filter("gray");
+
+  //     image(images[i], random(400), 0); 
+  //     image(images[i], random(400), random(400));  
+  //     image(images[i], random(800), random(800));
+  //   }
+  // },500);
+  
+  // display text labels
+  // fill(255);
+
+  // noStroke();
+
+
+
   level = amplitude.getLevel();
   background(34,32,36);
   push();

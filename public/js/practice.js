@@ -1,17 +1,30 @@
-var img1, img2, img3;
 var amplitude;
 var soundFile;
 var backgroundColor;
-var imageOrig;
-var imageGray;
-var imageInvert;
-var imageThresh;
+
 var canvas1;
-var angle = 0;
+
 var scaleLevel;
 var level;
-var imgWidth;
-var imgHeight;
+
+
+var num = 9;
+var sw = 20; 
+var r = 0;
+var rs;
+var hsbBright;
+var numLevel;
+var endLevel;
+
+
+// var min1 = 40;
+// var max1 = 100;
+// var theta = 0;
+// var sz;
+// var y;
+// var x;
+// var offSet;
+
 
 /* 
  Beat Detect Variables
@@ -33,92 +46,97 @@ var beatDecayRate = 0.95; // how fast does beat cutoff decay?
 var framesSinceLastbeat = 0; // once this equals beatHoldFrames, beatCutoff starts to decay.
 
 function preload() {
-  soundFile = loadSound('../../music/Eleanor_Rigby.mp3');
+  soundFile = loadSound('../../music/tiesto_zero_76.mp3');
 }
 
 function setup() 
 {
   // set canvas size
-  canvas1 = createCanvas(windowWidth, windowHeight);
-  angleMode(DEGREES);
+  canvas1 = createCanvas(800, 800);
+  // angleMode(DEGREES);
   soundFile.play();
   // frameRate(3);
-  imgWidth = 800;
-  imgHeight = 800;
-
-  imageArches = loadImage("../images/colorful-arches.jpg");
 
 
-  imageGray = loadImage("../images/colorful-arches.jpg", function(img2){
-     img2.filter("gray");     
-  });
-  
-  imageThresh = loadImage("../images/colorful-arches.jpg", function(img3){
-     img3.filter("threshold", 0.5);
-  }); 
-  
-  imageInvert = loadImage("../images/colorful-arches.jpg", function(img4){
-     img4.filter("invert");
-  })
-  
+  colorMode(HSB, 360, 100, 100);
+  noFill();
+  rs = random(100);
+  strokeWeight(sw);
+  strokeCap(SQUARE);
+
+  thicknessSlider = createSlider(15, 25, 20);
+  thicknessSlider.position(25, 25); 
+  lineNumSlider = createSlider(3, 10, 7);
+  lineNumSlider.position(25, 40);
 
   amplitude = new p5.Amplitude();
 }
  
 function draw(){
-  // var images = [];
-  // images.push(img1);
-  // images.push(img2);
-  // images.push(img3);
-
-  // setInterval(function(){
-  //   for (var i = 0; i < images.length; i++) {
-  //     // images[i].filter("threshold", 0.5);
-  //     images[i].filter("gray");
-
-  //     image(images[i], random(400), 0); 
-  //     image(images[i], random(400), random(400));  
-  //     image(images[i], random(800), random(800));
-  //   }
-  // },500);
   
-  // display text labels
-  // fill(255);
-
-  // noStroke();
-
   level = amplitude.getLevel();
-  // for(var i = 0; i < particles.length; i++) {
-  //   particles[i].update(level);
-  //   particles[i].draw();
-  // } 
-
-  background(0);
-  push();
-  scaleLevel = map(level, 0, 1, 1.0, 1.8);
-  scale(scaleLevel);
-  translate(windowWidth/2, windowHeight/2);
-
-  // rotate(frameCount);
-  rotate(angle);
-
-  angle = angle+2;
   detectBeat(level);
+  randomSeed(rs);
 
-  // position should be negative half of the size.
-  // image(imageBlueGold, -1000, -1000, 1000*2, 1000*2);
+  sw = thicknessSlider.value();
+  text("Thickness: " + thicknessSlider.value(), width/2, height/2); 
+
+  num = lineNumSlider.value();
+  text("Lines: " + lineNumSlider.value(), width/2, height/2); 
+
+  // background(backgroundColor);
+  background(0);
+  for (i=0; i<3; i++) {
+    arcs(width/2, height/2);
+  }
+
+}
+
+function arcs(x, y){
+  push();
+  
+  // controlable value range
+  scaleLevel = map(level, 0, 1, 1.0, 1.5);
+  scale(scaleLevel);
+  hsbBright = map(level, 0, 1, 200, 500);
+  
+
+  // controlable value range
+  numLevel = map(level, 0, 1, 5, 8);
+  endLevel = map(level, 0, 1, 0.6, 0.99);
+
+  // controlable value range
+  arcScalLevel = map(level, 0, 1, 0.4, 1.8);
+  translate(x, y);
+  rotate(r);
+  for (i=0; i<num; i++) {
+
+    stroke(360.0/numLevel*i, 100, 100, hsbBright);
+    start = random(TWO_PI);
+    end = start + random(PI/5, PI/3);
+    // end = start + endLevel;
+    scal = map(sin(r+TWO_PI/num*i), -1, 1, .5, 2);
+    // arc(0, 0, width*.9-i*3*sw, height*.9-i*3*sw, start, end*scal);
+    arc(0, 0, width*.9-i*3*sw, height*.9-i*3*sw, start, end*arcScalLevel);
+  }
+
+  // controlable value range
+  r = r + 0.0823/2;
   pop();
 }
+
+
+
 
 
 
 function detectBeat(level) {
     if (level > beatCutoff && level > beatThreshold) {
         onBeat();
-        beatCutoff = level * 0.9;
+        beatCutoff = level * 1.2;
         framesSinceLastbeat = 0;
     } else {
-        offBeat();
+        // offBeat();
         if (framesSinceLastbeat <= beatHoldFrames) {
             framesSinceLastbeat++;
         } else {
@@ -131,29 +149,29 @@ function detectBeat(level) {
 
 var onBeat = function() {
     
-    var randomNum = Math.floor(Math.random() * 3) + 1
-    if(randomNum == 1){
-      image(imageInvert, -imgWidth, -imgHeight, imgWidth*2, imgHeight*2);
-    }
-    if(randomNum == 2){
-      // image(imageThresh, 0, 0)
-      image(imageGray, -imgWidth, -imgHeight, imgWidth*2, imgHeight*2);
-    }
-    if(randomNum == 3){
-      // image(imageInvert, 0, 0);
-      image(imageThresh, -imgWidth, -imgHeight, imgWidth*2, imgHeight*2);
-    }
+    // var randomNum = Math.floor(Math.random() * 3) + 1
+    // if(randomNum == 1){
+    //   image(imageInvert, -imgWidth, -imgHeight, imgWidth*2, imgHeight*2);
+    // }
+    // if(randomNum == 2){
+    //   // image(imageThresh, 0, 0)
+    //   image(imageGray, -imgWidth, -imgHeight, imgWidth*2, imgHeight*2);
+    // }
+    // if(randomNum == 3){
+    //   // image(imageInvert, 0, 0);
+    //   image(imageThresh, -imgWidth, -imgHeight, imgWidth*2, imgHeight*2);
+    // }
+    bColor = Math.round(map(level, 0, 1, 0, 360));
+    color2 = map(level, 0, 1, 0, 100)
 
-    // backgroundColor = color(random(0, 255), random(0, 255), random(0, 255));
+
+    backgroundColor = color(bColor, color2, random(0, 100));
 }
 
 var offBeat = function(){
   image(imageArches, -imgWidth, -imgHeight, imgWidth*2, imgHeight*2);
 }
 
-// update = function(levelRaw) {
-//   map(levelRaw, 0, 1, 0, 400)
-// }
 
 
 

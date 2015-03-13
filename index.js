@@ -83,6 +83,10 @@ app.get('/play/spiral-two', function(req, res) {
   res.render('spiral-two');
 });
 
+app.get('/play/arcs', function(req, res) {
+  res.render('arcs');
+});
+
 app.get('/practice', function(req, res) {
   res.render('practice');
 });
