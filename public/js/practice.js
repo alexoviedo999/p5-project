@@ -2,24 +2,25 @@ var amplitude;
 var soundFile;
 var backgroundColor;
 var canvas1;
-var scaleLevel;
-var level;
-var num = 7;
-var sw = 20; 
-var r = 2;
-var rs;
-var hsbBright;
-var numLevel;
-var endLevel;
-var rColor1Slider;
-var gColor1Slider;
-var bColor1Slider;
-var rColor2Slider;
-var gColor2Slider;
-var bColor2Slider;
-var rColor1;
-var gColor1;
-var bColor1;
+
+
+// PVector 
+var target;
+
+// PVector[] 
+var points = [];
+
+var x; 
+var y;
+var d;
+var angle = 0; 
+var ease = 0.5;
+var easing = true;
+var num=140;
+var frames=165;
+var distance;
+var velocity;
+var point;
 
 
 
@@ -47,115 +48,80 @@ function preload() {
   soundFile = loadSound('../../music/tiesto_zero_76.mp3');
 }
 
+// void setup() {
+//   size(500, 500);
+//   colorMode(HSB,360,100,100);
+//   points = new PVector[num];
+//   for (int i=0; i<num; i++) {
+//     points[i] = new PVector(width/2, height/2);
+//   }
+// }
+ 
+
 function setup() {
   // set canvas size
-  canvas1 = createCanvas(windowWidth, windowHeight);
-  // angleMode(DEGREES);
-  soundFile.play();
-  // frameRate(3);
+  canvas1 = createCanvas(500, 500);
+  // canvas1 = createCanvas(windowWidth, windowHeight);
+  // soundFile.play();
+  // amplitude = new p5.Amplitude();
 
-
-  // colorMode(HSB, 360, 100, 100);
-  noFill();
-  rs = random(100);
-  strokeWeight(sw);
-  strokeCap(SQUARE);
-
-  thicknessSlider = createSlider(15, 25, 20);
-  thicknessSlider.position(25, 25); 
-  lineNumSlider = createSlider(3, 8, 5);
-  lineNumSlider.position(25, 45);
-
-  rColor1Slider = createSlider(0, 255, 100);
-  gColor1Slider = createSlider(0, 255, 100);
-  bColor1Slider = createSlider(0, 255, 100);
-
-  rColor2Slider = createSlider(0, 255, 100);
-  gColor2Slider = createSlider(0, 255, 100);
-  bColor2Slider = createSlider(0, 255, 100);
-
-  rColor1Slider.position(25, 65); 
-  gColor1Slider.position(25, 85); 
-  bColor1Slider.position(25, 105);
-
-  rColor2Slider.position(25, 125); 
-  gColor2Slider.position(25, 145); 
-  bColor2Slider.position(25, 165); 
-
-
-  amplitude = new p5.Amplitude();
-}
- 
-function draw(){
-  
-  level = amplitude.getLevel();
-  detectBeat(level);
-  randomSeed(rs);
-
-  sw = thicknessSlider.value();
-  text("Thickness: " + thicknessSlider.value(), width/2, height/2); 
-
-  num = lineNumSlider.value();
-  text("Lines: " + lineNumSlider.value(), width/2, height/2);
-
-  rColor1 = rColor1Slider.value();
-  gColor1 = gColor1Slider.value();
-  bColor1 = bColor1Slider.value(); 
-  rColor2 = rColor2Slider.value();
-  gColor2 = gColor2Slider.value();
-  bColor2 = bColor2Slider.value(); 
-
-
-  // background(backgroundColor);
-  background(0);
-  for (i=0; i<3; i++) {
-    arcs(width/2, height/2);
-  }
-}
-
-
-function arcs(x, y){
-  var lerpAmount;
-  var color1;
-  var color2;
-  var colors;
-  push();
-  // controlable value range
-  scaleLevel = map(level, 0, 1, 1.0, 1.2);
-  scale(scaleLevel);
-  hsbBright = map(level, 0, 1, 200, 500);
-  
-  // controlable value range
-  numLevel = map(level, 0, 1, 5, 8);
-  endLevel = map(level, 0, 1, 0.6, 0.99);
-
-  // controlable value range
-  arcScalLevel = map(level, 0, 1, 0.4, 1.8);
-  translate(x, y);
-  rotate(r);
+  colorMode(HSB,360,100,100);
+  // points = new p5.Vector(num);
 
   for (i=0; i<num; i++) {
-    // stroke(360.0/numLevel*i, 100, 100, hsbBright);
-
-    color1 = color(rColor1,gColor1,bColor1);
-    color2 = color(rColor2,gColor2,bColor2);
-
-    lerpAmount = 1.0/num*i;
-    colors = lerpColor(color1, color2, lerpAmount);
-    stroke(colors, 220);
-
-    start = random(TWO_PI);
-    end = start + random(PI/5, PI/3);
-    // end = start + endLevel;
-    scal = map(sin(r+TWO_PI/num*i), -1, 1, .5, 2);
-    // arc(0, 0, width*.9-i*3*sw, height*.9-i*3*sw, start, end*scal);
-    arc(0, 0, 800*.7-i*3*sw, 800*.7-i*3*sw, start, end*arcScalLevel);
+    points[i] = new p5.Vector(width/2, height/2);
   }
-
-  // controlable value range
-  r = r + 0.0523/2;
-  pop();
 }
+
+
+// void draw() {
+//   background(#202020);
+//   noStroke();
+//   float d = 150;
+//   x = width/2+cos(angle)*d;
+//   y = height/2+sin(angle*2)*d;
+//   target = new PVector(x,y);
+//   PVector leader = new PVector(target.x, target.y);
+//   for (int i=0; i<num; i++) {
+//     fill(180.0/num*i,90,90);
+//     point = points[i];
+//     PVector distance = PVector.sub(leader, point);
+//     PVector velocity = PVector.mult(distance, ease);
+//     point.add(velocity);
+//     ellipse(point.x, point.y, 70, 70);
+//     leader = point;
+//   }
+//   angle += TWO_PI/frames;
+//   //if (frameCount>250 && frameCount<=250+frames) saveFrame("image-###.gif");
+// }
+ 
+function draw(){
+  // level = amplitude.getLevel();
+  // detectBeat(level);
+
+  background(0);
+  noStroke();
+  d = 150;
+  x = width/2+cos(angle)*d;
+  y = height/2+sin(angle*2)*d;
+  target = new p5.Vector(mouseX, mouseY);
+  leader = new p5.Vector(target.x, target.y);
+  for (i=0; i<num; i++) {
+    fill(180.0/num*i,90,90);
+    point = points[i];
+
+    distance = p5.Vector.sub(leader, point);
+    velocity = p5.Vector.mult(distance, ease);
+    point.add(velocity);
+    ellipse(point.x, point.y, 70, 70);
+    leader = point;
+  }
+  angle = angle + TWO_PI/frames;
+  //if (frameCount>250 && frameCount<=250+frames) saveFrame("image-###.gif");
+
+}
+
+
 
 
 function detectBeat(level) {
