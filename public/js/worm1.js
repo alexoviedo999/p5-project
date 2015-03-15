@@ -3,11 +3,7 @@ var soundFile;
 var backgroundColor;
 var canvas1;
 
-
-// PVector 
 var target;
-
-// PVector[] 
 var points = [];
 
 var x; 
@@ -21,8 +17,6 @@ var frames = 165;
 var distance;
 var velocity;
 var point;
-
-
 
 
 /* 
@@ -98,10 +92,8 @@ function draw(){
   }
   
   angle = angle + TWO_PI/frames;
-  //if (frameCount>250 && frameCount<=250+frames) saveFrame("image-###.gif");
 
 }
-
 
 function detectBeat(level) {
     if (level > beatCutoff && level > beatThreshold) {

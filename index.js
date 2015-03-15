@@ -91,6 +91,10 @@ app.get('/play/arcs2', function(req, res) {
   res.render('arcs2');
 });
 
+app.get('/play/worm1', function(req, res) {
+  res.render('worm1');
+});
+
 app.get('/practice', function(req, res) {
   res.render('practice');
 });
