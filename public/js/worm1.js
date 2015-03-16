@@ -2,10 +2,8 @@ var amplitude;
 var soundFile;
 var backgroundColor;
 var canvas1;
-
 var target;
 var points = [];
-
 var x; 
 var y;
 var d;
@@ -50,12 +48,11 @@ function setup() {
   soundFile.play();
   amplitude = new p5.Amplitude();
 
-  colorMode(HSB,360,100,100);
-  // points = new p5.Vector(num);
-
   for (i=0; i<num; i++) {
     points[i] = new p5.Vector(width/2, height/2);
   }
+
+  
 }
 
  
@@ -63,36 +60,56 @@ function draw(){
   level = amplitude.getLevel();
   detectBeat(level);
   numLevel = map(level, 0, 1, 250, 540);
-
   scaleLevel = map(level, 0, 1, 1, 1.0004);
-  hsbLevel = map(level, 0, 1, 90, 100)
-  
-  // lerpAmount = 1.0/num*i;
-  // col = lerpColor(#9E023B, #FFC675, lerpAmount);
+  hsbLevel = map(level, 0, 0.5, 100, 100)
 
+  // Grid code
+  push();
+  strokeWeight(2);
+  translate(0, height/2);
+  lines();
+  scale(1, -1);
+  lines();
+  pop();
 
-  background(0);
+  // Worm code
+  push();
+  colorMode(HSB,360,100,100);
   noStroke();
   d = 150;
   x = width/2+cos(angle)*d;
   y = height/2+sin(angle*2)*d;
   target = new p5.Vector(mouseX, mouseY);
   leader = new p5.Vector(target.x, target.y);
+
   for (i=0; i<num; i++) {
     fill(180.0/numLevel*i,hsbLevel,hsbLevel);
     point = points[i];
-  scale(scaleLevel);
-
+    scale(scaleLevel);
     distance = p5.Vector.sub(leader, point);
     velocity = p5.Vector.mult(distance, ease);
     point.add(velocity);
-    ellipse(point.x, point.y, 50, 50);
+    ellipse(point.x, point.y, 70, 150);
     leader = point;
-    
   }
-  
   angle = angle + TWO_PI/frames;
+  pop();
+}
 
+function lines(){
+  stroke(0,255,0);
+  for(i = 0; i < 30; i++){
+    y = pow(((i+frameCount/10.0)%20), 2.5);
+    line(0, y, width, y);
+  }
+  for(i = 0; i < width; i+=20){
+    line(i, 0, (i-width/2)*20, height);
+  }
+  noStroke();
+  for(i = 0; i < height; i+= 10){
+    fill(0, 255-(i/height * 255)*1.8);
+    rect(0, i-2, width*2, 10);// use -2 instead of extra call to rectMode(CENTER)
+  }
 }
 
 function detectBeat(level) {
@@ -114,7 +131,6 @@ function detectBeat(level) {
 var onBeat = function() {
     bColor = Math.round(map(level, 0, 1, 0, 360));
     color2 = map(level, 0, 1, 0, 100)
-
     backgroundColor = color(bColor, color2, random(0, 100));
 }
 
