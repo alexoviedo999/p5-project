@@ -17,6 +17,110 @@ var velocity;
 var point;
 
 
+
+
+
+
+
+
+
+
+
+
+
+// nunchuck stuff
+
+var socket = io();
+var n = nunchuck.init('host', socket);
+var users = {};
+
+n.onJoin(function(data){
+  var userName = data.username;
+  console.log(data)
+  users[data.username] = data;
+  usersCount = Object.keys(users).length;
+  // addUser(userName);
+  $('.users').html("Users Online " + usersCount);
+  if(data.audioPick === 'ourAudio' && soundFile.playing === false){
+    soundFile.play();
+  }
+  else if(soundFile.playing === false){
+    mic = new p5.AudioIn();
+    mic.start();
+    amplitude.setInput(mic);  
+  }
+  
+});
+
+$(document).ready(function(){
+
+  n.receive(function(data){
+    userData = data;
+    if (!users[data.username]){
+      var el = $('<h3></h3>');
+      users[data.username] = el;
+      $('body').append(el);
+    }
+    if (users[data.username]){
+       // users[data.username].text(JSON.stringify(data,null,2));
+       
+      // for(var i = 0; i < particles.length; i++){
+      //   if(particles[i].user.username == data.username){
+      //     // betaAngle = userData.orientation.beta;
+
+      //     posX = Math.abs(data.touchPad.posX);
+      //     posY = Math.abs(data.touchPad.posY);
+
+          
+      //     var touch = createVector(posX, posY);
+      //     touch.mult(2.5);
+
+      //     // console.log('poxX: '+ posX + 'touch x: ' + touch.x)
+      //     // console.log('poxY: '+ posY + 'touch y: ' + touch.y)
+      //     particles[i].position.x = touch.x;
+      //     particles[i].position.y = touch.y;
+
+
+
+      //     function toggleStrobe(){
+      //       // btnPressCount = userData.buttons.length;
+      //       if(userData.buttons.length == 1){
+      //         userData.buttons = [];
+   
+      //         strobeInterval = setInterval(function(){
+      //           for (var i = 0; i < particles.length; i++) {
+      //             particles[i].color = color(random(0, 255), random(0, 255), random(0, 255));
+      //           }
+      //         },200)
+      //       }
+      //       else if(userData.buttons.length == 0){
+      //         clearInterval(strobeInterval);
+      //       }
+      //     }
+      //     toggleStrobe();
+      //   }
+      // }
+
+
+    }
+    // users[data.username].text(JSON.stringify(data,null,2))
+  });
+  $('.room-id').append(n.roomId);
+})
+
+
+
+// function addUser(user){
+//   // ps = new ParticleSystem(new p5.Vector(width/(usersCount * 2), 50));
+//   ps = new Particle()
+//   ps.user =  users[user]
+//   particles.push(ps)
+// }
+
+
+
+
+
 /* 
  Beat Detect Variables
 */
@@ -45,13 +149,12 @@ function setup() {
   // set canvas size
   // canvas1 = createCanvas(500, 500);
   canvas1 = createCanvas(windowWidth, windowHeight);
-  soundFile.play();
+  // soundFile.play();
   amplitude = new p5.Amplitude();
 
   for (i=0; i<num; i++) {
     points[i] = new p5.Vector(width/2, height/2);
   }
-
   
 }
 
