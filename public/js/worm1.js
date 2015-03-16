@@ -61,11 +61,14 @@ function draw(){
   detectBeat(level);
   numLevel = map(level, 0, 1, 250, 540);
   scaleLevel = map(level, 0, 1, 1, 1.0004);
-  hsbLevel = map(level, 0, 0.5, 100, 100)
+  hsbLevel = map(level, 0, 0.5, 100, 100);
+
+  gridLevel = map(level, 0, 0.5, 1.5, 3.5);
 
   // Grid code
   push();
-  strokeWeight(2);
+  strokeWeight(gridLevel);
+  console.log(gridLevel);
   translate(0, height/2);
   lines();
   scale(1, -1);
@@ -107,7 +110,7 @@ function lines(){
   }
   noStroke();
   for(i = 0; i < height; i+= 10){
-    fill(0, 255-(i/height * 255)*1.8);
+    fill(0, 255-(i/height * 255)*gridLevel);
     rect(0, i-2, width*2, 10);// use -2 instead of extra call to rectMode(CENTER)
   }
 }
