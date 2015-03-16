@@ -58,7 +58,7 @@ function setup() {
  
 function draw(){
   level = amplitude.getLevel();
-  detectBeat(level);
+  // detectBeat(level);
   numLevel = map(level, 0, 1, 250, 540);
   scaleLevel = map(level, 0, 1, 1, 1.0004);
   hsbLevel = map(level, 0, 0.5, 100, 100);
@@ -67,8 +67,8 @@ function draw(){
 
   // Grid code
   push();
-  strokeWeight(gridLevel);
-  console.log(gridLevel);
+  strokeWeight(2);
+  // console.log(gridLevel);
   translate(0, height/2);
   lines();
   scale(1, -1);
@@ -86,7 +86,7 @@ function draw(){
   leader = new p5.Vector(target.x, target.y);
 
   for (i=0; i<num; i++) {
-    fill(180.0/numLevel*i,hsbLevel,hsbLevel);
+    fill(180.0/numLevel*i,100,100);
     point = points[i];
     scale(scaleLevel);
     distance = p5.Vector.sub(leader, point);
