@@ -199,7 +199,7 @@
                 posXp: e.view.posXp,
                 posY: e.view.posY,
                 posYp: e.view.posYp,
-                tXWidth: tXWidth,
+                tWidth: tWidth,
                 tHeight: tHeight
             }
 

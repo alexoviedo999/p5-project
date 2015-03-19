@@ -53,28 +53,10 @@ $(document).ready(function(){
           posX = Math.abs(data.touchPad.posX);
           posY = Math.abs(data.touchPad.posY);
           var touch = createVector(posX, posY);
-          // touch.mult(2.5);
-
-
-
           var touchX = map(touch.x, 0, data.touchPad.tWidth, 0, windowWidth);
           var touchY = map(touch.y, 0, data.touchPad.tHeight, 0, windowHeight);
-
           touchPos.x = touchX;
           touchPos.y = touchY;
-
-
-          // console.log('poxX: '+ posX + 'touch x: ' + touch.x)
-          // console.log('poxY: '+ posY + 'touch y: ' + touch.y)
-          // worms[i][i].point.x = touchX;
-          // worms[i][i].point.y = touchY;
-
-          // worms[i][i].target.x = touchX;
-          // worms[i][i].target.y = touchY;
-
-          // worms[i][i].leader.x = worms[i][i].target.x;
-          // worms[i][i].leader.y = worms[i][i].target.y;
-
         }
       }
     }
