@@ -5,8 +5,12 @@ var points = [];
 var num = 15;
 var frames = 25;
 var distance;
+var target;
+var leader;
 var velocity;
 var point;
+var worms = [];
+var touchPos = {};
 
 
 // nunchuck stuff
@@ -42,19 +46,35 @@ $(document).ready(function(){
     }
     if (users[data.username]){
        // users[data.username].text(JSON.stringify(data,null,2));
-      for(var i = 0; i < particles.length; i++){
-        if(particles[i].user.username == data.username){
+      for(var i = 0; i < worms.length; i++){
+        if(worms[i].user.username == data.username){
           // betaAngle = userData.orientation.beta;
 
           posX = Math.abs(data.touchPad.posX);
           posY = Math.abs(data.touchPad.posY);
           var touch = createVector(posX, posY);
-          touch.mult(2.5);
+          // touch.mult(2.5);
+
+
+
+          var touchX = map(touch.x, 0, data.touchPad.tWidth, 0, windowWidth);
+          var touchY = map(touch.y, 0, data.touchPad.tHeight, 0, windowHeight);
+
+          touchPos.x = touchX;
+          touchPos.y = touchY;
+
 
           // console.log('poxX: '+ posX + 'touch x: ' + touch.x)
           // console.log('poxY: '+ posY + 'touch y: ' + touch.y)
-          particles[i].position.x = touch.x;
-          particles[i].position.y = touch.y;
+          // worms[i][i].point.x = touchX;
+          // worms[i][i].point.y = touchY;
+
+          // worms[i][i].target.x = touchX;
+          // worms[i][i].target.y = touchY;
+
+          // worms[i][i].leader.x = worms[i][i].target.x;
+          // worms[i][i].leader.y = worms[i][i].target.y;
+
         }
       }
     }
@@ -103,16 +123,16 @@ function Point(width, height) {
     noStroke();
     var ease = 0.050;
     var easing = true;
-    var target = new p5.Vector(mouseX, mouseY);
-    var leader = new p5.Vector(target.x, target.y);
+    this.target = new p5.Vector(touchPos.x, touchPos.y);
+    this.leader = new p5.Vector(this.target.x, this.target.y);
     for (var i=0; i<num; i++) {
       fill(180.0/num*i,100,100);
       point = points[i].point;
-      this.distance = p5.Vector.sub(leader, point);
+      this.distance = p5.Vector.sub(this.leader, point);
       velocity = p5.Vector.mult(this.distance, ease);
       point.add(velocity);
       ellipse(point.x, point.y, 70, 130);
-      leader = point;
+      this.leader = point;
     }     
   };
 }
@@ -123,7 +143,7 @@ function draw(){
   // scaleLevel = map(level, 0, 1, 1, 1.0004);
   // hsbLevel = map(level, 0, 0.5, 100, 100);
   gridLevel = map(level, 0, 0.5, 1.5, 3.5);
-  
+
   // Grid code
   strokeWeight(2);
   push()
@@ -161,6 +181,15 @@ function addUser(user){
   // ps = new Particle()
   // ps.user =  users[user]
   // particles.push(ps)
+
+  for (var i=0; i<num; i++) {
+    points[i] = new Point();
+  }
+  points.user = users[user];
+  worms.push(points);
+
+
+
 }
 
 

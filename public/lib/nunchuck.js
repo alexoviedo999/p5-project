@@ -155,7 +155,9 @@
                 posX: e.view.posX,
                 posXp: e.view.posXp,
                 posY: e.view.posY,
-                posYp: e.view.posYp
+                posYp: e.view.posYp,
+                tWidth: tWidth,
+                tHeight: tHeight
             }
 
             _instance.socket.emit('nunchuck-data', {
@@ -175,7 +177,9 @@
                 posX: e.view.posX,
                 posXp: e.view.posXp,
                 posY: e.view.posY,
-                posYp: e.view.posYp
+                posYp: e.view.posYp,
+                tWidth: tWidth,
+                tHeight: tHeight
             }
 
             _instance.socket.emit('nunchuck-data', {
@@ -194,7 +198,9 @@
                 posX: e.view.posX,
                 posXp: e.view.posXp,
                 posY: e.view.posY,
-                posYp: e.view.posYp
+                posYp: e.view.posYp,
+                tXWidth: tXWidth,
+                tHeight: tHeight
             }
 
             _instance.socket.emit('nunchuck-data', {

@@ -20,6 +20,8 @@
       posXp = Math.max(s.ptouchX);
       posY = s.touchY;
       posYp = Math.max(s.ptouchY);
+      tWidth = s.windowWidth;
+      tHeight = s.windowHeight
       // console.log("posX: "+ posX)
       // console.log("posY: "+ posY)
     }
