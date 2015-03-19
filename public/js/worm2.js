@@ -2,8 +2,8 @@
 var canvas1;
 var target;
 var points = [];
-var num = 20;
-var frames = 20;
+var num = 15;
+var frames = 25;
 var distance;
 var velocity;
 var point;
@@ -101,8 +101,7 @@ function Point(width, height) {
   this.display = function(){
     colorMode(HSB,360,100,100);
     noStroke();
-    var d = 20;
-    var ease = 0.1;
+    var ease = 0.050;
     var easing = true;
     var target = new p5.Vector(mouseX, mouseY);
     var leader = new p5.Vector(target.x, target.y);
@@ -112,7 +111,7 @@ function Point(width, height) {
       this.distance = p5.Vector.sub(leader, point);
       velocity = p5.Vector.mult(this.distance, ease);
       point.add(velocity);
-      ellipse(point.x, point.y, 70, 70);
+      ellipse(point.x, point.y, 70, 130);
       leader = point;
     }     
   };
@@ -124,6 +123,7 @@ function draw(){
   // scaleLevel = map(level, 0, 1, 1, 1.0004);
   // hsbLevel = map(level, 0, 0.5, 100, 100);
   gridLevel = map(level, 0, 0.5, 1.5, 3.5);
+  
   // Grid code
   strokeWeight(2);
   push()
