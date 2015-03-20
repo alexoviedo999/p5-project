@@ -1,16 +1,17 @@
 
 var canvas1;
 var target;
-var points = [];
+var particles = [];
 var num = 15;
 var frames = 25;
 var distance;
 var target;
 var leader;
 var velocity;
-var point;
-var worms = [];
+var particle;
+var allParticles = [];
 var touchPos = {};
+
 
 
 // nunchuck stuff
@@ -39,17 +40,18 @@ n.onJoin(function(data){
 $(document).ready(function(){
   n.receive(function(data){
     userData = data;
+
     if (!users[data.username]){
       var el = $('<h3></h3>');
       users[data.username] = el;
       $('body').append(el);
     }
+    
     if (users[data.username]){
        // users[data.username].text(JSON.stringify(data,null,2));
-      for(var i = 0; i < worms.length; i++){
-        if(worms[i].user.username == data.username){
+      for(var i = 0; i < allParticles.length; i++){
+        if(allParticles[i].user.username == data.username){
           // betaAngle = userData.orientation.beta;
-
           posX = Math.abs(data.touchPad.posX);
           posY = Math.abs(data.touchPad.posY);
           var touch = createVector(posX, posY);
@@ -57,6 +59,8 @@ $(document).ready(function(){
           var touchY = map(touch.y, 0, data.touchPad.tHeight, 0, windowHeight);
           touchPos.x = touchX;
           touchPos.y = touchY;
+
+          // allParticles[i].touchPos = touchPos;
         }
       }
     }
@@ -92,14 +96,11 @@ function preload() {
 function setup() {
   canvas1 = createCanvas(windowWidth, windowHeight);
   amplitude = new p5.Amplitude();
-  for (var i=0; i<num; i++) {
-    points[i] = new Point();
-  }
 }
 
-function Point(width, height) {
-  this.point = new p5.Vector(width/2, height/2);
-
+function Particle(width, height) {
+  this.particle = new p5.Vector(width/2, height/2);
+  var particle;
   this.display = function(){
     colorMode(HSB,360,100,100);
     noStroke();
@@ -109,14 +110,29 @@ function Point(width, height) {
     this.leader = new p5.Vector(this.target.x, this.target.y);
     for (var i=0; i<num; i++) {
       fill(180.0/num*i,100,100);
-      point = points[i].point;
-      this.distance = p5.Vector.sub(this.leader, point);
+      particle = particles[i].particle;
+      this.distance = p5.Vector.sub(this.leader, particle);
       velocity = p5.Vector.mult(this.distance, ease);
-      point.add(velocity);
-      ellipse(point.x, point.y, 70, 130);
-      this.leader = point;
+      particle.add(velocity);
+      ellipse(particle.x, particle.y, 70, 130);
+      this.leader = particle;
     }     
   };
+}
+
+function ParticleSystem(location) {
+  this.origin = location.get();
+  this.particles = [];
+}
+
+ParticleSystem.prototype.run = function() {
+  var p;
+  
+  // this.origin = width/angle, 50
+  for (var i=0; i<num; i++) {
+    p = this.particles[i];
+    p.display();
+  }
 }
  
 function draw(){
@@ -136,11 +152,24 @@ function draw(){
   pop();
 
   // Worm Code
-  for (var i=0; i<num; i++) {
-    points[i].display();
-  }
 
+  for(var i=0; i < allParticles.length; i++){
+      // allParticles[i].origin.x = width/((i+1) * 2) + betaAngle;
+      allParticles[i].run();
+    }
 }
+
+function addUser(user){
+  ps = new ParticleSystem(new p5.Vector(width/(usersCount * 2), 50));
+  ps.user =  users[user]
+
+  for (var i=0; i<num; i++) {
+    particles[i] = new Particle();
+  }
+  ps.particles = particles;
+  allParticles.push(ps);
+}
+
 
 function lines(){
   stroke(0,255,0);
@@ -158,20 +187,6 @@ function lines(){
   }
 }
 
-function addUser(user){
-  // ps = new ParticleSystem(new p5.Vector(width/(usersCount * 2), 50));
-  // ps = new Particle()
-  // ps.user =  users[user]
-  // particles.push(ps)
 
-  for (var i=0; i<num; i++) {
-    points[i] = new Point();
-  }
-  points.user = users[user];
-  worms.push(points);
-
-
-
-}
 
 
