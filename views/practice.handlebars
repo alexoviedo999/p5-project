@@ -1,2 +1,33 @@
 <script language="javascript" src="../js/practice.js"></script>
+<script src="../lib/nunchuck.js"></script>
+<script src="../js/nunchuck-sketch.js"></script>
 <link type="text/css" rel="stylesheet" media="all" href="../css/practice.css" />
+
+
+<script>
+  player_data = {}; 
+  var socket = io();
+</script>
+
+<style>
+  .code {
+    position: fixed;
+    font-size: 15em;
+    opacity: .5;
+    right: .2em;
+    bottom: 0;
+  }
+  .users {
+    font-family: 'Montserrat', 'Helvetic Neue', 'Helvetica', sans-serif;
+    font-size: 1.2em;
+    top: 8px;
+    left: 8px;
+  }
+</style>
+</head>
+
+<body>
+  <h2 class="room-id"> Room Id: </h2>
+  <div class="users">USERS ONLINE:</div>
+  {{!-- <div id="sound-canvas"></div> --}}
+</body>

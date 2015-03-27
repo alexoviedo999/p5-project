@@ -30,6 +30,7 @@
         this.socket = options.socket;
         this.prevData = null;
         this.buttons = [];
+        this.sliders = [];
         this.touchPad = touchPad;
 
         if (this.type == 'host') {
@@ -100,6 +101,7 @@
                         username: _instance.username,
                         roomId: _instance.roomId,
                         buttons: _instance.buttons,
+                        sliders: _instance.sliders,
                         touchPad: touchPad,
                         orientation: data,
                         timestamp: Date.now()
@@ -121,6 +123,7 @@
                     username: _instance.username,
                     roomId: _instance.roomId,
                     buttons: _instance.buttons,
+                    sliders: _instance.sliders,
                     touchPad: touchPad,
                     orientation: _instance.prevData,
                     timestamp: Date.now()
@@ -139,6 +142,7 @@
                     username: _instance.username,
                     roomId: _instance.roomId,
                     buttons: _instance.buttons,
+                    sliders: _instance.sliders,
                     touchPad: touchPad,
                     orientation: _instance.prevData,
                     timestamp: Date.now()
@@ -146,7 +150,61 @@
             });
         }
 
-        var canvasTouch = document.getElementById('defaultCanvas')
+
+        // Add slider listeners
+        var sliders = document.getElementsByClassName('nunchuck-slider');
+
+        for (var i = 0; i < sliders.length; i++) {
+            sliders[i].addEventListener('touchstart', function(e) {
+                if (_instance.sliders.indexOf(this.id) < 0) {
+                    var slider = {
+                        value: this.value
+                    };
+                    _instance.sliders.push(slider);
+                }
+
+                _instance.socket.emit('nunchuck-data', {
+                    username: _instance.username,
+                    roomId: _instance.roomId,
+                    buttons: _instance.buttons,
+                    sliders: _instance.sliders,
+                    touchPad: touchPad,
+                    orientation: _instance.prevData,
+                    timestamp: Date.now()
+                });
+            });
+
+            sliders[i].addEventListener('touchmove', function(e) {
+                console.log('slide ' + slider1)
+                // e.preventDefault()
+                if (_instance.sliders.indexOf(this.id) < 0) {
+                    var slider = {
+                        value: this.value
+                    };
+                    _instance.sliders.push(slider);
+                }
+                
+            });
+
+            sliders[i].addEventListener('touchend', function(e) {
+                sliders = {
+                    slider1: slider1
+                }
+                _instance.socket.emit('nunchuck-data', {
+                    username: _instance.username,
+                    roomId: _instance.roomId,
+                    buttons: _instance.buttons,
+                    sliders: _instance.sliders,
+                    touchPad: touchPad,
+                    orientation: _instance.prevData,
+                    timestamp: Date.now()
+                });
+            });
+        }
+
+
+        var canvasTouch = document.getElementById('defaultCanvas');
+        if(canvasTouch){
 
         canvasTouch.addEventListener('touchstart', function(e) {
             console.log('touchCanvas: ' + e);
@@ -157,13 +215,15 @@
                 posY: e.view.posY,
                 posYp: e.view.posYp,
                 tWidth: tWidth,
-                tHeight: tHeight
+                tHeight: tHeight,
+                slider1: e.view.slider1
             }
 
             _instance.socket.emit('nunchuck-data', {
                 username: _instance.username,
                 roomId: _instance.roomId,
                 buttons: _instance.buttons,
+                sliders: _instance.sliders,
                 touchPad: touchPad,
                 orientation: _instance.prevData,
                 timestamp: Date.now()
@@ -212,6 +272,8 @@
                 timestamp: Date.now()
             });
         });
+
+        }
 
     };
 

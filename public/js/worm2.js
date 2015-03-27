@@ -1,4 +1,7 @@
 
+// var Worm2Module = function() {
+
+
 var canvas1;
 var target;
 var particles = [];
@@ -11,8 +14,8 @@ var velocity;
 var particle;
 var allParticles = [];
 var touchPos = {};
-
-
+var usersCount;
+var soundFile;
 
 // nunchuck stuff
 
@@ -20,13 +23,12 @@ var socket = io();
 var n = nunchuck.init('host', socket);
 var users = {};
 
-n.onJoin(function(data){
-  var userName = data.username;
-  console.log(data)
-  users[data.username] = data;
-  usersCount = Object.keys(users).length;
-  addUser(userName);
-  $('.users').html("Users Online " + usersCount);
+var User = function(name){
+  this.id = Object.keys(users).length + 1;
+  this.username = name;
+}
+
+audioSetup = function(){
   if(data.audioPick === 'ourAudio' && soundFile.playing === false){
     soundFile.play();
   }
@@ -35,37 +37,49 @@ n.onJoin(function(data){
     mic.start();
     amplitude.setInput(mic);  
   }
+}
+
+joinUser = function(data){
+
+  var user = new User(data.username);
+  var userName = user.username
+  console.log(user);
+  users[data.username] = data;
+  usersCount = Object.keys(users).length;
+  addUser(userName);
+
+  $('.users').html("Users Online " + usersCount);
+
+}
+
+n.onJoin(joinUser);
+
+
+
+n.receive(function(data){
+
+  // if (!users[data.username]){
+  //   var el = $('<h3></h3>');
+  //   users[data.username] = el;
+  //   $('body').append(el);
+  // }
+
+  if (users[data.username]){
+    for(var i = 0; i < allParticles.length; i++){
+      if(allParticles[i].user.username == data.username){
+        posX = Math.abs(data.touchPad.posX);
+        posY = Math.abs(data.touchPad.posY);
+        var touch = createVector(posX, posY);
+        var touchX = map(touch.x, 0, data.touchPad.tWidth, 0, windowWidth);
+        var touchY = map(touch.y, 0, data.touchPad.tHeight, 0, windowHeight);
+        touchPos.x = touchX;
+        touchPos.y = touchY;
+      }
+    }
+  }
 });
 
 $(document).ready(function(){
-  n.receive(function(data){
-    userData = data;
-
-    if (!users[data.username]){
-      var el = $('<h3></h3>');
-      users[data.username] = el;
-      $('body').append(el);
-    }
-    
-    if (users[data.username]){
-       // users[data.username].text(JSON.stringify(data,null,2));
-      for(var i = 0; i < allParticles.length; i++){
-        if(allParticles[i].user.username == data.username){
-          // betaAngle = userData.orientation.beta;
-          posX = Math.abs(data.touchPad.posX);
-          posY = Math.abs(data.touchPad.posY);
-          var touch = createVector(posX, posY);
-          var touchX = map(touch.x, 0, data.touchPad.tWidth, 0, windowWidth);
-          var touchY = map(touch.y, 0, data.touchPad.tHeight, 0, windowHeight);
-          touchPos.x = touchX;
-          touchPos.y = touchY;
-
-          // allParticles[i].touchPos = touchPos;
-        }
-      }
-    }
-    // users[data.username].text(JSON.stringify(data,null,2))
-  });
   $('.room-id').append(n.roomId);
 });
 
@@ -159,8 +173,8 @@ function draw(){
     }
 }
 
-function addUser(user){
-  ps = new ParticleSystem(new p5.Vector(width/(usersCount * 2), 50));
+function addUser(user, windowWidth){
+  ps = new ParticleSystem(new p5.Vector(windowWidth/(usersCount * 2), 50));
   ps.user =  users[user]
 
   for (var i=0; i<num; i++) {
@@ -187,6 +201,8 @@ function lines(){
   }
 }
 
+
+// };
 
 
 

@@ -6,10 +6,18 @@
     s.setup = function() {
         tp = s.createCanvas(s.windowWidth, s.windowHeight);
         tp.parent('touch-pad');
-        strobe = s.createButton('Strobe', 'strobe');
-        strobe.id('strobe-btn').class('nunchuck-button').position(s.windowWidth/20, s.windowHeight/20);
+        // strobe = s.createButton('Strobe', 'strobe');
+        // strobe.id('strobe-btn').class('nunchuck-button').position(s.windowWidth/20, s.windowHeight/20);
         // strobe.parent('bottom-strip');
-        strobe.touchEnded(strobeEnd);
+        // strobe.touchEnded(strobeEnd);
+
+        timeSlider = s.createSlider(1, 5, 3);
+        timeSlider.position(100, 100)
+
+        timeSlider.id('slider1').class('nunchuck-slider').position(s.windowWidth/20, s.windowHeight/20);
+        // timeSlider.parent('bottom-strip');
+        // timeSlider.parent('bottom-strip');
+        // timeSlider.touchEnded(strobeEnd);
 
         s.colorMode("hsb");
         s.background(184, 174, 175, 90);
@@ -24,12 +32,12 @@
       tHeight = s.windowHeight
       // console.log("posX: "+ posX)
       // console.log("posY: "+ posY)
+
+      slider1 = timeSlider.value()/1000
     }
   }
 
-  function strobeEnd(){
-    console.log('ended');
-  }
+
 
   window.onload = function(){
 
