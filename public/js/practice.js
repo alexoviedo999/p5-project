@@ -43,7 +43,7 @@ function setup() {
 }
 
 function draw() {
- background(20);
+  background(20);
 
   for(var i=0; i<allSquares.length; i++){
     allSquares[i].display();  
@@ -51,37 +51,38 @@ function draw() {
   
 }
 
-
 // Square
 
-var Square = function(r, g, b, opacity) {
+var Square = function(r, g, b, o) {
   // this.location = translate(width/2, height/2);
   // this.location = userCount;
   this.r = r;
   this.g = g;
   this.b = b;
-  this.opacity = opacity;
+  this.o = o;
 }
 
 Square.prototype.display = function(){
   
-
+  
   push();
   translate(windowWidth/(2*this.user), windowHeight/2);
   rotate(-time);
-  fill(this.r, this.g, this.b, this.opacity);
-  strokeWeight(3);
+  fill(this.r, this.g, this.b, this.o);
+  strokeWeight(2);
   stroke(this.r, this.g, this.b);
   rectMode(CENTER);
-  rect(0, 0, 500, 500);
+  rect(0, 0, 250, 250);
+
+
 
   time += timeSlider.value()/1000;
    
-  for (var i = 0; i < 20; i++) {
-    var spinColor = noise(time*5)
+  for (var i = 0; i < 15; i++) {
+    var spinColor = noise(time*15)
     rotate(time);
-    fill(this.r* spinColor,this.g*spinColor,this.b*spinColor,80);
-    rect(i,i,i*15,i*15);
+    fill(this.r* spinColor,this.g*spinColor,this.b*spinColor,70);
+    rect(i,i,i*10,i*10);
   }
 
   pop();
