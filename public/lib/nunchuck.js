@@ -175,15 +175,13 @@
             });
 
             sliders[i].addEventListener('touchmove', function(e) {
-                console.log('slide ' + slider1)
-                // e.preventDefault()
+                console.log('slide ' + slider1);
                 if (_instance.sliders.indexOf(this.id) < 0) {
                     var slider = {
                         value: this.value
                     };
                     _instance.sliders.push(slider);
                 }
-                
             });
 
             sliders[i].addEventListener('touchend', function(e) {

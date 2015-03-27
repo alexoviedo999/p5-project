@@ -1,7 +1,6 @@
 
 var allSquares = [];
 var timeSlider;
-var time = 0.0003;
 
 // nunchuck stuff
 var socket = io();
@@ -21,6 +20,7 @@ var addUser = function(user){
   var r = 0;
   var g = 0;
   var b = 0;
+  var o = 70;
 
   if (user.id === 1){
     g = 255;
@@ -31,50 +31,12 @@ var addUser = function(user){
   else if(user.id === 3) {
     r = 255;
   }
-  square = new Square(r, g, b, 70, 0.002, 0);
+  square = new Square(r, g, b, o, 0.002, 0);
   square.user = user;
   allSquares.push(square)
 }
 
 
-n.receive(function(data){
-  if (users[data.username]){
-    
-    var squareData = function(){
-
-    for(var i = 0; i < allSquares.length; i++){
-      if(allSquares[i].user.username == data.username){
-
-        var thisSquare = allSquares[i]
-
-        // posX = Math.abs(data.touchPad.posX);
-        // posY = Math.abs(data.touchPad.posY);
-        // var touch = createVector(posX, posY);
-        // var touchX = s.map(s.touch.x, 0, data.touchPad.tWidth, 0, s.windowWidth);
-        // var touchY = s.map(s.touch.y, 0, data.touchPad.tHeight, 0, s.windowHeight);
-        // touchPos.x = touchX;
-        // touchPos.y = touchY;
-
-        for(var j=0; j<data.sliders.length; j++){
-          var sliderVal1 = data.sliders[j].value;
-          thisSquare.rTime = parseInt(sliderVal1)/1000;
-        }
-
-        var returnSquare = function(){
-          return thisSquare;
-        }
-        
-        return returnSquare;
-      }
-      
-    }
-    }
-
-    var squareScope = squareData();
-    squareScope();
-  }
-  
-});
 
 
 var sketch = function(s){
@@ -85,18 +47,12 @@ var sketch = function(s){
 
   s.setup = function() {
     var myCanvas = s.createCanvas(s.windowWidth, s.windowHeight);
-    // myCanvas.parent('sketch');
-    // timeSlider = s.createSlider(1, 5, 3);
-    // timeSlider.position(25, 50)
-    // user1 = 1;
-    // user2 = 2;
-    // addUser(user1);
-    // addUser(user2);
+    amplitude = new p5.Amplitude();
     s.smooth();
   }
 
   s.draw = function() {
-    s.background(20);
+    s.background(50, 50, 50);
 
     for(var i=0; i<allSquares.length; i++){
       allSquares[i].display(); 
@@ -106,8 +62,6 @@ var sketch = function(s){
   }
 
   Square = function(r, g, b, o, rTime, tTime) {
-    // this.location = translate(width/2, height/2);
-    // this.location = userCount;
     this.r = r;
     this.g = g;
     this.b = b;
@@ -117,26 +71,24 @@ var sketch = function(s){
   }
 
   Square.prototype.display = function(){
+    var level = amplitude.getLevel();
+    var olevel = s.map(level, 0, 0.5, 60, 100);
+    var squareNum = s.map(level, 0, 0.5, 10, 20);
+    var squareSize = s.map(level, 0, 0.5, 200, 300);
+    this.o = olevel;
     this.tTime += this.rTime
-    
-    // this.rTime += this.tTime;
-
-    // var rTime = this.rTime;
-    // time += (parseInt(this.rTime))/1000;
-    // this.rTime = time; 
     s.push();
-
     s.translate(s.windowWidth/(2*this.user.id), s.windowHeight/2);
     s.rotate(-this.tTime);
     s.fill(this.r, this.g, this.b, this.o);
     s.strokeWeight(2);
     s.stroke(this.r, this.g, this.b);
     s.rectMode(s.CENTER);
-    s.rect(0, 0, 250, 250);
+    s.rect(0, 0, squareSize, squareSize);
     
      
     for (var i = 0; i < 15; i++) {
-      var spinColor = s.noise(this.tTime*15)
+      var spinColor = s.noise(this.o)
       s.rotate(this.tTime);
       s.fill(this.r* spinColor,this.g*spinColor,this.b*spinColor,70);
       s.rect(i,i,i*10,i*10);
