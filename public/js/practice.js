@@ -1,139 +1,115 @@
-var amplitude;
-var soundFile;
-var backgroundColor;
-var canvas1;
-var target;
-var points = [];
-var x; 
-var y;
-var d;
-var angle = 0; 
-var ease = 0.9;
-var easing = true;
-var num = 540;
-var frames = 165;
-var distance;
-var velocity;
-var point;
+var angInc = 0.2;
+var d,e,f;
+var dfScale = 1.9;
+var springBack = 0.96;
+var m = 0;
+var mScale = 0.005;
+var num = 0;
 
 
-/* 
- Beat Detect Variables
-*/
-// how many draw loop frames before the beatCutoff starts to decay
-// so that another beat can be triggered.
-// frameRate() is usually around 60 frames per second,
-// so 20 fps = 3 beats per second, meaning if the song is over 180 BPM,
-// we wont respond to every beat.
-var beatHoldFrames = 20;
+var usersCount = 2;
+var allSquares = [];
+var timeSlider;
+var time = 0;
 
-// what amplitude level can trigger a beat?
-var beatThreshold = 0.05;
 
-// When we have a beat, beatCutoff will be reset to 1.1*beatThreshold, and then decay
-// Level must be greater than beatThreshold and beatCutoff before the next beat can trigger.
-var beatCutoff = 0;
-var beatDecayRate = 0.95; // how fast does beat cutoff decay?
-var framesSinceLastbeat = 0; // once this equals beatHoldFrames, beatCutoff starts to decay.
+var users = {
+  user: {
+    id: 1,
+    name: 'joe'
+  },
+  user: {
+    id: 2,
+    name: 'tom'
+  }
+};
 
-function preload() {
-  soundFile = loadSound('../../music/tiesto_zero_76.mp3');
-}
- 
+var users = [];
 
 function setup() {
-  // set canvas size
-  // canvas1 = createCanvas(500, 500);
-  canvas1 = createCanvas(windowWidth, windowHeight);
-  soundFile.play();
-  amplitude = new p5.Amplitude();
+  var myCanvas = createCanvas(windowWidth, windowHeight);
+  // myCanvas.parent('sketch');
 
-  for (i=0; i<num; i++) {
-    points[i] = new p5.Vector(width/2, height/2);
+  timeSlider = createSlider(1, 5, 3);
+  timeSlider.position(25, 25)
+
+  user1 = 1;
+  user2 = 2;
+  addUser(user1);
+  addUser(user2);
+
+
+  smooth();
+}
+
+function draw() {
+ background(20);
+
+  for(var i=0; i<allSquares.length; i++){
+    allSquares[i].display();  
   }
-
   
 }
 
- 
-function draw(){
-  level = amplitude.getLevel();
-  detectBeat(level);
-  numLevel = map(level, 0, 1, 250, 540);
-  scaleLevel = map(level, 0, 1, 1, 1.0004);
-  hsbLevel = map(level, 0, 0.5, 100, 100)
 
-  // Grid code
+// Square
+
+var Square = function(r, g, b, opacity) {
+  // this.location = translate(width/2, height/2);
+  // this.location = userCount;
+  this.r = r;
+  this.g = g;
+  this.b = b;
+  this.opacity = opacity;
+}
+
+Square.prototype.display = function(){
+  
+
   push();
-  strokeWeight(2);
-  translate(0, height/2);
-  lines();
-  scale(1, -1);
-  lines();
-  pop();
+  translate(windowWidth/(2*this.user), windowHeight/2);
+  rotate(-time);
+  fill(this.r, this.g, this.b, this.opacity);
+  strokeWeight(3);
+  stroke(this.r, this.g, this.b);
+  rectMode(CENTER);
+  rect(0, 0, 500, 500);
 
-  // Worm code
-  push();
-  colorMode(HSB,360,100,100);
-  noStroke();
-  d = 150;
-  x = width/2+cos(angle)*d;
-  y = height/2+sin(angle*2)*d;
-  target = new p5.Vector(mouseX, mouseY);
-  leader = new p5.Vector(target.x, target.y);
-
-  for (i=0; i<num; i++) {
-    fill(180.0/numLevel*i,hsbLevel,hsbLevel);
-    point = points[i];
-    scale(scaleLevel);
-    distance = p5.Vector.sub(leader, point);
-    velocity = p5.Vector.mult(distance, ease);
-    point.add(velocity);
-    ellipse(point.x, point.y, 70, 150);
-    leader = point;
+  time += timeSlider.value()/1000;
+   
+  for (var i = 0; i < 20; i++) {
+    var spinColor = noise(time*5)
+    rotate(time);
+    fill(this.r* spinColor,this.g*spinColor,this.b*spinColor,80);
+    rect(i,i,i*15,i*15);
   }
-  angle = angle + TWO_PI/frames;
+
   pop();
 }
 
-function lines(){
-  stroke(0,255,0);
-  for(i = 0; i < 30; i++){
-    y = pow(((i+frameCount/10.0)%20), 2.5);
-    line(0, y, width, y);
+function addUser(user){
+  var r = 0;
+  var g = 0;
+  var b = 0;
+  if (user === 1){
+    g = 255;
   }
-  for(i = 0; i < width; i+=20){
-    line(i, 0, (i-width/2)*20, height);
+  else if(user === 2) {
+    b = 255;
   }
-  noStroke();
-  for(i = 0; i < height; i+= 10){
-    fill(0, 255-(i/height * 255)*1.8);
-    rect(0, i-2, width*2, 10);// use -2 instead of extra call to rectMode(CENTER)
+  else if(user === 3) {
+    r = 255;
   }
+
+  square = new Square(r, g, b, 70, usersCount);
+  square.user = user;
+  allSquares.push(square)
 }
 
-function detectBeat(level) {
-    if (level > beatCutoff && level > beatThreshold) {
-        onBeat();
-        beatCutoff = level * 1.9;
-        framesSinceLastbeat = 0;
-    } else {
-        // offBeat();
-        if (framesSinceLastbeat <= beatHoldFrames) {
-            framesSinceLastbeat++;
-        } else {
-            beatCutoff *= beatDecayRate;
-            beatCutoff = Math.max(beatCutoff, beatThreshold);
-        }
-    }
-}
 
-var onBeat = function() {
-    bColor = Math.round(map(level, 0, 1, 0, 360));
-    color2 = map(level, 0, 1, 0, 100)
-    backgroundColor = color(bColor, color2, random(0, 100));
-}
 
-var offBeat = function(){
-  image(imageArches, -imgWidth, -imgHeight, imgWidth*2, imgHeight*2);
-}
+
+
+
+
+

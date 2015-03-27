@@ -99,6 +99,10 @@ app.get('/play/worm2', function(req, res) {
   res.render('worm2');
 });
 
+app.get('/play/boxes', function(req, res) {
+  res.render('boxes');
+});
+
 app.get('/practice', function(req, res) {
   res.render('practice');
 });
