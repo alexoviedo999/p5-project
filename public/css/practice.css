@@ -1,8 +1,45 @@
 body{
-	background-color: black;
+	background-color: #323232;
 	color:white;
+	font-family: 'Montserrat', 'Helvetic Neue', 'Helvetica', sans-serif;
+}
+
+nav div {
+	font-size: 18px;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+nav span {
+	color: #0DFF92;
+	margin-left: 10px;
+}
+
+nav .nav-left {
+  float: left;
+  width: 50%;
+}
+
+nav .nav-right {
+  float: right;
+  width: 40%;
+}
+
+nav .room-id {
+	font-size: 20px;
+}
+
+.code {
+  position: fixed;
+  font-size: 14px;
+  opacity: .5;
+  right: .2em;
+  bottom: 0;
 }
 
 canvas {
 	border:none;
 }
+
+
+

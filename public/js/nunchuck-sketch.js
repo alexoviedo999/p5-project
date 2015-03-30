@@ -7,7 +7,7 @@ n.onJoin(function(data){
   usersCount = Object.keys(users).length;
   addUser(user);
 
-  $('.users').html("Users Online " + usersCount);
+  $('.users').html("Users Online: " + usersCount);
   if(data.audioPick === 'ourAudio' && soundFile.playing === false){
     soundFile.play();
   }

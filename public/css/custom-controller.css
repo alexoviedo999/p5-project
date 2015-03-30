@@ -32,6 +32,11 @@ canvas {
   left: 100px;
 }
 
+.nunchuck-slider {
+  display: none;
+  width: 250px;
+}
+
 button#strobe-btn {
 	font-family: 'Montserrat', 'Helvetica', 'Helvetica Neue', sans-serif;
   font-size: 14px;
@@ -47,3 +52,4 @@ button#strobe-btn {
   padding: 12px;
   display: none;
 }
+

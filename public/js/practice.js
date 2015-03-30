@@ -9,6 +9,7 @@ var users = {};
 var usersCount;
 var Square;
 var sliderData;
+var usersCount = 0;
 
 var User = function(name){
   this.id = Object.keys(users).length + 1;
@@ -115,6 +116,7 @@ window.onload = function(){
   containerNode = document.getElementById( 'canvas' );
   myP5sketch = new p5(sketch, containerNode);
   $('.room-id').append(n.roomId);
+  $('.users').html("Users Online: " + usersCount);
 }
 
 
