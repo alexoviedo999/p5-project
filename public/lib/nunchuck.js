@@ -185,9 +185,11 @@
             });
 
             sliders[i].addEventListener('touchend', function(e) {
-                sliders = {
-                    slider1: slider1
+
+                if (_instance.sliders.indexOf(this.id) > -1) {
+                    _instance.sliders.splice(_instance.sliders.indexOf(this.id), 1)
                 }
+
                 _instance.socket.emit('nunchuck-data', {
                     username: _instance.username,
                     roomId: _instance.roomId,
