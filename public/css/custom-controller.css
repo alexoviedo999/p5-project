@@ -57,7 +57,7 @@ button#strobe-btn {
   height:20px;
   margin:10px 50px;
   background: linear-gradient(to right, #9A2720 0%, #9A2720 100%);
-  background-size:150px 10px;
+  background-size:250px 10px;
   background-position:center;
   background-repeat:no-repeat;
   overflow:hidden;
@@ -75,7 +75,7 @@ button#strobe-btn {
 
 .nunchuck-slider::-webkit-slider-thumb:after{
   content:" ";
-  width:160px;
+  width:250px;
   height:10px;
   position:absolute;
   z-index:1;
@@ -85,13 +85,13 @@ button#strobe-btn {
   background: linear-gradient(to right, #f088fc 1%, #AC6CFF 70%);
 }
 
-p{
+/*p{
   width:100%;
   text-align:center;
   color:white;
   font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', Roboto, Arial, Sans-serif;
   font-size:32px;
   margin-top:30px;
-}
+}*/
 
 
