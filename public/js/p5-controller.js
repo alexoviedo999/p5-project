@@ -46,6 +46,6 @@
      set it as the p5 target
   */
   containerNode = document.getElementById( 'canvas' );
-  myp5 = new p5(sketch, containerNode);
+  myp5Ctrl = new p5(sketch, containerNode);
 
 }

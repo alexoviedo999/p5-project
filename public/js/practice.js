@@ -1,5 +1,5 @@
 
-var allSquares = [];
+var allUserItems = [];
 var timeSlider;
 
 // nunchuck stuff
@@ -31,9 +31,11 @@ var addUser = function(user){
   else if(user.id === 3) {
     r = 255;
   }
-  square = new Square(r, g, b, o, 0.002, 0);
-  square.user = user;
-  allSquares.push(square)
+  var square = new Square(r, g, b, o, 0.002, 0);
+  var item = square;
+
+  item.user = user;
+  allUserItems.push(item);
 }
 
 
@@ -54,9 +56,9 @@ var sketch = function(s){
   s.draw = function() {
     s.background(50, 50, 50);
 
-    for(var i=0; i<allSquares.length; i++){
-      allSquares[i].display(); 
-      allSquares[i].update();  
+    for(var i=0; i<allUserItems.length; i++){
+      allUserItems[i].display(); 
+      allUserItems[i].update();  
     }
     
   }
@@ -111,7 +113,7 @@ var sketch = function(s){
 
 window.onload = function(){
   containerNode = document.getElementById( 'canvas' );
-  boxesP5 = new p5(sketch, containerNode);
+  myP5sketch = new p5(sketch, containerNode);
   $('.room-id').append(n.roomId);
 }
 

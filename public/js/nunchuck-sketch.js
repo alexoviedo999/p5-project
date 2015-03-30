@@ -12,6 +12,7 @@ n.onJoin(function(data){
     soundFile.play();
   }
   else if(soundFile.playing === false){
+    // Set p5 audio...
     mic = new p5.AudioIn();
     mic.start();
     amplitude.setInput(mic);  
@@ -20,11 +21,11 @@ n.onJoin(function(data){
 
 n.receive(function(data){
   if (users[data.username]){
-    var squareData = function(){
-      for(var i = 0; i < allSquares.length; i++){
-        if(allSquares[i].user.username == data.username){
+    var itemData = function(){
+      for(var i = 0; i < allUserItems.length; i++){
+        if(allUserItems[i].user.username == data.username){
 
-          var thisSquare = allSquares[i]
+          var thisItem = allUserItems[i]
 
           // posX = Math.abs(data.touchPad.posX);
           // posY = Math.abs(data.touchPad.posY);
@@ -36,19 +37,19 @@ n.receive(function(data){
 
           for(var j=0; j<data.sliders.length; j++){
             var sliderVal1 = data.sliders[j].value;
-            thisSquare.rTime = parseInt(sliderVal1)/200;
+            thisItem.rTime = parseInt(sliderVal1)/200;
           }
 
-          var returnSquare = function(){
-            return thisSquare;
+          var returnItem = function(){
+            return thisItem;
           }
-          return returnSquare;
+          return returnItem;
         }
       }
     }
 
-    var squareScope = squareData();
-    squareScope();
+    var itemScope = itemData();
+    itemScope();
   }
 });
 
