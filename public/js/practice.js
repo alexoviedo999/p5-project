@@ -1,15 +1,8 @@
 
-var allUserItems = [];
 var timeSlider;
-
-// nunchuck stuff
-var socket = io();
-var n = nunchuck.init('host', socket);
-var users = {};
-var usersCount;
 var Square;
 var sliderData;
-var usersCount = 0;
+// var usersCount = 0;
 
 var User = function(name){
   this.id = Object.keys(users).length + 1;
@@ -17,7 +10,6 @@ var User = function(name){
 }
 
 var addUser = function(user){
-
   var r = 0;
   var g = 0;
   var b = 0;
@@ -40,8 +32,6 @@ var addUser = function(user){
 }
 
 
-
-
 var sketch = function(s){
 
   s.preload = function() {
@@ -60,17 +50,20 @@ var sketch = function(s){
     for(var i=0; i<allUserItems.length; i++){
       allUserItems[i].display(); 
       allUserItems[i].update();  
-    }
-    
+    } 
   }
 
-  Square = function(r, g, b, o, rTime, tTime) {
+  Square = function(r, g, b, o, rTime, tTime, xpos, ypos, touchW, touchH) {
     this.r = r;
     this.g = g;
     this.b = b;
     this.o = o;
     this.rTime = rTime;
-    this.tTime = tTime
+    this.tTime = tTime;
+    this.xpos = xpos;
+    this.ypos = ypos;
+    this.touchW = touchW;
+    this.touchH = touchH;
   }
 
   Square.prototype.display = function(){
@@ -81,14 +74,16 @@ var sketch = function(s){
     var squareSize = s.map(level, 0, 0.5, 250, 350);
     this.o = olevel;
     this.tTime += this.rTime
+    
     s.push();
-    s.translate(s.windowWidth/(2*this.user.id), s.windowHeight/2);
+    var touchX = s.map(this.xpos, 0, this.touchW, 0, s.windowWidth);
+    var touchY = s.map(this.ypos, 0, this.touchH, 0, s.windowHeight);
+    s.translate(touchX, touchY);
     s.fill(this.r, this.g, this.b, this.o);
-    s.strokeWeight(8);
+    s.strokeWeight(10);
     s.stroke(28);
     s.ellipseMode(s.CENTER);
     s.ellipse(0, 0, squareSize, squareSize);
-    
      
     for (var i = 0; i < 15; i++) {
       s.strokeWeight(strokeLevel);
@@ -102,12 +97,9 @@ var sketch = function(s){
   }
 
   Square.prototype.update = function(receiveData){
-
     if(receiveData){
       this.rTime += receiveData.sliderVal1.value/1000;
     }
-    
-
   }
 
 } // End Sketch
