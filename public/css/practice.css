@@ -5,14 +5,15 @@ body{
 }
 
 nav div {
-	font-size: 18px;
+	font-size: 22px;
 	margin-top: 10px;
 	margin-left: 10px;
 }
 
 nav span {
 	color: #0DFF92;
-	margin-left: 10px;
+	margin: 10px 0px;
+  display: inline-block;
 }
 
 nav .nav-left {
@@ -26,7 +27,7 @@ nav .nav-right {
 }
 
 nav .room-id {
-	font-size: 20px;
+	margin-top: 0;
 }
 
 .code {

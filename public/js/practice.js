@@ -74,7 +74,7 @@ var sketch = function(s){
     var squareSize = s.map(level, 0, 0.5, 250, 350);
     this.o = olevel;
     this.tTime += this.rTime
-    
+
     s.push();
     var touchX = s.map(this.xpos, 0, this.touchW, 0, s.windowWidth);
     var touchY = s.map(this.ypos, 0, this.touchH, 0, s.windowHeight);
@@ -109,7 +109,7 @@ var sketch = function(s){
 window.onload = function(){
   containerNode = document.getElementById( 'canvas' );
   myP5sketch = new p5(sketch, containerNode);
-  $('.room-id').append(n.roomId);
+  $('.room-id span').append(n.roomId).css('color', '#0DFF92');
   $('.users').html("Users Online: " + usersCount);
 }
 
