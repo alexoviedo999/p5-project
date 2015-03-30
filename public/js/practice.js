@@ -75,26 +75,28 @@ var sketch = function(s){
 
   Square.prototype.display = function(){
     var level = amplitude.getLevel();
-    var olevel = s.map(level, 0, 0.5, 60, 100);
-    var squareNum = s.map(level, 0, 0.5, 10, 20);
-    var squareSize = s.map(level, 0, 0.5, 200, 300);
+    var olevel = s.map(level, 0, 0.5, 40, 100);
+    var strokeLevel = s.map(level, 0, 0.5, 1, 8);
+    var squareNum = s.map(level, 0, 0.5, 30, 40);
+    var squareSize = s.map(level, 0, 0.5, 250, 350);
     this.o = olevel;
     this.tTime += this.rTime
     s.push();
     s.translate(s.windowWidth/(2*this.user.id), s.windowHeight/2);
-    s.rotate(-this.tTime);
     s.fill(this.r, this.g, this.b, this.o);
-    s.strokeWeight(2);
-    s.stroke(this.r, this.g, this.b);
-    s.rectMode(s.CENTER);
-    s.rect(0, 0, squareSize, squareSize);
+    s.strokeWeight(8);
+    s.stroke(28);
+    s.ellipseMode(s.CENTER);
+    s.ellipse(0, 0, squareSize, squareSize);
     
      
     for (var i = 0; i < 15; i++) {
+      s.strokeWeight(strokeLevel);
+      s.stroke(this.r, this.g, this.b);
       var spinColor = s.noise(this.o)
       s.rotate(this.tTime);
       s.fill(this.r* spinColor,this.g*spinColor,this.b*spinColor,70);
-      s.rect(i,i,i*10,i*10);
+      s.rect(i,i,i*5,i*5);
     }
     s.pop();
   }
