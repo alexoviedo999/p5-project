@@ -246,6 +246,7 @@
                 username: _instance.username,
                 roomId: _instance.roomId,
                 buttons: _instance.buttons,
+                sliders: _instance.sliders,
                 touchPad: touchPad,
                 orientation: _instance.prevData,
                 timestamp: Date.now()
@@ -267,6 +268,7 @@
                 username: _instance.username,
                 roomId: _instance.roomId,
                 buttons: _instance.buttons,
+                sliders: _instance.sliders,
                 touchPad: touchPad,
                 orientation: _instance.prevData,
                 timestamp: Date.now()
