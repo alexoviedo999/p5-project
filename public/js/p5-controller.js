@@ -21,6 +21,10 @@
       tWidth = s.windowWidth;
       tHeight = s.windowHeight
       slider1 = timeSlider.value()/1000
+
+      if(tp.width !== s.windowWidth){
+        tp = s.createCanvas(s.windowWidth, s.windowHeight*0.5);
+      }
     }
   }
 
@@ -33,32 +37,5 @@
   containerNode = document.getElementById( 'canvas' );
   myp5Ctrl = new p5(sketch, containerNode);
 
-  $(window).bind('orientationchange resize', function(event){
-    if (event.orientation) {
-      if (event.orientation == 'landscape') {
-        if (window.rotation == 90) {
-          rotate(this, -90);
-        } else {
-          rotate(this, 90);
-        }
-      }
-    }
-  });
-
-  function rotate(el, degs) {
-    iedegs = degs/90;
-    if (iedegs < 0) iedegs += 4;
-    transform = 'rotate('+degs+'deg)';
-    iefilter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+iedegs+')';
-    styles = {
-      transform: transform,
-      '-webkit-transform': transform,
-      '-moz-transform': transform,
-      '-o-transform': transform,
-      filter: iefilter,
-      '-ms-filter': iefilter
-    };
-    $(el).css(styles);
-  }
 
 }
