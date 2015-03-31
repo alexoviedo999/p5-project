@@ -35,7 +35,7 @@ var addUser = function(user){
 var sketch = function(s){
 
   s.preload = function() {
-    soundFile = s.loadSound('../../music/tiesto_zero_76.mp3');
+    soundFile = s.loadSound('../../music/d_player_zero_original_mix.mp3');
   }
 
   s.setup = function() {
