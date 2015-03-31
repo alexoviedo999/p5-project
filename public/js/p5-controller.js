@@ -4,11 +4,16 @@
   var sketch = function(s){
     s.setup = function() {
       tp = s.createCanvas(s.windowWidth, s.windowHeight*0.5);
+      s.textSize(32);
+      s.text("touch-pad", s.windowWidth/3, s.windowHeight*0.25);
+      s.fill(255);
+      s.noStroke();
       tp.parent('touch-pad');
       timeSlider = s.createSlider(1, 5, 3);
+      s.textSize(20);
       timeSlider.parent('knob-pad');
       timeSlider.id('slider1').class('nunchuck-slider');
-
+      $('#slider1').before('<p>Rotation Speed</p>');
       s.colorMode("hsb");
       s.background(184, 174, 175, 90);
     }
@@ -24,6 +29,10 @@
 
       if(tp.width !== s.windowWidth){
         tp = s.createCanvas(s.windowWidth, s.windowHeight*0.5);
+        s.textSize(32);
+        s.text("touch-pad", s.windowWidth/3, s.windowHeight*0.25);
+        s.fill(255);
+        s.noStroke() 
       }
     }
   }
