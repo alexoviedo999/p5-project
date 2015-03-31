@@ -4,11 +4,11 @@
   var sketch = function(s){
     s.setup = function() {
       tp = s.createCanvas(s.windowWidth, s.windowHeight*0.5);
+      tp.parent('touch-pad');
       s.textSize(32);
       s.text("touch-pad", s.windowWidth/3, s.windowHeight*0.25);
       s.fill(255);
       s.noStroke();
-      tp.parent('touch-pad');
       timeSlider = s.createSlider(1, 5, 3);
       s.textSize(20);
       timeSlider.parent('knob-pad');
