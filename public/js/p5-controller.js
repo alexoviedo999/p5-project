@@ -3,10 +3,12 @@
 
   var sketch = function(s){
     s.setup = function() {
-      tp = s.createCanvas(s.windowWidth, s.windowHeight);
+      tp = s.createCanvas(s.windowWidth, s.windowHeight*0.8);
       tp.parent('touch-pad');
       timeSlider = s.createSlider(1, 5, 3);
-      timeSlider.id('slider1').class('nunchuck-slider').position(50, 50);
+      timeSlider.parent('knob-pad');
+      timeSlider.id('slider1').class('nunchuck-slider');
+
       s.colorMode("hsb");
       s.background(184, 174, 175, 90);
     }
