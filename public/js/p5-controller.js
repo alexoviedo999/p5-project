@@ -43,7 +43,7 @@
      Retrieve the canvas created in index.html and
      set it as the p5 target
   */
-  containerNode = document.getElementById('defaultCanvas' );
+  containerNode = document.getElementById('touch-pad' );
   myp5Ctrl = new p5(sketch, containerNode);
 
 
