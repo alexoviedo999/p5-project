@@ -43,7 +43,7 @@
      Retrieve the canvas created in index.html and
      set it as the p5 target
   */
-  containerNode = document.getElementById( 'canvas' );
+  containerNode = document.getElementById('defaultCanvas' );
   myp5Ctrl = new p5(sketch, containerNode);
 
 
