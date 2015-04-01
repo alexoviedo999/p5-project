@@ -43,6 +43,10 @@ n.receive(function(data){
               sliderVal1 = 3;
               var sliderVal2 = data.sliders[j].slider2;
             }
+            else if(!data.sliders[j].slider2){
+              sliderVal1 = data.sliders[j].slider1;
+              var sliderVal2 = 20;
+            }
             else {
               var sliderVal1 = data.sliders[j].slider1;
               var sliderVal2 = data.sliders[j].slider2;
