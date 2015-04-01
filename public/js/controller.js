@@ -7,7 +7,7 @@ n.onJoin(function(data, err) {
     bounceOut('join');
     $('canvas').css('display', 'block');
     $('section#join').css('display', 'none');
-    $('#slider1').css('display', 'block');
+    $('.nunchuck-slider').css('display', 'block');
   } else {
     alert(err.msg)
   }

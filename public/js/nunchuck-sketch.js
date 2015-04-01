@@ -39,9 +39,18 @@ n.receive(function(data){
           thisItem.touchH = data.touchPad.tHeight;
 
           for(var j=0; j<data.sliders.length; j++){
-            var sliderVal1 = data.sliders[j].value;
-            thisItem.rTime = parseInt(sliderVal1)/200;
+            if(!data.sliders[j].slider1){
+              sliderVal1 = 3;
+              var sliderVal2 = data.sliders[j].slider2;
+            }
+            else {
+              var sliderVal1 = data.sliders[j].slider1;
+              var sliderVal2 = data.sliders[j].slider2;
+            }
+            thisItem.rTime = parseInt(sliderVal1)/400;
+            thisItem.squareCount = sliderVal2;
           }
+
           var returnItem = function(){
             return thisItem;
           }

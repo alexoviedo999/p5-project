@@ -153,16 +153,14 @@
 
         // Add slider listeners
         var sliders = document.getElementsByClassName('nunchuck-slider');
-
+        var slider = {};
         for (var i = 0; i < sliders.length; i++) {
             sliders[i].addEventListener('touchstart', function(e) {
                 if (_instance.sliders.indexOf(this.id) < 0) {
-                    var slider = {
-                        value: this.value
-                    };
+
+                    slider[this.id] = this.value;
                     _instance.sliders.push(slider);
                 }
-
                 _instance.socket.emit('nunchuck-data', {
                     username: _instance.username,
                     roomId: _instance.roomId,
@@ -175,13 +173,21 @@
             });
 
             sliders[i].addEventListener('touchmove', function(e) {
-                console.log('slide ' + slider1);
+                
                 if (_instance.sliders.indexOf(this.id) < 0) {
-                    var slider = {
-                        value: this.value
-                    };
+
+                    slider[this.id] = this.value;
                     _instance.sliders.push(slider);
                 }
+                _instance.socket.emit('nunchuck-data', {
+                    username: _instance.username,
+                    roomId: _instance.roomId,
+                    buttons: _instance.buttons,
+                    sliders: _instance.sliders,
+                    touchPad: touchPad,
+                    orientation: _instance.prevData,
+                    timestamp: Date.now()
+                });
             });
 
             sliders[i].addEventListener('touchend', function(e) {
@@ -189,7 +195,6 @@
                 if (_instance.sliders.indexOf(this.id) > -1) {
                     _instance.sliders.splice(_instance.sliders.indexOf(this.id), 1)
                 }
-
                 _instance.socket.emit('nunchuck-data', {
                     username: _instance.username,
                     roomId: _instance.roomId,
@@ -215,8 +220,7 @@
                 posY: e.view.posY,
                 posYp: e.view.posYp,
                 tWidth: tWidth,
-                tHeight: tHeight,
-                slider1: e.view.slider1
+                tHeight: tHeight
             }
 
             _instance.socket.emit('nunchuck-data', {

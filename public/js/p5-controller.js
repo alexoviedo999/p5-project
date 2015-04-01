@@ -14,6 +14,11 @@
       timeSlider.parent('knob-pad');
       timeSlider.id('slider1').class('nunchuck-slider');
       $('#slider1').before('<p>Rotation Speed</p>');
+      squareCountSlider = s.createSlider(10, 30, 20);
+      s.textSize(20);
+      squareCountSlider.parent('knob-pad');
+      squareCountSlider.id('slider2').class('nunchuck-slider');
+      $('#slider2').before('<p>Squar Count</p>');
       s.colorMode("hsb");
       s.background(184, 174, 175, 90);
     }
@@ -25,15 +30,13 @@
       posYp = Math.max(s.ptouchY);
       tWidth = s.windowWidth;
       tHeight = s.windowHeight
-      slider1 = timeSlider.value()/1000
-
-      // if(tp.width !== s.windowWidth){
-        tp = s.createCanvas(s.windowWidth, s.windowHeight*0.5);
-        s.textSize(32);
-        s.text("touch-pad", s.windowWidth/3, s.windowHeight*0.25);
-        s.fill(255);
-        s.noStroke() 
-      // }
+      slider1 = timeSlider.value()/1000;
+      slider2 = squareCountSlider.value();
+      tp = s.createCanvas(s.windowWidth, s.windowHeight*0.5);
+      s.textSize(32);
+      s.text("touch-pad", s.windowWidth/3, s.windowHeight*0.25);
+      s.fill(255);
+      s.noStroke() 
     }
   }
 
