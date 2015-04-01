@@ -82,7 +82,7 @@ var sketch = function(s){
       s.translate(touchX, touchY);
     }
     else{
-      s.translate(s.windowWidth/2, s.windowHeight/2;
+      s.translate(window.innerWidth/2, window.innerHeight/2);
     }
 
     // s.fill(this.r, this.g, this.b, this.o);
