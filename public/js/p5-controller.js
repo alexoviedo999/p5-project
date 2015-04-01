@@ -6,8 +6,9 @@
       tp = s.createCanvas(window.innerWidth, window.innerHeight*0.5);
       tp.parent('touch-pad');
       s.textSize(32);
+      s.textFont('Montserrat');
       s.text("touch-pad", window.innerWidth/2, window.innerHeight*0.25);
-      s.fill(255);
+      s.fill(255, 91, 50);
       s.noStroke();
       timeSlider = s.createSlider(1, 5, 3);
       s.textSize(20);

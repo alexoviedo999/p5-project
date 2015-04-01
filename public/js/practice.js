@@ -77,12 +77,12 @@ var sketch = function(s){
     s.push();
 
     if(this.xpos){
-      var touchX = s.map(this.xpos, 0, this.touchW, 0, s.windowWidth);
-      var touchY = s.map(this.ypos, 0, this.touchH, 0, s.windowHeight);
+      var touchX = s.map(this.xpos, 0, this.touchW, 0, window.innerWidth);
+      var touchY = s.map(this.ypos, 0, this.touchH, 0, window.innerHeight);
       s.translate(touchX, touchY);
     }
     else{
-      s.translate(s.windowWidth/(usersCount*2), s.windowHeight/(usersCount*2));
+      s.translate(s.windowWidth/2, s.windowHeight/2;
     }
 
     // s.fill(this.r, this.g, this.b, this.o);
