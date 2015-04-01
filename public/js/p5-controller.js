@@ -30,10 +30,7 @@
       posYp = Math.max(s.ptouchY);
       tWidth = s.windowWidth;
       tHeight = s.windowHeight
-      if(tHeight !== s.windowHeight){
-        tp = s.createCanvas(s.windowWidth, s.windowHeight*0.5);
-      }
-      
+      tp = s.createCanvas(s.windowWidth, s.windowHeight*0.5);
       slider1 = timeSlider.value()/1000;
       slider2 = squareCountSlider.value();
       s.textSize(32);
