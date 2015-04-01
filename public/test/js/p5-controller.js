@@ -27,13 +27,13 @@
       tHeight = s.windowHeight
       slider1 = timeSlider.value()/1000
 
-      // if(tp.width !== s.windowWidth){
+      if(tp.width !== s.windowWidth){
         tp = s.createCanvas(s.windowWidth, s.windowHeight*0.5);
         s.textSize(32);
         s.text("touch-pad", s.windowWidth/3, s.windowHeight*0.25);
         s.fill(255);
         s.noStroke() 
-      // }
+      }
     }
   }
 

@@ -55,6 +55,10 @@ app.get('/test', function(req, res){
   res.render('test-receiver');
 });
 
+app.get('/test/mobile', function(req, res){
+  res.render('controller');
+});
+
 app.get('/about', function(req, res) {
 	res.render('about');
 });
