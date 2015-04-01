@@ -6,7 +6,7 @@
       tp = s.createCanvas(window.innerWidth, window.innerHeight*0.5);
       tp.parent('touch-pad');
       s.textSize(32);
-      s.text("touch-pad", window.innerWidth/3, window.innerHeight*0.25);
+      s.text("touch-pad", window.innerWidth/2, window.innerHeight*0.25);
       s.fill(255);
       s.noStroke();
       timeSlider = s.createSlider(1, 5, 3);
@@ -24,17 +24,19 @@
     }
 
     s.draw = function(){
-      tp = s.createCanvas(window.innerWidth, window.innerHeight*0.5);
+      var wHeight = window.innerHeight;
+      var wWidth = window.innerWidth
+      tp = s.createCanvas(wHeight, wHeight*0.5);
       posX = s.touchX;
       posXp = Math.max(s.ptouchX);
       posY = s.touchY;
       posYp = Math.max(s.ptouchY);
-      tWidth = s.windowWidth;
-      tHeight = s.windowHeight
+      tWidth = wHeight;
+      tHeight = wHeight;
       slider1 = timeSlider.value()/1000;
       slider2 = squareCountSlider.value();
       s.textSize(32);
-      s.text("touch-pad", window.innerWidth/3, window.innerHeight*0.25);
+      s.text("touch-pad", wWidth*0.25, wHeight*0.25);
       s.fill(255);
       s.noStroke() 
     }
