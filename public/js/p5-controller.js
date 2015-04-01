@@ -10,12 +10,12 @@
       s.text("touch-pad", window.innerWidth/2, window.innerHeight*0.25);
       s.fill(255, 91, 50);
       s.noStroke();
-      timeSlider = s.createSlider(1, 5, 3);
+      timeSlider = s.createSlider(1, 4, 2.5);
       s.textSize(20);
       timeSlider.parent('knob-pad');
       timeSlider.id('slider1').class('nunchuck-slider');
       $('#slider1').before('<p>Rotation Speed</p>');
-      squareCountSlider = s.createSlider(10, 30, 20);
+      squareCountSlider = s.createSlider(20, 40, 30);
       s.textSize(20);
       squareCountSlider.parent('knob-pad');
       squareCountSlider.id('slider2').class('nunchuck-slider');

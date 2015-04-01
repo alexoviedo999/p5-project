@@ -18,18 +18,20 @@ var addUser = function(user){
   }
   else if(user.id === 2) {
     b = 255;
+    g = 20;
   }
   else if(user.id === 3) {
     r = 255;
   }
   var square = new Square(r, g, b, o, 0.002, 0);
-  square['squareCount'] = 10;
+  square['squareCount'] = 30;
   square['tTime'] = 0;
   var item = square;
 
   item.user = user;
   allUserItems.push(item);
 }
+
 
 
 var sketch = function(s){
@@ -45,14 +47,33 @@ var sketch = function(s){
   }
 
   s.draw = function() {
-    s.background(50, 50, 50);
+    s.background(70, 70, 70);
+    var xposDiff;
+    var yposDiff;
+
+    if(usersCount > 1 &&  allUserItems[allUserItems.length - 1].xpos > 0){
+      xposDiff = Math.abs(allUserItems[1].xpos - allUserItems[0].xpos);
+      yposDiff = Math.abs(allUserItems[1].ypos - allUserItems[0].ypos);  
+    }
+
     for(var i=0; i<allUserItems.length; i++){
+
+      if (xposDiff < 20 && yposDiff < 20){
+        allUserItems[i].whiteTest = true;
+      }
+      else { 
+        allUserItems[i].whiteTest = false;
+      }
+
       allUserItems[i].display(); 
       allUserItems[i].update();  
+
+
     } 
   }
 
-  Square = function(r, g, b, o, rTime, tTime, xpos, ypos, touchW, touchH, squareCount) {
+
+  Square = function(r, g, b, o, rTime, tTime, xpos, ypos, touchW, touchH, squareCount, whiteTest) {
     this.r = r;
     this.g = g;
     this.b = b;
@@ -64,12 +85,16 @@ var sketch = function(s){
     this.touchW = touchW;
     this.touchH = touchH;
     this.squareCount = squareCount;
+    this.whiteTest = false;
   }
 
+
+
   Square.prototype.display = function(){
+      
     var level = amplitude.getLevel();
-    var olevel = s.map(level, 0, 0.5, 40, 100);
-    var strokeLevel = s.map(level, 0, 0.5, 1, 8);
+    var olevel = s.map(level, 0, 0.5, 80, 100);
+    var strokeLevel = s.map(level, 0, 0.5, 1, 4);
     var squareNum = s.map(level, 0, 0.5, 30, 40);
     var squareSize = s.map(level, 0, 0.5, 250, 350);
     this.o = olevel;
@@ -85,22 +110,37 @@ var sketch = function(s){
       s.translate(window.innerWidth/2, window.innerHeight/2);
     }
 
-    // s.fill(this.r, this.g, this.b, this.o);
-    s.fill(0, 0, 0, 70);
-    s.noStroke();
-    s.ellipseMode(s.CENTER);
-    s.ellipse(0, 0, squareSize*(0.06*this.squareCount), squareSize*(0.06*this.squareCount));
-     
+   
+
     for (var i = 0; i < this.squareCount; i++) {
-      s.strokeWeight(strokeLevel);
-      s.stroke(this.r, this.g, this.b);
-      var spinColor = s.noise(this.o)
-      s.rotate(this.tTime);
-      s.fill(this.r* spinColor,this.g*spinColor,this.b*spinColor,90);
-      s.rect(i,i,i*5,i*5);
+      if (!this.whiteTest){
+        var spinColor = this.o
+        s.rotate(this.tTime);
+        s.fill(this.r* spinColor,this.g*spinColor,this.b*spinColor,70);
+        s.rect(i,i,i*5,i*5);
+        s.fill(0, 0, 0, 5);
+        s.noStroke();
+        s.ellipseMode(s.CENTER);
+        s.ellipse(0, 0, squareSize*(0.06*this.squareCount), squareSize*(0.06*this.squareCount));
+      }
+      else{
+        s.strokeWeight(strokeLevel);
+        s.stroke(255, 255, 255);
+        var spinColor = this.o;
+        s.rotate(this.tTime);
+        s.fill(this.r* spinColor,this.g*spinColor,this.b*spinColor,95);
+        s.rect(i,i,i*5,i*5);
+        s.fill(0, 0, 0, 0);
+        s.strokeWeight(strokeLevel);
+        s.stroke(this.r* spinColor,this.g*spinColor,this.b*spinColor,95);
+        s.ellipseMode(s.CENTER);
+        s.ellipse(0, 0, squareSize*(0.06*this.squareCount), squareSize*(0.06*this.squareCount));
+      }
     }
     s.pop();
+
   }
+
 
   Square.prototype.update = function(receiveData){
     if(receiveData){
