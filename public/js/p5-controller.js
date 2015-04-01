@@ -3,10 +3,10 @@
 
   var sketch = function(s){
     s.setup = function() {
-      tp = s.createCanvas(s.windowWidth, s.windowHeight*0.5);
+      tp = s.createCanvas(window.innerWidth, window.innerHeight*0.5);
       tp.parent('touch-pad');
       s.textSize(32);
-      s.text("touch-pad", s.windowWidth/3, s.windowHeight*0.25);
+      s.text("touch-pad", window.innerWidth/3, window.innerHeight*0.25);
       s.fill(255);
       s.noStroke();
       timeSlider = s.createSlider(1, 5, 3);
@@ -24,17 +24,17 @@
     }
 
     s.draw = function(){
+      tp = s.createCanvas(window.innerWidth, window.innerHeight*0.5);
       posX = s.touchX;
       posXp = Math.max(s.ptouchX);
       posY = s.touchY;
       posYp = Math.max(s.ptouchY);
       tWidth = s.windowWidth;
       tHeight = s.windowHeight
-      tp = s.createCanvas(s.windowWidth, s.windowHeight*0.5);
       slider1 = timeSlider.value()/1000;
       slider2 = squareCountSlider.value();
       s.textSize(32);
-      s.text("touch-pad", s.windowWidth/3, s.windowHeight*0.25);
+      s.text("touch-pad", window.innerWidth/3, window.innerHeight*0.25);
       s.fill(255);
       s.noStroke() 
     }
