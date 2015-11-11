@@ -4,10 +4,10 @@ var backgroundColor;
 var canvas1;
 var target;
 var points = [];
-var x; 
+var x;
 var y;
 var d;
-var angle = 0; 
+var angle = 0;
 var ease = 0.9;
 var easing = true;
 var num = 540;
@@ -47,9 +47,9 @@ n.onJoin(function(data){
   else if(soundFile.playing === false){
     mic = new p5.AudioIn();
     mic.start();
-    amplitude.setInput(mic);  
+    amplitude.setInput(mic);
   }
-  
+
 });
 
 $(document).ready(function(){
@@ -63,7 +63,7 @@ $(document).ready(function(){
     }
     if (users[data.username]){
        // users[data.username].text(JSON.stringify(data,null,2));
-       
+
       // for(var i = 0; i < particles.length; i++){
       //   if(particles[i].user.username == data.username){
       //     // betaAngle = userData.orientation.beta;
@@ -71,7 +71,7 @@ $(document).ready(function(){
       //     posX = Math.abs(data.touchPad.posX);
       //     posY = Math.abs(data.touchPad.posY);
 
-          
+
       //     var touch = createVector(posX, posY);
       //     touch.mult(2.5);
 
@@ -86,7 +86,7 @@ $(document).ready(function(){
       //       // btnPressCount = userData.buttons.length;
       //       if(userData.buttons.length == 1){
       //         userData.buttons = [];
-   
+
       //         strobeInterval = setInterval(function(){
       //           for (var i = 0; i < particles.length; i++) {
       //             particles[i].color = color(random(0, 255), random(0, 255), random(0, 255));
@@ -121,7 +121,7 @@ $(document).ready(function(){
 
 
 
-/* 
+/*
  Beat Detect Variables
 */
 // how many draw loop frames before the beatCutoff starts to decay
@@ -141,9 +141,9 @@ var beatDecayRate = 0.95; // how fast does beat cutoff decay?
 var framesSinceLastbeat = 0; // once this equals beatHoldFrames, beatCutoff starts to decay.
 
 function preload() {
-  soundFile = loadSound('../../music/tiesto_zero_76.mp3');
+  soundFile = loadSound('../music/tiesto_zero_76.mp3');
 }
- 
+
 
 function setup() {
   // set canvas size
@@ -155,10 +155,10 @@ function setup() {
   for (i=0; i<num; i++) {
     points[i] = new p5.Vector(width/2, height/2);
   }
-  
+
 }
 
- 
+
 function draw(){
   level = amplitude.getLevel();
   // detectBeat(level);

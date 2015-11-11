@@ -35,7 +35,7 @@ audioSetup = function(){
   else if(soundFile.playing === false){
     mic = new p5.AudioIn();
     mic.start();
-    amplitude.setInput(mic);  
+    amplitude.setInput(mic);
   }
 }
 
@@ -83,8 +83,8 @@ $(document).ready(function(){
   $('.room-id').append(n.roomId);
 });
 
- 
-/* 
+
+/*
  Beat Detect Variables
 */
 // how many draw loop frames before the beatCutoff starts to decay
@@ -130,25 +130,26 @@ function Particle(width, height) {
       particle.add(velocity);
       ellipse(particle.x, particle.y, 70, 130);
       this.leader = particle;
-    }     
+    }
   };
 }
 
 function ParticleSystem(location) {
-  this.origin = location.get();
+  // this.origin = location.get();
+  this.origin = location;
   this.particles = [];
 }
 
 ParticleSystem.prototype.run = function() {
   var p;
-  
+
   // this.origin = width/angle, 50
   for (var i=0; i<num; i++) {
     p = this.particles[i];
     p.display();
   }
 }
- 
+
 function draw(){
   level = amplitude.getLevel();
   // numLevel = map(level, 0, 1, 250, 540);
@@ -203,6 +204,3 @@ function lines(){
 
 
 // };
-
-
-
