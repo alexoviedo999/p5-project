@@ -149,7 +149,7 @@ function setup() {
   // set canvas size
   // canvas1 = createCanvas(500, 500);
   canvas1 = createCanvas(windowWidth, windowHeight);
-  // soundFile.play();
+  soundFile.play();
   amplitude = new p5.Amplitude();
 
   for (i=0; i<num; i++) {
@@ -184,8 +184,13 @@ function draw(){
   d = 150;
   x = width/2+cos(angle)*d;
   y = height/2+sin(angle*2)*d;
-  target = new p5.Vector(mouseX, mouseY);
-  leader = new p5.Vector(target.x, target.y);
+  // if (mouseX) {
+    target = new p5.Vector(mouseX, mouseY);
+    leader = new p5.Vector(target.x, target.y);
+  // } else if (touchX){
+    // target = new p5.Vector(touchX, touchY);
+    // leader = new p5.Vector(target.x, target.y);
+  // }
 
   for (i=0; i<num; i++) {
     fill(180.0/numLevel*i,100,100);
